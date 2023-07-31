@@ -10,5 +10,5 @@ WORKDIR /edetector_go
 RUN go env -w CGO_ENABLED="1"
 RUN go mod download
 RUN go build -o workingserver.exe cmd/server/working_server.go
-EXPOSE 5055
+EXPOSE 5055 1988 1989 1990
 CMD ["/edetector_go/workingserver.exe"]

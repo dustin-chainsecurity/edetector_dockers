@@ -1,0 +1,151 @@
+# sudo docker-compose --env-file ./config/.env up -d
+version: "3"
+services:
+  redisdb:
+    image: redis:6-alpine
+    container_name: ${REDIS_HOSTNAME}
+    volumes:
+      - ./.volumes/redis-data:/data
+      - ./.volumes/redis.conf:/redis.conf:ro
+    ports:
+      - ${REDIS_PORT}:${REDIS_PORT}
+    command: redis-server --save 20 1 --loglevel warning --requirepass ${REDIS_PASSWORD}
+    restart: always
+    healthcheck:
+      test: ["CMD", "redis-cli", "-p", "${REDIS_PORT}", "ping"]
+      interval: 10s
+      timeout: 10s
+      retries: 3
+    env_file: ./config/.env #這裡才正式把環境變數帶進來
+    
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: ${RABBITMQ_HOSTNAME}
+    volumes:
+      - ./.volumes/rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf:ro
+    ports:
+      - ${RABBITMQ_WEB_PORT}:${RABBITMQ_WEB_PORT}
+      - ${RABBITMQ_PORT}:${RABBITMQ_PORT}
+    restart: always
+    environment:
+      RABBITMQ_DEFAULT_USER: "${RABBITMQ_USERNAME}"
+      RABBITMQ_DEFAULT_PASS: "${RABBITMQ_PASSWORD}"
+      RABBITMQ_DEFAULT_VHOST: "${RABBITMQ_VHOST}"
+    healthcheck:
+      test: rabbitmq-diagnostics -q ping
+      interval: 10s
+      timeout: 30s
+      retries: 3
+    env_file: ./config/.env
+    
+  mariadb: 
+    image: mariadb:10-jammy
+    container_name: ${MARIADB_HOSTNAME}
+    environment:
+      MARIADB_DATABASE : ${MARIADB_DATABASE}
+      MARIADB_USER: "${MARIADB_USER}"
+      MARIADB_PASSWORD: "${MARIADB_PASSWORD}"
+      MARIADB_ROOT_PASSWORD: "${MARIADB_ROOT_PASSWORD}"
+      MARIADB_ALLOW_EMPTY_ROOT_PASSWORD : "yes"
+    volumes:
+      - ./.volumes/mariadb:/var/lib/mariadb
+      - ./.volumes/etc/edetector:/etc/mariadb/conf.d
+      - ./schema.sql:/docker-entrypoint-initdb.d/schema.sql
+    ports:
+      - ${MARIADB_PORT}:${MARIADB_PORT}
+    restart: always
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -P ${MARIADB_PORT} -u${MARIADB_USER} -p${MARIADB_PASSWORD} | grep 'mysqld is alive' || exit 1"]
+      interval: 10s
+      timeout: 2s
+      retries: 3
+    env_file: ./config/.env #這裡才正式把環境變數帶進來
+    
+#=======================================API Service==================================#
+
+  api:
+    build:
+      context: ./dockers/api
+      dockerfile: Dockerfile
+    container_name: api
+    volumes:
+      - ./.volumes/api:/edetector_api/cmd/api
+    ports:
+      - "5000:5000"
+    depends_on:
+      - mariadb
+      - redisdb
+    restart: always
+    env_file: ./config/app.env
+    
+  websocket:
+    build:
+      context: ./dockers/websocket
+      dockerfile: Dockerfile
+    container_name: websocket
+    volumes:
+      - ./.volumes/websocket:/edetector_api/cmd/websocket
+    ports:
+      - "5050:5050"
+    depends_on:
+      - mariadb
+      - redisdb
+    restart: always
+    env_file: ./config/app.env
+
+  taskservice:
+    build:
+      context: ./dockers/taskservice
+      dockerfile: Dockerfile
+    container_name: taskservice
+    volumes:
+      - ./.volumes/taskservice:/edetector_api/cmd/taskservice
+    depends_on:
+      - mariadb
+      - redisdb
+    restart: always
+    env_file: ./config/app.env
+
+#=======================================Working Server Service==================================#
+
+  workingserver:
+    build:
+      context: ./dockers/workingserver
+      dockerfile: Dockerfile
+    container_name: workingserver
+    volumes:
+      - ./.volumes/workingserver:/edetector_go/cmd/server
+      - unstaged_db:/edetector_go/dbUnstage
+    ports:
+      - "5055:5055"
+    depends_on:
+      - mariadb
+      - redisdb
+    restart: always
+    env_file: ./config/app.env
+
+  dbparser:
+    build:
+      context: ./dockers/dbparser
+      dockerfile: Dockerfile
+    container_name: dbparser
+    volumes:
+      - ./.volumes/dbparser:/edetector_go/cmd/parser
+      - unstaged_db:/edetector_go/dbUnstage
+    restart: always
+    env_file: ./config/app.env
+
+  connector:
+    build:
+      context: ./dockers/connector
+      dockerfile: Dockerfile
+    container_name: connector
+    volumes:
+      - ./.volumes/connector:/edetector_go/cmd/connector
+    depends_on:
+      - rabbitmq
+    restart: always
+    env_file: ./config/app.env
+
+volumes:
+  unstaged_db:

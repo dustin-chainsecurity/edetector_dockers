@@ -1,0 +1,45 @@
+.dateContainer {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    width:280px;
+    height: 212px;
+    padding: 20px;
+    border-radius: 3px;
+}
+
+.dateItem {
+    font-size: small;
+    background-color: rgb(255, 255, 255);
+    border-radius: 50%;
+    text-align: center;
+    vertical-align: middle;
+    width: 17px;
+    height: 17px;
+    padding: 5px;
+    margin: 5px;
+    cursor: pointer;
+}
+
+.dateItem:hover {
+    background-color: #2196F3;
+    color: white
+}
+
+.dateSelected{
+    font-size: small;
+    background-color: #2196F3;
+    color:white;
+    border-radius: 50%;
+    text-align: center;
+    vertical-align: middle;
+    width: 17px;
+    height: 17px;
+    padding: 5px;
+    margin: 5px;
+    cursor: pointer;
+}
+
+.dateSelected:hover{
+    background-color: #05599d;
+    color:white
+}

@@ -1,0 +1,24 @@
+
+.hostDropDownGroup{
+    display: flex;
+    align-items: center;
+    padding-right: 20px;
+    margin-left: 10px;
+}
+.analysisDataSettingBar{
+    display: flex;
+    align-items: center;
+    padding-right: 20px;
+}
+.analysisDropDownGroup{
+    display: grid;
+    grid-template-columns: auto auto auto;
+}
+.analysisDropDownGroup span{
+    display: flex;
+    align-items: center;
+}
+.analysisTimeSettingBar{
+    display: flex;
+    align-items: center;
+}

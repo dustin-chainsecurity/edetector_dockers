@@ -1,0 +1,163 @@
+
+#clock {
+
+    margin: 5% auto;
+
+    width: 220px;
+
+    height: 220px;
+
+    border-radius: 10px;
+
+    background: #ffffff;
+
+    position: relative;
+
+    transform: rotate(-90deg);
+
+}
+
+#clock .bg {
+
+    width: 220px;
+
+    height: 220px;
+
+    border-radius: 50%;
+
+    background: #e0e0e0;
+
+    position: absolute;
+
+    left: 50%;
+
+    top: 50%;
+
+    margin-left: -110px;
+
+    margin-top: -110px;
+
+}
+
+#clock .point {
+
+    position: absolute;
+
+    left: 50%;
+
+    top: 50%;
+
+    margin-left: -4px;
+
+    margin-top: -2px;
+
+}
+
+#clock #hour {
+
+    width: 90px;
+
+    height: 4px;
+
+    background: #2196F3;
+
+    /* transform: rotate(300deg); */
+
+    margin: 0px 0 0 2px;
+
+    /*transform: rotate(30deg);*/
+
+    /* transform-origin:0 1px; */
+
+    /* animation: hour 3s linear 100!* alternate*!; */
+    transform-origin:0px 2px;
+
+    /* border-radius: px; */
+
+}
+
+
+#clock .point .circle {
+
+    width: 8px;
+
+    height: 8px;
+
+    border-radius: 50%;
+
+    background: #2196F3;
+
+    position: absolute;
+
+    left: -2px;
+
+    top: -2px;
+
+}
+
+@keyframes hour {
+
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+
+}
+
+
+
+#clock .number {
+    cursor: pointer;
+
+    position: absolute;
+
+    font-size: 10px;
+
+    width: 20px;
+
+    height: 20px;
+
+    line-height: 20px;
+
+    text-align: center;
+
+    transform: rotate(90deg);
+
+}
+
+#clock .number:hover {
+    color: #fff;
+    background-color: #2196F3;
+    border-radius: 50%;
+
+}
+
+.am_pm_button{
+    cursor: pointer;
+    height: 50px;
+    width: 50px;
+    cursor: pointer;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.am_pm_button:hover{
+    color: #fff;
+    background-color:#2196F3;
+}
+.am_pm_button_clicked{
+    cursor: pointer;
+    color: #fff;
+    background-color: #2196F3;
+    height: 50px;
+    width: 50px;
+    cursor: pointer;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

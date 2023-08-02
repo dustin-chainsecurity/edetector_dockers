@@ -1,0 +1,38 @@
+
+.memoryInputBox div input{
+    height: 24px;
+    width: 220px;
+}
+.memoryInputBox div{
+    display: flex;
+    align-items: center;
+}
+.memoryInputBox{
+    height: 100%;
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+}
+
+.memoryDropDownSelector{
+    margin-left: 10px;
+    height: 100%;
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+}
+
+.memoryDropDownSelector div{
+    display: flex;
+    align-items: center;
+}
+.memoryDropDownSelector2{
+    display: flex;
+    align-items: center;
+    margin-left: 20px;
+    height: 100%;
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+}
+.checkBoxColumn{
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+}

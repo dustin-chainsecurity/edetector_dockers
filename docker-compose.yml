@@ -16,6 +16,8 @@ services:
       interval: 10s
       timeout: 10s
       retries: 3
+    networks: 
+      - edetector_net
     env_file: ./config/.env #這裡才正式把環境變數帶進來
     
   rabbitmq:
@@ -37,6 +39,8 @@ services:
       timeout: 30s
       retries: 3
     env_file: ./config/.env
+    networks: 
+      - edetector_net
     
   mariadb: 
     image: mariadb:10-jammy
@@ -60,6 +64,8 @@ services:
       timeout: 2s
       retries: 3
     env_file: ./config/.env #這裡才正式把環境變數帶進來
+    networks: 
+      - edetector_net
     
 #=======================================API Service==================================#
 
@@ -77,6 +83,8 @@ services:
       - redisdb
     restart: always
     env_file: ./config/app.env
+    networks: 
+      - edetector_net
     
   websocket:
     build:
@@ -92,6 +100,8 @@ services:
       - redisdb
     restart: always
     env_file: ./config/app.env
+    networks: 
+      - edetector_net
 
   taskservice:
     build:
@@ -105,6 +115,8 @@ services:
       - redisdb
     restart: always
     env_file: ./config/app.env
+    networks: 
+      - edetector_net
 
 #=======================================Working Server Service==================================#
 
@@ -126,6 +138,8 @@ services:
       - redisdb
     restart: always
     env_file: ./config/app.env
+    networks: 
+      - edetector_net
 
   dbparser:
     build:
@@ -137,6 +151,8 @@ services:
       - unstaged_db:/edetector_go/dbUnstage
     restart: always
     env_file: ./config/app.env
+    networks: 
+      - edetector_net
 
   connector:
     build:
@@ -149,6 +165,12 @@ services:
       - rabbitmq
     restart: always
     env_file: ./config/app.env
+    networks: 
+      - edetector_net
 
 volumes:
   unstaged_db:
+
+networks:
+  edetector_net:
+    driver: bridge

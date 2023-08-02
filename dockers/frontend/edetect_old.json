@@ -1,0 +1,484 @@
+{
+  "uuid": "78762e59-0e22-4c0e-a5ea-2f897b614126",
+  "lastMigration": 27,
+  "name": "Edetect",
+  "endpointPrefix": "",
+  "latency": 0,
+  "port": 6969,
+  "hostname": "",
+  "folders": [],
+  "routes": [
+    {
+      "uuid": "e857e255-afb8-47cf-854f-46139a1da6dc",
+      "type": "http",
+      "documentation": "",
+      "method": "post",
+      "endpoint": "member/login",
+      "responses": [
+        {
+          "uuid": "225cef37-bcf5-458e-89d9-3382ff01fc81",
+          "body": "{\n  \"success\": true,\n  \"message\": \"登入成功\",\n\t\"code\" : 200,\n  \"user\": {\n    \"id\": 123,\n    \"username\": \"john_doe\",\n\t\t\"token\" : \"anyScript\"\n  }\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true
+        },
+        {
+          "uuid": "280b7697-eddd-400c-89da-3e8f0915d437",
+          "body": "{\n  \"success\": false,\n  \"message\": \"登入失敗\", // leave message\n\t\"code\" : 200 //or something else\n  \"user\": {\n    \"username\": \"john_doe\",\n\t\t\"token\" : \"\"\n  }\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false
+        }
+      ],
+      "enabled": true,
+      "responseMode": null
+    },
+    {
+      "uuid": "ee747330-2579-4259-aa48-dfc0ecba05a1",
+      "type": "http",
+      "documentation": "",
+      "method": "get",
+      "endpoint": "searchEvidence/DetectDevices",
+      "responses": [
+        {
+          "uuid": "fe99022c-4015-4c32-80bd-79a510e40b23",
+          "body": "{\n  \"isSuccess\": true,\n  \"data\": [\n    {\n      \"deviceId\": \"deviceIDNumber1\",\n      \"connection\": true,\n      \"innerIP\": \"1.2.4.34\",\n      \"deviceName\": \"PC-1\",\n      \"groups\": [\n        \"group1\",\n        \"group2\"\n      ],\n      \"detectionMode\": false,\n      \"scanSchedule\": [\n        \"2\",\n        \"12\",\n        \"24\"\n      ],\n      \"scanFinishTime\": {\n        \"isFinish\": true,\n        \"progress\": 100,\n        \"finishTime\": 1688552565\n      },\n      \"collectSchedule\": {\n        \"date\": 30,\n        \"time\": \"2400\"\n      },\n      \"collectFinishTime\": {\n        \"isFinish\": false,\n        \"progress\": 39,\n        \"finishTime\": null\n      },\n      \"fileDownloadDate\": {\n        \"date\": 26,\n        \"time\": \"2400\"\n      },\n      \"fileFinishTime\": {\n        \"isFinish\": true,\n        \"progress\": 100,\n        \"finishTime\": 1688565203\n      },\n      \"imageFinishTime\": {\n        \"isFinish\": false,\n        \"progress\": 31,\n        \"finishTime\": null\n      }\n    },\n    {\n      \"deviceId\": \"deviceIDNumber2\",\n      \"connection\": true,\n      \"innerIP\": \"1.2.4.34\",\n      \"deviceName\": \"PC-1\",\n      \"groups\": [\n        \"group1\",\n        \"group2\"\n      ],\n      \"detectionMode\": false,\n      \"scanSchedule\": [\n        \"2\",\n        \"12\",\n        \"24\"\n      ],\n      \"scanFinishTime\": {\n        \"isFinish\": true,\n        \"progress\": 100,\n        \"finishTime\": 1688552565\n      },\n      \"collectSchedule\": {\n        \"date\": 30,\n        \"time\": \"2400\"\n      },\n      \"collectFinishTime\": {\n        \"isFinish\": false,\n        \"progress\": 39,\n        \"finishTime\": null\n      },\n      \"fileDownloadDate\": {\n        \"date\": 26,\n        \"time\": \"2400\"\n      },\n      \"fileFinishTime\": {\n        \"isFinish\": true,\n        \"progress\": 100,\n        \"finishTime\": 1688565203\n      },\n      \"imageFinishTime\": {\n        \"isFinish\": false,\n        \"progress\": 31,\n        \"finishTime\": null\n      }\n    }\n  ]\n}\n",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true
+        }
+      ],
+      "enabled": true,
+      "responseMode": null
+    },
+    {
+      "uuid": "917199b1-5567-4edf-ae25-8b5143aba345",
+      "type": "http",
+      "documentation": "",
+      "method": "post",
+      "endpoint": "member/loginWithToken",
+      "responses": [
+        {
+          "uuid": "9856447c-88d9-4334-af73-fffd0c1a9d13",
+          "body": "{\n  \"success\": true,\n  \"message\": \"登入成功\",\n  \"code\": 200,\n  \"user\": {\n    \"id\": 123,\n    \"username\": \"john_doe\",\n    \"token\": \"anyScript\"\n  }\n}\n",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [
+            {
+              "target": "body",
+              "modifier": "token",
+              "value": "anyScript",
+              "invert": false,
+              "operator": "equals"
+            }
+          ],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false
+        },
+        {
+          "uuid": "b2f6fe1e-2260-4112-808e-afa059a5044d",
+          "body": "{\n  \"success\": false,\n  \"message\": \"登入失敗\",\n  \"code\": 200,\n  \"user\": {\n    \"username\": \"john_doe\",\n    \"token\": \"\"\n  }\n}\n",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true
+        }
+      ],
+      "enabled": true,
+      "responseMode": null
+    },
+    {
+      "uuid": "32f36820-4727-4fb6-9ca7-b022aab13f0d",
+      "type": "http",
+      "documentation": "",
+      "method": "post",
+      "endpoint": "searchEvidence/refresh",
+      "responses": [
+        {
+          "uuid": "87c8dd7c-2e23-4481-b885-cc828234a2c7",
+          "body": "{\n  \"isSuccess\": true,\n  \"data\": [\n    {\n      \"deviceId\": \"deviceIDNumber1\",\n      \"connection\": false,\n      \"innerIP\": \"1.2.4.34\",\n      \"deviceName\": \"PC-1\",\n      \"groups\": [\n        \"group1\",\n        \"group2\"\n      ],\n      \"detectionMode\": false,\n      \"scanSchedule\": [\n        \"2\",\n        \"12\",\n        \"24\"\n      ],\n      \"scanFinishTime\": {\n        \"isFinish\": true,\n        \"progress\": 100,\n        \"finishTime\": 1688552565\n      },\n      \"collectSchedule\": {\n        \"date\": 30,\n        \"time\": \"2400\"\n      },\n      \"collectFinishTime\": {\n        \"isFinish\": false,\n        \"progress\": 39,\n        \"finishTime\": null\n      },\n      \"fileDownloadDate\": {\n        \"date\": 26,\n        \"time\": \"2400\"\n      },\n      \"fileFinishTime\": {\n        \"isFinish\": true,\n        \"progress\": 100,\n        \"finishTime\": 1688565203\n      },\n      \"imageFinishTime\": {\n        \"isFinish\": true,\n        \"progress\": 100,\n        \"finishTime\": 1688565203\n      }\n    },\n    {\n      \"deviceId\": \"deviceIDNumber2\",\n      \"connection\": true,\n      \"innerIP\": \"1.2.4.34\",\n      \"deviceName\": \"PC-1\",\n      \"groups\": [\n        \"group1\",\n        \"group2\"\n      ],\n      \"detectionMode\": false,\n      \"scanSchedule\": [\n        \"2\",\n        \"12\",\n        \"24\"\n      ],\n      \"scanFinishTime\": {\n        \"isFinish\": true,\n        \"progress\": 100,\n        \"finishTime\": 1688552565\n      },\n      \"collectSchedule\": {\n        \"date\": 30,\n        \"time\": \"2400\"\n      },\n      \"collectFinishTime\": {\n        \"isFinish\": false,\n        \"progress\": 39,\n        \"finishTime\": null\n      },\n      \"fileDownloadDate\": {\n        \"date\": 26,\n        \"time\": \"2400\"\n      },\n      \"fileFinishTime\": {\n        \"isFinish\": true,\n        \"progress\": 100,\n        \"finishTime\": 1688565203\n      },\n      \"imageFinishTime\": {\n        \"isFinish\": false,\n        \"progress\": 31,\n        \"finishTime\": null\n      }\n    }\n  ]\n}\n",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true
+        }
+      ],
+      "enabled": true,
+      "responseMode": null
+    },
+    {
+      "uuid": "75099fc7-ccca-405c-9d35-e0ed550a30f5",
+      "type": "http",
+      "documentation": "",
+      "method": "post",
+      "endpoint": "searchEvidence/sendMission",
+      "responses": [
+        {
+          "uuid": "7b4d0411-6a28-46fd-8981-e0cd82c28750",
+          "body": "{\n  \"isSuccess\": true,\n  \"message\": \"\"\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true
+        }
+      ],
+      "enabled": true,
+      "responseMode": null
+    },
+    {
+      "uuid": "1dc4119c-ae73-4930-9a22-acbab302247e",
+      "type": "http",
+      "documentation": "",
+      "method": "post",
+      "endpoint": "task/scheduledScan",
+      "responses": [
+        {
+          "uuid": "a032912d-377b-4bec-aaeb-e7c4bf785534",
+          "body": "{\n\t\"isSuccess\": true,\n  \"message\": \"\"\n}\n",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true
+        }
+      ],
+      "enabled": true,
+      "responseMode": null
+    },
+    {
+      "uuid": "42ea2fcf-95f4-42a5-89ac-52b6ec877c03",
+      "type": "http",
+      "documentation": "",
+      "method": "post",
+      "endpoint": "task/detectionMode",
+      "responses": [
+        {
+          "uuid": "ba39bc6d-311f-47ea-9458-86dc14b3552c",
+          "body": "{\n\t\"isSuccess\": true,\n  \"message\": \"\"\n}\n",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true
+        }
+      ],
+      "enabled": true,
+      "responseMode": null
+    },
+    {
+      "uuid": "50ef3865-c4c7-452a-9739-7d05d84879ce",
+      "type": "http",
+      "documentation": "",
+      "method": "post",
+      "endpoint": "task/scheduledForensics",
+      "responses": [
+        {
+          "uuid": "6d8f222c-32c0-4a7e-a21c-43e2cc48f1df",
+          "body": "{\n\t\"isSuccess\": true,\n  \"message\": \"\"\n}\n",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true
+        }
+      ],
+      "enabled": true,
+      "responseMode": null
+    },
+    {
+      "uuid": "6dce9b64-aff1-41a6-a327-17bad32494f5",
+      "type": "http",
+      "documentation": "",
+      "method": "post",
+      "endpoint": "task/scheduledDownload",
+      "responses": [
+        {
+          "uuid": "fcf71708-d2c9-484f-87a5-2ed790abc6de",
+          "body": "{\n\t\"isSuccess\": true,\n  \"message\": \"\"\n}\n",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true
+        }
+      ],
+      "enabled": true,
+      "responseMode": null
+    },
+    {
+      "uuid": "07befadb-2caf-4c28-94d2-de588eff6602",
+      "type": "http",
+      "documentation": "",
+      "method": "get",
+      "endpoint": "analysisPage/allDeviceDetail",
+      "responses": [
+        {
+          "uuid": "c53abd3d-c595-40e2-823f-606eb28d09ff",
+          "body": "{\n    \"isSuccess\": true,\n    \"data\": [\n        {\n            \"id\": \"014e4553bbce4a0d85826937225af881\",\n            \"ip\": \"192.168.200.170\",\n            \"macAddress\": \"B8-8A-60-A0-B7-CF\",\n            \"name\": \"DESKTOP-JAVQUL0\",\n            \"group\": [\"1\"]\n        },\n        {\n            \"id\": \"18debaad31da4e90b66bcd6420e4cee8\",\n            \"ip\": \"192.168.200.168\",\n            \"macAddress\": \"24-0A-64-C4-85-ED\",\n            \"name\": \"DESKTOP-T8T4QLM\",\n            \"group\": [\"1\"]\n        },\n        {\n            \"id\": \"2062069ea6fa4d0e8fb3e208d655bf63\",\n            \"ip\": \"192.168.200.171\",\n            \"macAddress\": \"24-0A-64-83-31-91\",\n            \"name\": \"DESKTOP-JAVQUL0\",\n            \"group\": [\"2\",\"3\"]\n        },\n        {\n            \"id\": \"3e716e2d61ba910983cb456817116799\",\n            \"ip\": \"192.168.200.128\",\n            \"macAddress\": \"4C-44-5B-3D-FE-64\",\n            \"name\": \"MSI\",\n            \"group\": [\"1\",\"2\",\"3\"]\n        },\n        {\n            \"id\": \"569a2191ae414802a5a72bc0b8e0bd1e\",\n            \"ip\": \"192.168.200.166\",\n            \"macAddress\": \"28-C2-DD-68-9E-41\",\n            \"name\": \"DESKTOP-LD2C4NP\",\n            \"group\": [\"2\",\"3\"]\n        },\n        {\n            \"id\": \"6b75775ef8854658a595286f6f051399\",\n            \"ip\": \"192.168.200.164\",\n            \"macAddress\": \"24-0A-64-C4-86-25\",\n            \"name\": \"DESKTOP-907HOM3\",\n            \"group\": [\"1\",\"2\",\"3\",\"4\"]\n        },\n        {\n            \"id\": \"8beba472f3f44cabbbb44fd232171933\",\n            \"ip\": \"10.0.2.15\",\n            \"macAddress\": \"08-00-27-64-BA-1A\",\n            \"name\": \"WIN10\",\n            \"group\": [\"2\",\"3\"]\n        },\n        {\n            \"id\": \"ac546d517d7a466983065ca9cb07225a\",\n            \"ip\": \"192.168.200.165\",\n            \"macAddress\": \"28-C2-DD-4C-0F-17\",\n            \"name\": \"DESKTOP-TSOMVA0\",\n            \"group\": [\"2\",\"3\"]\n        },\n        {\n            \"id\": \"ef79b81c7c604a4295d5391b9db3fb44\",\n            \"ip\": \"192.168.200.169\",\n            \"macAddress\": \"28-C2-DD-68-9D-B9\",\n            \"name\": \"DESKTOP-HJ70GMO\",\n            \"group\": [\"1\",\"2\",\"3\"]\n        },\n        {\n            \"id\": \"test_agent1\",\n            \"ip\": \"192.168.0.1\",\n            \"macAddress\": \"9A:8D:05:D9:FB:DF\",\n            \"name\": \"PC-1\",\n            \"group\": [\n                \"1\",\n                \"2\"\n            ]\n        },\n        {\n            \"id\": \"test_agent2\",\n            \"ip\": \"192.168.0.2\",\n            \"macAddress\": \"1E:41:65:A2:B2:C9\",\n            \"name\": \"PC-2\",\n            \"group\": [\n                \"1\",\n                \"2\"\n            ]\n        },\n        {\n            \"id\": \"test_agent3\",\n            \"ip\": \"192.168.0.3\",\n            \"macAddress\": \"C6:E7:56:B3:5D:75\",\n            \"name\": \"PC-3\",\n            \"group\": [\n                \"1\",\n                \"2\"\n            ]\n        },\n        {\n            \"id\": \"test_agent4\",\n            \"ip\": \"192.168.0.4\",\n            \"macAddress\": \"22:E4:AB:C4:32:63\",\n            \"name\": \"PC-4\",\n            \"group\": [\n                \"1\",\n                \"2\"\n            ]\n        },\n        {\n            \"id\": \"test_agent5\",\n            \"ip\": \"192.168.0.5\",\n            \"macAddress\": \"56:E2:C2:DB:AC:E7\",\n            \"name\": \"PC-5\",\n            \"group\": [\n                \"1\",\n                \"2\"\n            ]\n        }\n    ]\n}\n",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true
+        }
+      ],
+      "enabled": true,
+      "responseMode": null
+    },
+    {
+      "uuid": "8d64b158-4086-497d-a563-7d55e02481bc",
+      "type": "http",
+      "documentation": "",
+      "method": "get",
+      "endpoint": "ed_main/_search",
+      "responses": [
+        {
+          "uuid": "b9d33ceb-b3ba-4358-8157-eee937a270ef",
+          "body": "{\n    \"took\": 5,\n    \"timed_out\": false,\n    \"_shards\": {\n        \"total\": 5,\n        \"successful\": 5,\n        \"skipped\": 0,\n        \"failed\": 0\n    },\n    \"hits\": {\n        \"total\": 1761834,\n        \"max_score\": 1.0,\n        \"hits\": [\n            {\n                \"_index\": \"ed_main\",\n                \"_type\": \"_doc\",\n                \"_id\": \"WMz-kIkB2YGup2nXoAVc\",\n                \"_score\": 1.0,\n                \"_source\": {\n                    \"uuid\": \"5b9c923e-3d82-4c31-93f6-3e030cb5dd20\",\n                    \"index\": \"ed_networkdatausagemonitor\",\n                    \"agent\": \"3e716e2d61ba910983cb456817116799\",\n                    \"item\": \"c:\\\\program files (x86)\\\\edetectorclient\\\\clientsearch.exe\",\n                    \"date\": \"1685413020\",\n                    \"type\": \"software\",\n                    \"etc\": \"49546\"\n                }\n            },\n            {\n                \"_index\": \"ed_main\",\n                \"_type\": \"_doc\",\n                \"_id\": \"ZMz-kIkB2YGup2nXoAVc\",\n                \"_score\": 1.0,\n                \"_source\": {\n                    \"uuid\": \"3c30f984-c412-4458-a13f-a66836a7ac9b\",\n                    \"index\": \"ed_networkdatausagemonitor\",\n                    \"agent\": \"3e716e2d61ba910983cb456817116799\",\n                    \"item\": \"WpnUserService_4df47\",\n                    \"date\": \"1685413020\",\n                    \"type\": \"software\",\n                    \"etc\": \"1097\"\n                }\n            },\n            {\n                \"_index\": \"ed_main\",\n                \"_type\": \"_doc\",\n                \"_id\": \"Zsz-kIkB2YGup2nXoAVc\",\n                \"_score\": 1.0,\n                \"_source\": {\n                    \"uuid\": \"4e731c69-14a3-4d2d-b555-c00cd844669f\",\n                    \"index\": \"ed_networkdatausagemonitor\",\n                    \"agent\": \"3e716e2d61ba910983cb456817116799\",\n                    \"item\": \"Dnscache\",\n                    \"date\": \"1685413020\",\n                    \"type\": \"software\",\n                    \"etc\": \"1861\"\n                }\n            },\n            {\n                \"_index\": \"ed_main\",\n                \"_type\": \"_doc\",\n                \"_id\": \"dsz-kIkB2YGup2nXoAVc\",\n                \"_score\": 1.0,\n                \"_source\": {\n                    \"uuid\": \"24d51660-b8b0-4cbd-a053-c9a6915194df\",\n                    \"index\": \"ed_networkdatausagemonitor\",\n                    \"agent\": \"3e716e2d61ba910983cb456817116799\",\n                    \"item\": \"Microsoft.Windows.StartMenuExperienceHost_10.0.22621.1_neutral_neutral_cw5n1h2txyewy\",\n                    \"date\": \"1685413020\",\n                    \"type\": \"software\",\n                    \"etc\": \"10119\"\n                }\n            },\n            {\n                \"_index\": \"ed_main\",\n                \"_type\": \"_doc\",\n                \"_id\": \"gMz-kIkB2YGup2nXoAVc\",\n                \"_score\": 1.0,\n                \"_source\": {\n                    \"uuid\": \"eedc39c4-4b50-4885-bbea-462c197e85e1\",\n                    \"index\": \"ed_networkdatausagemonitor\",\n                    \"agent\": \"3e716e2d61ba910983cb456817116799\",\n                    \"item\": \"c:\\\\program files\\\\google\\\\chrome\\\\application\\\\chrome.exe\",\n                    \"date\": \"1685413260\",\n                    \"type\": \"software\",\n                    \"etc\": \"383\"\n                }\n            },\n            {\n                \"_index\": \"ed_main\",\n                \"_type\": \"_doc\",\n                \"_id\": \"gsz-kIkB2YGup2nXoAVc\",\n                \"_score\": 1.0,\n                \"_source\": {\n                    \"uuid\": \"30f1f6b0-f0f1-4aaa-8bff-e5bc846c0316\",\n                    \"index\": \"ed_networkdatausagemonitor\",\n                    \"agent\": \"3e716e2d61ba910983cb456817116799\",\n                    \"item\": \"DoSvc\",\n                    \"date\": \"1685413260\",\n                    \"type\": \"software\",\n                    \"etc\": \"12291219\"\n                }\n            },\n            {\n                \"_index\": \"ed_main\",\n                \"_type\": \"_doc\",\n                \"_id\": \"kMz-kIkB2YGup2nXoAVc\",\n                \"_score\": 1.0,\n                \"_source\": {\n                    \"uuid\": \"adb08e5c-357d-4f0a-8459-62118f50b79d\",\n                    \"index\": \"ed_networkdatausagemonitor\",\n                    \"agent\": \"3e716e2d61ba910983cb456817116799\",\n                    \"item\": \"Microsoft.Windows.StartMenuExperienceHost_10.0.22621.1_neutral_neutral_cw5n1h2txyewy\",\n                    \"date\": \"1685413260\",\n                    \"type\": \"software\",\n                    \"etc\": \"108\"\n                }\n            },\n            {\n                \"_index\": \"ed_main\",\n                \"_type\": \"_doc\",\n                \"_id\": \"lsz-kIkB2YGup2nXoAVc\",\n                \"_score\": 1.0,\n                \"_source\": {\n                    \"uuid\": \"2df0fe1b-2eac-41aa-8879-0c4c48cfc8f7\",\n                    \"index\": \"ed_networkdatausagemonitor\",\n                    \"agent\": \"3e716e2d61ba910983cb456817116799\",\n                    \"item\": \"system\\\\ipv6 control message\",\n                    \"date\": \"1685413260\",\n                    \"type\": \"software\",\n                    \"etc\": \"0\"\n                }\n            },\n            {\n                \"_index\": \"ed_main\",\n                \"_type\": \"_doc\",\n                \"_id\": \"msz-kIkB2YGup2nXoAVc\",\n                \"_score\": 1.0,\n                \"_source\": {\n                    \"uuid\": \"0e117083-c191-4905-921d-0805e3011df2\",\n                    \"index\": \"ed_networkdatausagemonitor\",\n                    \"agent\": \"3e716e2d61ba910983cb456817116799\",\n                    \"item\": \"ClickToRunSvc\",\n                    \"date\": \"1685413260\",\n                    \"type\": \"software\",\n                    \"etc\": \"3543\"\n                }\n            },\n            {\n                \"_index\": \"ed_main\",\n                \"_type\": \"_doc\",\n                \"_id\": \"nsz-kIkB2YGup2nXoAVc\",\n                \"_score\": 1.0,\n                \"_source\": {\n                    \"uuid\": \"873ff44e-c5e9-4efc-bffe-fa3e1e3a0303\",\n                    \"index\": \"ed_networkdatausagemonitor\",\n                    \"agent\": \"3e716e2d61ba910983cb456817116799\",\n                    \"item\": \"DoSvc\",\n                    \"date\": \"1685413260\",\n                    \"type\": \"software\",\n                    \"etc\": \"5965259\"\n                }\n            }\n        ]\n    }\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true
+        }
+      ],
+      "enabled": true,
+      "responseMode": null
+    },
+    {
+      "uuid": "eec25df6-4b70-4bcf-9166-1f803561637c",
+      "type": "http",
+      "documentation": "",
+      "method": "get",
+      "endpoint": "ed_networkdatausagemonitor/_search",
+      "responses": [
+        {
+          "uuid": "e6241957-0e1b-4574-9940-63824827d022",
+          "body": "{\n    \"took\": 5,\n    \"timed_out\": false,\n    \"_shards\": {\n        \"total\": 5,\n        \"successful\": 5,\n        \"skipped\": 0,\n        \"failed\": 0\n    },\n    \"hits\": {\n        \"total\": 1018384,\n        \"max_score\": 1.0,\n        \"hits\": [\n            {\n                \"_index\": \"ed_networkdatausagemonitor\",\n                \"_type\": \"_doc\",\n                \"_id\": \"0mZikIkB2VVa7__rh-U9\",\n                \"_score\": 1.0,\n                \"_source\": {\n                    \"uuid\": \"e76f6d47-3f22-4018-8dbb-99ef18e5ef01\",\n                    \"agent\": \"3e716e2d61ba910983cb456817116799\",\n                    \"record_id\": 102588,\n                    \"app_name\": \"c:\\\\users\\\\jim10\\\\appdata\\\\local\\\\programs\\\\microsoft vs code\\\\code.exe\",\n                    \"app_id\": 3430,\n                    \"user_name\": \"jim10\\\\MSI\",\n                    \"user_sid\": \"S-1-5-21-3414511439-2402517761-651233876-1001\",\n                    \"bytes_sent\": 20209,\n                    \"bytes_recvd\": 61847,\n                    \"network_adapter\": \"Realtek PCIe GbE Family Controller\",\n                    \"network_adapter_guid\": \"{C4E15565-48B2-49C3-81B8-79D2B4500A23}\",\n                    \"interfaceluid\": \"0x6008001000000\",\n                    \"timestamp\": 1685483460\n                }\n            },\n            {\n                \"_index\": \"ed_networkdatausagemonitor\",\n                \"_type\": \"_doc\",\n                \"_id\": \"2GZikIkB2VVa7__rh-U9\",\n                \"_score\": 1.0,\n                \"_source\": {\n                    \"uuid\": \"1d1a0f79-761e-4f00-a58c-765d53ac48e1\",\n                    \"agent\": \"3e716e2d61ba910983cb456817116799\",\n                    \"record_id\": 102591,\n                    \"app_name\": \"c:\\\\program files (x86)\\\\google\\\\chrome remote desktop\\\\112.0.5615.26\\\\remoting_host.exe\",\n                    \"app_id\": 2892,\n                    \"user_name\": \"LOCAL SERVICE\\\\NT AUTHORITY\",\n                    \"user_sid\": \"S-1-5-19\",\n                    \"bytes_sent\": 5402,\n                    \"bytes_recvd\": 9511,\n                    \"network_adapter\": \"Realtek PCIe GbE Family Controller\",\n                    \"network_adapter_guid\": \"{C4E15565-48B2-49C3-81B8-79D2B4500A23}\",\n                    \"interfaceluid\": \"0x6008001000000\",\n                    \"timestamp\": 1685483460\n                }\n            },\n            {\n                \"_index\": \"ed_networkdatausagemonitor\",\n                \"_type\": \"_doc\",\n                \"_id\": \"8GZikIkB2VVa7__rh-U9\",\n                \"_score\": 1.0,\n                \"_source\": {\n                    \"uuid\": \"bc9eee9d-d277-4c10-80c3-ebaf3d880bd5\",\n                    \"agent\": \"3e716e2d61ba910983cb456817116799\",\n                    \"record_id\": 102606,\n                    \"app_name\": \"c:\\\\users\\\\jim10\\\\appdata\\\\local\\\\microsoft\\\\onedrive\\\\onedrive.exe\",\n                    \"app_id\": 2883,\n                    \"user_name\": \"jim10\\\\MSI\",\n                    \"user_sid\": \"S-1-5-21-3414511439-2402517761-651233876-1001\",\n                    \"bytes_sent\": 918,\n                    \"bytes_recvd\": 1740,\n                    \"network_adapter\": \"Realtek PCIe GbE Family Controller\",\n                    \"network_adapter_guid\": \"{C4E15565-48B2-49C3-81B8-79D2B4500A23}\",\n                    \"interfaceluid\": \"0x6008001000000\",\n                    \"timestamp\": 1685483700\n                }\n            },\n            {\n                \"_index\": \"ed_networkdatausagemonitor\",\n                \"_type\": \"_doc\",\n                \"_id\": \"_mZikIkB2VVa7__rh-U9\",\n                \"_score\": 1.0,\n                \"_source\": {\n                    \"uuid\": \"44d90263-82af-4923-8b28-47cc2fc56471\",\n                    \"agent\": \"3e716e2d61ba910983cb456817116799\",\n                    \"record_id\": 102616,\n                    \"app_name\": \"c:\\\\program files\\\\google\\\\chrome\\\\application\\\\chrome.exe\",\n                    \"app_id\": 2886,\n                    \"user_name\": \"jim10\\\\MSI\",\n                    \"user_sid\": \"S-1-5-21-3414511439-2402517761-651233876-1001\",\n                    \"bytes_sent\": 172792,\n                    \"bytes_recvd\": 85577,\n                    \"network_adapter\": \"Realtek PCIe GbE Family Controller\",\n                    \"network_adapter_guid\": \"{C4E15565-48B2-49C3-81B8-79D2B4500A23}\",\n                    \"interfaceluid\": \"0x6008001000000\",\n                    \"timestamp\": 1685483940\n                }\n            },\n            {\n                \"_index\": \"ed_networkdatausagemonitor\",\n                \"_type\": \"_doc\",\n                \"_id\": \"AmZikIkB2VVa7__rh-Y9\",\n                \"_score\": 1.0,\n                \"_source\": {\n                    \"uuid\": \"8cf6ca9c-f9b3-4b2d-8ae9-06d1ad68797b\",\n                    \"agent\": \"3e716e2d61ba910983cb456817116799\",\n                    \"record_id\": 102618,\n                    \"app_name\": \"c:\\\\program files (x86)\\\\google\\\\chrome remote desktop\\\\112.0.5615.26\\\\remoting_host.exe\",\n                    \"app_id\": 2892,\n                    \"user_name\": \"LOCAL SERVICE\\\\NT AUTHORITY\",\n                    \"user_sid\": \"S-1-5-19\",\n                    \"bytes_sent\": 4827,\n                    \"bytes_recvd\": 9008,\n                    \"network_adapter\": \"Realtek PCIe GbE Family Controller\",\n                    \"network_adapter_guid\": \"{C4E15565-48B2-49C3-81B8-79D2B4500A23}\",\n                    \"interfaceluid\": \"0x6008001000000\",\n                    \"timestamp\": 1685483940\n                }\n            },\n            {\n                \"_index\": \"ed_networkdatausagemonitor\",\n                \"_type\": \"_doc\",\n                \"_id\": \"ImZikIkB2VVa7__rh-Y9\",\n                \"_score\": 1.0,\n                \"_source\": {\n                    \"uuid\": \"52b0a6f5-644f-4023-8fa0-5c0be564a7cb\",\n                    \"agent\": \"3e716e2d61ba910983cb456817116799\",\n                    \"record_id\": 102634,\n                    \"app_name\": \"c:\\\\users\\\\jim10\\\\appdata\\\\local\\\\microsoft\\\\onedrive\\\\onedrive.exe\",\n                    \"app_id\": 2883,\n                    \"user_name\": \"jim10\\\\MSI\",\n                    \"user_sid\": \"S-1-5-21-3414511439-2402517761-651233876-1001\",\n                    \"bytes_sent\": 765,\n                    \"bytes_recvd\": 1450,\n                    \"network_adapter\": \"Realtek PCIe GbE Family Controller\",\n                    \"network_adapter_guid\": \"{C4E15565-48B2-49C3-81B8-79D2B4500A23}\",\n                    \"interfaceluid\": \"0x6008001000000\",\n                    \"timestamp\": 1685484180\n                }\n            },\n            {\n                \"_index\": \"ed_networkdatausagemonitor\",\n                \"_type\": \"_doc\",\n                \"_id\": \"SmZikIkB2VVa7__rh-Y9\",\n                \"_score\": 1.0,\n                \"_source\": {\n                    \"uuid\": \"1b439bbc-35f8-45b7-91eb-1e5be7833b6d\",\n                    \"agent\": \"3e716e2d61ba910983cb456817116799\",\n                    \"record_id\": 102661,\n                    \"app_name\": \"c:\\\\program files\\\\docker\\\\docker\\\\resources\\\\com.docker.backend.exe\",\n                    \"app_id\": 3421,\n                    \"user_name\": \"jim10\\\\MSI\",\n                    \"user_sid\": \"S-1-5-21-3414511439-2402517761-651233876-1001\",\n                    \"bytes_sent\": 846,\n                    \"bytes_recvd\": 990,\n                    \"network_adapter\": \"Realtek PCIe GbE Family Controller\",\n                    \"network_adapter_guid\": \"{C4E15565-48B2-49C3-81B8-79D2B4500A23}\",\n                    \"interfaceluid\": \"0x6008001000000\",\n                    \"timestamp\": 1685484660\n                }\n            },\n            {\n                \"_index\": \"ed_networkdatausagemonitor\",\n                \"_type\": \"_doc\",\n                \"_id\": \"TGZikIkB2VVa7__rh-Y9\",\n                \"_score\": 1.0,\n                \"_source\": {\n                    \"uuid\": \"b6177523-965f-419f-a4c4-43cdeb80efc6\",\n                    \"agent\": \"3e716e2d61ba910983cb456817116799\",\n                    \"record_id\": 102662,\n                    \"app_name\": \"c:\\\\users\\\\jim10\\\\appdata\\\\local\\\\programs\\\\microsoft vs code\\\\bin\\\\code-tunnel.exe\",\n                    \"app_id\": 9127,\n                    \"user_name\": \"jim10\\\\MSI\",\n                    \"user_sid\": \"S-1-5-21-3414511439-2402517761-651233876-1001\",\n                    \"bytes_sent\": 394,\n                    \"bytes_recvd\": 460,\n                    \"network_adapter\": \"Realtek PCIe GbE Family Controller\",\n                    \"network_adapter_guid\": \"{C4E15565-48B2-49C3-81B8-79D2B4500A23}\",\n                    \"interfaceluid\": \"0x6008001000000\",\n                    \"timestamp\": 1685484660\n                }\n            },\n            {\n                \"_index\": \"ed_networkdatausagemonitor\",\n                \"_type\": \"_doc\",\n                \"_id\": \"amZikIkB2VVa7__rh-Y9\",\n                \"_score\": 1.0,\n                \"_source\": {\n                    \"uuid\": \"b1f93b2c-5c71-4e2d-ad13-d64661419aee\",\n                    \"agent\": \"3e716e2d61ba910983cb456817116799\",\n                    \"record_id\": 102681,\n                    \"app_name\": \"DiagTrack\",\n                    \"app_id\": 2855,\n                    \"user_name\": \"jim10\\\\MSI\",\n                    \"user_sid\": \"S-1-5-21-3414511439-2402517761-651233876-1001\",\n                    \"bytes_sent\": 5295,\n                    \"bytes_recvd\": 9061,\n                    \"network_adapter\": \"Realtek PCIe GbE Family Controller\",\n                    \"network_adapter_guid\": \"{C4E15565-48B2-49C3-81B8-79D2B4500A23}\",\n                    \"interfaceluid\": \"0x6008001000000\",\n                    \"timestamp\": 1685484900\n                }\n            },\n            {\n                \"_index\": \"ed_networkdatausagemonitor\",\n                \"_type\": \"_doc\",\n                \"_id\": \"dGZikIkB2VVa7__rh-Y9\",\n                \"_score\": 1.0,\n                \"_source\": {\n                    \"uuid\": \"e909c59a-1134-4bc7-a075-53b5434cda24\",\n                    \"agent\": \"3e716e2d61ba910983cb456817116799\",\n                    \"record_id\": 102686,\n                    \"app_name\": \"c:\\\\program files (x86)\\\\microsoft\\\\edge\\\\application\\\\msedge.exe\",\n                    \"app_id\": 2879,\n                    \"user_name\": \"jim10\\\\MSI\",\n                    \"user_sid\": \"S-1-5-21-3414511439-2402517761-651233876-1001\",\n                    \"bytes_sent\": 60177,\n                    \"bytes_recvd\": 113782,\n                    \"network_adapter\": \"Realtek PCIe GbE Family Controller\",\n                    \"network_adapter_guid\": \"{C4E15565-48B2-49C3-81B8-79D2B4500A23}\",\n                    \"interfaceluid\": \"0x6008001000000\",\n                    \"timestamp\": 1685485140\n                }\n            }\n        ]\n    }\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true
+        }
+      ],
+      "enabled": true,
+      "responseMode": null
+    }
+  ],
+  "rootChildren": [
+    {
+      "type": "route",
+      "uuid": "e857e255-afb8-47cf-854f-46139a1da6dc"
+    },
+    {
+      "type": "route",
+      "uuid": "917199b1-5567-4edf-ae25-8b5143aba345"
+    },
+    {
+      "type": "route",
+      "uuid": "ee747330-2579-4259-aa48-dfc0ecba05a1"
+    },
+    {
+      "type": "route",
+      "uuid": "32f36820-4727-4fb6-9ca7-b022aab13f0d"
+    },
+    {
+      "type": "route",
+      "uuid": "75099fc7-ccca-405c-9d35-e0ed550a30f5"
+    },
+    {
+      "type": "route",
+      "uuid": "1dc4119c-ae73-4930-9a22-acbab302247e"
+    },
+    {
+      "type": "route",
+      "uuid": "42ea2fcf-95f4-42a5-89ac-52b6ec877c03"
+    },
+    {
+      "type": "route",
+      "uuid": "50ef3865-c4c7-452a-9739-7d05d84879ce"
+    },
+    {
+      "type": "route",
+      "uuid": "6dce9b64-aff1-41a6-a327-17bad32494f5"
+    },
+    {
+      "type": "route",
+      "uuid": "07befadb-2caf-4c28-94d2-de588eff6602"
+    },
+    {
+      "type": "route",
+      "uuid": "8d64b158-4086-497d-a563-7d55e02481bc"
+    },
+    {
+      "type": "route",
+      "uuid": "eec25df6-4b70-4bcf-9166-1f803561637c"
+    }
+  ],
+  "proxyMode": false,
+  "proxyHost": "",
+  "proxyRemovePrefix": false,
+  "tlsOptions": {
+    "enabled": false,
+    "type": "CERT",
+    "pfxPath": "",
+    "certPath": "",
+    "keyPath": "",
+    "caPath": "",
+    "passphrase": ""
+  },
+  "cors": true,
+  "headers": [
+    {
+      "key": "Content-Type",
+      "value": "application/json"
+    },
+    {
+      "key": "Access-Control-Allow-Origin",
+      "value": "*"
+    },
+    {
+      "key": "Access-Control-Allow-Methods",
+      "value": "GET,POST,PUT,PATCH,DELETE,HEAD,OPTIONS"
+    },
+    {
+      "key": "Access-Control-Allow-Headers",
+      "value": "Content-Type, Origin, Accept, Authorization, Content-Length, X-Requested-With"
+    }
+  ],
+  "proxyReqHeaders": [
+    {
+      "key": "",
+      "value": ""
+    }
+  ],
+  "proxyResHeaders": [
+    {
+      "key": "",
+      "value": ""
+    }
+  ],
+  "data": []
+}

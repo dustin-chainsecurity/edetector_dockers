@@ -1,3 +1,4 @@
+DROP DATABASE IF EXISTS edetector;
 CREATE DATABASE edetector;
 USE edetector;
 
@@ -9,7 +10,7 @@ CREATE TABLE user (
 
 CREATE TABLE user_info (
 	id INT NOT NULL,
-	token VARCHAR(200) NOT NULL,
+	token VARCHAR(200),
 	token_time TIMESTAMP,
 	email VARCHAR(45) NOT NULL,
   PRIMARY KEY (id),
@@ -83,4 +84,17 @@ CREATE TABLE client_task_status (
 	FOREIGN KEY (client_id) REFERENCES client(client_id) ON DELETE CASCADE
 );
 
+INSERT INTO user (username, password) VALUES ('test', MD5('123'));
+INSERT INTO user_info (id, token, email) VALUES ('1', '123', 'test@example.com');
 
+INSERT INTO user (username, password) VALUES ('chiehyu', MD5('123'));
+INSERT INTO user_info (id, email) VALUES ('2', 'chiehyu@example.com');
+
+INSERT INTO user (username, password) VALUES ('beta', MD5('123'));
+INSERT INTO user_info (id, email) VALUES ('3', 'beta@example.com');
+
+INSERT INTO user (username, password) VALUES ('bob', MD5('456'));
+INSERT INTO user_info (id, email) VALUES ('4', 'bob@example.com');
+
+INSERT INTO user (username, password) VALUES ('QA', MD5('123'));
+INSERT INTO user_info (id, email) VALUES ('5', 'qa@example.com');

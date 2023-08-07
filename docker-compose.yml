@@ -79,8 +79,10 @@ services:
     ports:
       - "5000:5000"
     depends_on:
-      - mariadb
-      - redisdb
+      mariadb:
+        condition: service_healthy
+      redisdb:
+        condition: service_healthy
     restart: always
     env_file: ./config/app.env
     networks: 
@@ -96,8 +98,10 @@ services:
     ports:
       - "5050:5050"
     depends_on:
-      - mariadb
-      - redisdb
+      mariadb:
+        condition: service_healthy
+      redisdb:
+        condition: service_healthy
     restart: always
     env_file: ./config/app.env
     networks: 
@@ -111,8 +115,10 @@ services:
     volumes:
       - ./.volumes/taskservice:/edetector_api/cmd/taskservice
     depends_on:
-      - mariadb
-      - redisdb
+      mariadb:
+        condition: service_healthy
+      redisdb:
+        condition: service_healthy
     restart: always
     env_file: ./config/app.env
     networks: 
@@ -134,8 +140,10 @@ services:
       - "1989:1989"
       - "1990:1990"
     depends_on:
-      - mariadb
-      - redisdb
+      mariadb:
+        condition: service_healthy
+      redisdb:
+        condition: service_healthy
     restart: always
     env_file: ./config/app.env
     networks: 
@@ -150,7 +158,8 @@ services:
       - ./.volumes/dbparser:/edetector_go/cmd/parser
       - unstaged_db:/edetector_go/dbUnstage
     depends_on:
-      - mariadb
+      mariadb:
+        condition: service_healthy
     restart: always
     env_file: ./config/app.env
     networks: 
@@ -164,7 +173,8 @@ services:
     volumes:
       - ./.volumes/connector:/edetector_go/cmd/connector
     depends_on:
-      - rabbitmq
+      rabbitmq:
+        condition: service_healthy
     restart: always
     env_file: ./config/app.env
     networks: 

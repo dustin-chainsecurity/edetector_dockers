@@ -1,6 +1,6 @@
 FROM golang:alpine
 WORKDIR /
-RUN apk update && apk add --no-cache git git openssh gcc musl-dev g++
+RUN apk update && apk add --no-cache git openssh gcc musl-dev g++
 RUN mkdir /root/.ssh/
 ADD id_rsa /root/.ssh/id_rsa
 RUN chmod 600 /root/.ssh/id_rsa

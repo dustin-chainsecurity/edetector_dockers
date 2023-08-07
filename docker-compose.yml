@@ -149,6 +149,8 @@ services:
     volumes:
       - ./.volumes/dbparser:/edetector_go/cmd/parser
       - unstaged_db:/edetector_go/dbUnstage
+    depends_on:
+      - mariadb
     restart: always
     env_file: ./config/app.env
     networks: 

@@ -1,4 +1,4 @@
-# sudo docker-compose --env-file ./config/.env up -d
+# sudo docker-compose --env-file ./config/app.env up -d
 version: "3"
 services:
   redisdb:
@@ -18,7 +18,7 @@ services:
       retries: 3
     networks: 
       - edetector_net
-    env_file: ./config/.env #這裡才正式把環境變數帶進來
+    env_file: ./config/app.env #這裡才正式把環境變數帶進來
     
   rabbitmq:
     image: rabbitmq:3-management-alpine
@@ -38,7 +38,7 @@ services:
       interval: 10s
       timeout: 30s
       retries: 3
-    env_file: ./config/.env
+    env_file: ./config/app.env
     networks: 
       - edetector_net
     
@@ -63,7 +63,7 @@ services:
       interval: 10s
       timeout: 2s
       retries: 3
-    env_file: ./config/.env #這裡才正式把環境變數帶進來
+    env_file: ./config/app.env #這裡才正式把環境變數帶進來
     networks: 
       - edetector_net
     

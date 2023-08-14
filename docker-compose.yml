@@ -181,17 +181,17 @@ services:
       - edetector_net
 
 #=======================================Frontend==================================#
-  frontend:
-    build:
-      context: ./dockers/frontend
-      dockerfile: Dockerfile
-    container_name: frontend_react
-    restart: always
-    ports:
-      - "3000:3000"
-    env_file: ./config/app.env
-    networks: 
-      - edetector_net
+  # frontend:
+  #   build:
+  #     context: ./dockers/frontend
+  #     dockerfile: Dockerfile
+  #   container_name: frontend_react
+  #   restart: always
+  #   ports:
+  #     - "3000:3000"
+  #   env_file: ./config/app.env
+  #   networks: 
+  #     - edetector_net
 
 volumes:
   unstaged_db:

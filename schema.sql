@@ -83,6 +83,23 @@ CREATE TABLE IF NOT EXISTS client_task_status (
 	FOREIGN KEY (client_id) REFERENCES client(client_id) ON DELETE CASCADE
 );
 
+CREATE TABLE IF NOT EXISTS analysis_template (
+	template_id varchar(45) NOT NULL,
+	template_name varchar(45) NOT NULL,
+	work varchar(45) NOT NULL,
+	keyword_type varchar(45),
+	keyword varchar(255),
+	history_and_bookmark varchar(45) NOT NULL,
+	cookie_and_cache varchar(45) NOT NULL,
+	connection_history varchar(45) NOT NULL,
+	process_history varchar(45) NOT NULL,
+	vanishing_history varchar(45) NOT NULL,
+	recent_opening varchar(45) NOT NULL,
+	usb_history varchar(45) NOT NULL,
+	email_history varchar(45) NOT NULL,
+	PRIMARY KEY (template_id)
+);
+
 INSERT INTO user (username, password)
 SELECT 'test', MD5('123')
 WHERE NOT EXISTS (

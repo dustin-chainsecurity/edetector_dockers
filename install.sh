@@ -1,4 +1,4 @@
-#!  #!/usr/bin/env bash
+#!/usr/bin/env bash
 
 sudo apt update
 sudo apt install apt-transport-https ca-certificates curl software-properties-common

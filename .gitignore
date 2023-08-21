@@ -1,3 +1,4 @@
 *.log
 id_rsa*
 dump*
+es_data

@@ -1,14 +1,8 @@
-FROM golang:alpine
+FROM ubuntu:latest
 WORKDIR /
-RUN apk update && apk add --no-cache git
-RUN apk add --no-cache openssh
-RUN mkdir /root/.ssh/
-ADD id_rsa /root/.ssh/id_rsa
-RUN chmod 600 /root/.ssh/id_rsa
-RUN ssh-keyscan github.com >> /root/.ssh/known_hosts
-RUN git clone --branch qa git@github.com:yu-niverse/edetector_api.git
-WORKDIR /edetector_api
-RUN go mod download
-RUN go build -o websocket.exe cmd/websocket/websocket.go
+RUN apt-get update && apt-get install -y wget
+RUN mkdir log
 EXPOSE 5050
-CMD ["/edetector_api/websocket.exe", "5050"]
+RUN wget -O "websocket_1.0.0.exe" "api:5000/server_file/websocket_1.0.0.exe"
+RUN chmod +x websocket_1.0.0.exe
+CMD ["/websocket_1.0.0.exe", "5050"]

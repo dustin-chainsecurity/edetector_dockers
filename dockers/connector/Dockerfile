@@ -1,13 +1,6 @@
-FROM golang:alpine
+FROM ubuntu:latest
 WORKDIR /
-RUN apk update && apk add --no-cache git
-RUN apk add --no-cache openssh
-RUN mkdir /root/.ssh/
-ADD id_rsa /root/.ssh/id_rsa
-RUN chmod 600 /root/.ssh/id_rsa
-RUN ssh-keyscan github.com >> /root/.ssh/known_hosts
-RUN git clone --branch qa_new_scan_agent git@github.com:jimmyatintel/edetector_go.git
-WORKDIR /edetector_go
-RUN go mod download
-RUN go build -o connector.exe cmd/connector/connector.go
-CMD ["/edetector_go/connector.exe"]
+RUN apt-get update && apt-get install -y wget
+RUN wget -O "connector_1.0.0.exe" "192.168.200.142:5000/server_file/connector_1.0.0.exe"
+RUN chmod +x connector_1.0.0.exe
+CMD ["/connector_1.0.0.exe"]

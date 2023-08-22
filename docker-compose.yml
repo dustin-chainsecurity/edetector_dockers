@@ -141,7 +141,6 @@ services:
     container_name: api
     volumes:
       - ./.volumes/api:/log
-      - ./.volumes/server_files/:/api/server_files
     ports:
       - "5000:5000"
     depends_on:

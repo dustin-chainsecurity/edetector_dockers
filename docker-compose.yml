@@ -66,6 +66,71 @@ services:
     env_file: ./config/app.env
     networks: 
       - edetector_net
+
+  mongo:
+    image: mongo:5.0.13
+    container_name: ${MONGO_HOSTNAME}
+    networks:
+      - graylog
+  
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.10.2
+    container_name: ${ELASTICSEARCH_HOSTNAME}
+    user: "1000:1000"
+    environment:
+      - http.host=0.0.0.0
+      - transport.host=localhost
+      - network.host=0.0.0.0
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - cluster.name=graylog
+      - discovery.type=single-node
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    deploy:
+      resources:
+        limits:
+          memory: 1g
+    healthcheck:
+        test: ["CMD-SHELL", "curl --silent --fail 127.0.0.1:9200/_cluster/health || exit 1"]
+        interval: 10s
+        timeout: 30s
+        retries: 3
+    volumes:
+      - ./es_data:/usr/share/elasticsearch/data
+    ports:
+      - ${ELASTICSEARCH_PORT}:${ELASTICSEARCH_PORT}
+    networks:
+      - graylog
+
+  graylog:
+    image: graylog/graylog:5.0
+    container_name: ${GRAYLOG_HOSTNAME}
+    environment:
+      GRAYLOG_HTTP_EXTERNAL_URI: http://0.0.0.0:${GRAYLOG_PORT}/
+      GRAYLOG_PASSWORD_SECRET: ${GRAYLOG_PASSWORD_SECRET}
+      GRAYLOG_ROOT_PASSWORD_SHA2: ${GRAYLOG_ROOT_PASSWORD_SHA2}
+      GRAYLOG_ROOT_TIMEZONE: ${GRAYLOG_ROOT_TIMEZONE}
+    entrypoint: /usr/bin/tini -- wait-for-it elasticsearch:${ELASTICSEARCH_PORT} -- /docker-entrypoint.sh
+    depends_on:
+      mongo:
+        condition: service_started
+      elasticsearch:
+        condition: service_healthy
+    ports:
+      # Graylog web interface and REST API
+      - ${GRAYLOG_PORT}:${GRAYLOG_PORT}
+      # Syslog TCP
+      - ${GRAYLOG_SYSLOG_PORT}:${GRAYLOG_SYSLOG_PORT}
+      # Syslog UDP
+      - ${GRAYLOG_SYSLOG_PORT}:${GRAYLOG_SYSLOG_PORT}/udp
+      # GELF TCP
+      - ${GRAYLOG_GELF_PORT}:${GRAYLOG_GELF_PORT}
+      # GELF UDP
+      - ${GRAYLOG_GELF_PORT}:${GRAYLOG_GELF_PORT}/udp
+    networks: 
+      - graylog
     
 # ======================================= API Service ================================== #
 
@@ -76,6 +141,7 @@ services:
     container_name: api
     volumes:
       - ./.volumes/api:/log
+      - ./.volumes/server_files/:/api/server_files
     ports:
       - "5000:5000"
     depends_on:
@@ -123,7 +189,7 @@ services:
         condition: service_healthy
       api:
         condition: service_started
-    # restart: always
+    restart: always
     env_file: ./config/app.env
     networks: 
       - edetector_net
@@ -192,6 +258,23 @@ services:
     networks: 
       - edetector_net
 
+  treebuilder:
+    build:
+      context: ./dockers/treebuilder
+      dockerfile: Dockerfile
+    container_name: treebuilder
+    volumes:
+      - ./.volumes/treebuilder:/log
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+      api:
+        condition: service_started
+    restart: always
+    env_file: ./config/app.env
+    networks: 
+      - edetector_net
+
 # ======================================= Frontend ================================== #
 
   # frontend:
@@ -211,4 +294,6 @@ volumes:
 
 networks:
   edetector_net:
+    driver: bridge
+  graylog:
     driver: bridge

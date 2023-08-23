@@ -112,6 +112,11 @@ services:
       GRAYLOG_PASSWORD_SECRET: ${GRAYLOG_PASSWORD_SECRET}
       GRAYLOG_ROOT_PASSWORD_SHA2: ${GRAYLOG_ROOT_PASSWORD_SHA2}
       GRAYLOG_ROOT_TIMEZONE: ${GRAYLOG_ROOT_TIMEZONE}
+      GRAYLOG_CONTENT_PACKS_AUTO_INSTALL: graylog-content-pack.json
+      GRAYLOG_CONTENT_PACKS_LOADER_ENABLED: true
+      GRAYLOG_CONTENT_PACKS_DIR: /usr/share/graylog/data/contentpacks
+    volumes:
+      - ./graylog-setup/content-pack.json:/usr/share/graylog/data/contentpacks/graylog-content-pack.json
     entrypoint: /usr/bin/tini -- wait-for-it elasticsearch:${ELASTICSEARCH_PORT} -- /docker-entrypoint.sh
     depends_on:
       mongo:
@@ -131,7 +136,8 @@ services:
       - ${GRAYLOG_GELF_PORT}:${GRAYLOG_GELF_PORT}/udp
     networks: 
       - graylog
-    
+      - edetector_net
+
 # ======================================= API Service ================================== #
 
   api:
@@ -148,7 +154,9 @@ services:
         condition: service_healthy
       redisdb:
         condition: service_healthy
-    restart: always
+      graylog:
+        condition: service_healthy
+    # restart: always
     env_file: ./config/app.env
     networks: 
       - edetector_net

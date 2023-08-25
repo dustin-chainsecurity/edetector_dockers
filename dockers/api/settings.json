@@ -1,0 +1,60 @@
+{
+    "serverAndEmail": {
+        "workerPort": 8889,
+        "detectPort": 9999,
+        "detectDefault": true,
+        "updatePort": 6,
+        "email": "test@example.com",
+        "password": "password",
+        "ip": "192.168.0.2",
+        "port": 25,
+        "encryption": "TLS"
+    },
+    "function": {
+        "emailNotification": {
+            "on": true,
+            "riskLevel": "no",
+            "recepientEmail": "test@example.com"
+        },
+        "report": {
+            "on": true,
+            "generateTime": "2200",
+            "riskLevel": "level2",
+            "recepientEmail": "tysonTesting8888@example.com"
+        },
+        "autoDefense": {
+            "on": true,
+            "riskLevel": "level2",
+            "action": "no-action",
+            "memoryDump": true,
+            "dumpUploadVirusTotalAnalysis": true,
+            "dumpUploadHybridAnalysis": true,
+            "sampleDownload": false,
+            "sampleUploadVirusTotalAnalysis": true,
+            "sampleUploadHybridAnalysis": false
+        }
+    },
+    "agent": {
+        "mission": {
+            "fileAnalysis": true,
+            "fileAnalysisMainDisk": "Disk/D",
+            "memoryScan": false,
+            "collection": true,
+            "generateImage": true
+        },
+        "generateAgent": {
+            "serverIP": "192.168.0.1",
+            "memoryScan": true,
+            "collection": false,
+            "generateImage": false
+        },
+        "cpuPriority": "veryNormal"
+    },
+    "interface": {
+        "cefLog": false,
+        "riskLevel": "level2",
+        "ip": "192.168.0.2",
+        "port": 12,
+        "signatureID": "Lorem"
+    }
+}

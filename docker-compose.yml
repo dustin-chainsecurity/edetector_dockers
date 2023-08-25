@@ -147,6 +147,7 @@ services:
     container_name: api
     volumes:
       - ./.volumes/api:/log
+      - ./dockers/api/settings.json:/api/setting/settings.json
     ports:
       - "5000:5000"
     depends_on:
@@ -156,7 +157,7 @@ services:
         condition: service_healthy
       graylog:
         condition: service_healthy
-    # restart: always
+    restart: always
     env_file: ./config/app.env
     networks: 
       - edetector_net

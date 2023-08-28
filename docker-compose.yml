@@ -211,7 +211,8 @@ services:
     container_name: workingserver
     volumes:
       - ./.volumes/workingserver:/log
-      - unstaged_db:/edetector_go/dbUnstage
+      - unstaged_db:/dbUnstage
+      - unstaged_file:/fileUnstage
     ports:
       - "5055:5055"
       - "1988:1988"
@@ -238,7 +239,7 @@ services:
     container_name: dbparser
     volumes:
       - ./.volumes/dbparser:/log
-      - unstaged_db:/edetector_go/dbUnstage
+      - unstaged_db:/dbUnstage
     depends_on:
       mariadb:
         condition: service_healthy
@@ -273,6 +274,7 @@ services:
     container_name: treebuilder
     volumes:
       - ./.volumes/treebuilder:/log
+      - unstaged_file:/fileUnstage
     depends_on:
       rabbitmq:
         condition: service_healthy
@@ -302,6 +304,7 @@ services:
 
 volumes:
   unstaged_db:
+  unstaged_file:
 
 networks:
   edetector_net:

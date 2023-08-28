@@ -1,0 +1,82 @@
+import { Checkbox, FormControlLabel, InputAdornment, Menu, MenuItem, TextField, Toolbar, Tooltip, Typography } from "@mui/material";
+import { alpha } from '@mui/material/styles';
+import { ChangeEvent, useState } from "react";
+import SearchIcon from '@mui/icons-material/Search';
+import PartialLoading from "../../PartialLoading/PartialLoading";
+import SearchBar from "../../SearchBar/SearchBar";
+
+// import { IFormatedDevice } from "../../../constant/interfaceBoard";
+// import PartialLoading from "../../CommonConponents/PartialLoading/PartialLoading";
+// import FilterDrop from "../FilterDrop.tsx/FilterDrop";
+// import SearchBar from "../../CommonConponents/SearchBar/SearchBar";
+
+
+interface EnhancedTableToolbarProps {
+    numSelected: number;
+    // setDataQuery: React.Dispatch<React.SetStateAction<IFormatedDevice[]>>;
+    searchRows: (key: string) => void;
+    // originData: IFormatedDevice[];
+    refreshLoading: boolean;
+    activeFetch: boolean;
+}
+
+export function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
+    const { numSelected } = props;
+    const [hint, setHint] = useState<string>('搜尋')
+    const [key, setKey] = useState<string>('')
+
+
+    const searchKeyWords = (key: string) => {
+        console.log('search key', key);
+        if (key === '') {
+            setHint('請輸入關鍵字');
+            return;
+        }
+        props.searchRows(key);
+    };
+
+    const clearSearchKeyWords = (key: string) => {
+        if (key.length === 0) {
+            // console.log('clear search key successful', props.originData.length);
+            // props.setDataQuery(props.originData);
+        }
+    };
+
+    const onChangeFunc = (e: ChangeEvent<HTMLInputElement>) => {
+        setHint('搜尋')
+        setKey(e.target.value)
+        clearSearchKeyWords(e.target.value)
+    }
+
+
+    return (
+        <Toolbar
+            style={{ padding: '5px 5px 5px 10px', backgroundColor: '#F5F5F5' }}
+            sx={{
+                pl: { sm: 2 },
+                pr: { xs: 1, sm: 1 },
+                ...(numSelected > 0 && {
+                    bgcolor: (theme) =>
+                        alpha(theme.palette.primary.main, theme.palette.action.activatedOpacity),
+                }),
+            }}
+        >
+            <Typography
+                sx={{ flex: '1 1 100%' }}
+                color="inherit"
+                variant="subtitle1"
+                component="div"
+            >
+                <div style={{ width: 400, display: 'flex', alignItems: 'flex-end' }}>
+                    {/* <FilterDrop /> */}
+                    {/* <FilterAltIcon style={{ color: '#BDBDBD', cursor: 'pointer', marginRight: 10 }} fontSize="large" /> */}
+                    <SearchBar labelValue={hint} query={key} onChangeFunc={onChangeFunc} onSearchFunc={searchKeyWords} />
+                    {props.refreshLoading && props.activeFetch ? <PartialLoading /> : null}
+                </div>
+            </Typography>
+        </Toolbar>
+    );
+}
+
+
+// 目前處於兩個點要考慮，本地搜尋或是伺服器搜尋

@@ -16,8 +16,10 @@ const GroupHeader = (props: GroupHeaderProps) => {
     const [totalDevices, setTotalDevices] = useState<number>(0);
 
     useEffect(() => {
-        const total = groupData.reduce((acc, cur) => acc + cur.devices.length, 0)
-        setTotalDevices(total)
+        const groupSet = groupData.map((item) => item.devices.map((item) => item.id))  // get all the id
+        const flatGroupSet = groupSet.flat() // flat the ID array
+        const GroupSetLength = new Set(flatGroupSet).size // get the length of all the ID
+        setTotalDevices(GroupSetLength)
     }, [])
 
     useEffect(() => {

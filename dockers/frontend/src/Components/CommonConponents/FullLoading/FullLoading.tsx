@@ -1,11 +1,27 @@
-import './FullLoading.css'
+/** @format */
 
-const FullLoading = () => {
-    return (
-        <div className="loader-wrapper">
-            <div className="loader"></div>
-        </div>
-    )
+import { Backdrop, CircularProgress } from "@mui/material";
+import "./FullLoading.css";
+import { useEffect, useState } from "react";
+
+interface FullLoadingProps {
+    open: boolean;
+    handleClose?: () => void;
 }
 
-export default FullLoading
+const FullLoading = (props: FullLoadingProps) => {
+    const { open, handleClose } = props;
+
+    return (
+        <Backdrop
+            sx={{ color: '#42a5f5', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+            open={open}
+            onClick={handleClose}
+        >
+            <CircularProgress color="inherit" />
+        </Backdrop>
+    );
+};
+
+export default FullLoading;
+

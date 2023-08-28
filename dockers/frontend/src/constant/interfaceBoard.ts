@@ -239,6 +239,7 @@ export interface AllFilesDropDownData {
     onlySearchDeletedFile:boolean
 }
 export interface ForensicsSelectedData{
+    [key :string] : boolean | undefined | string
     isForensicsSelected?:boolean 
     keywordType?:string
     keyword?:string
@@ -316,8 +317,7 @@ export interface ForensicsSelectedData{
 
 
 export interface requestHostData extends oneHostData{
-
-    group: string[];
+    group: string[]|[];
 }
 
 export interface oneHostData {
@@ -327,10 +327,10 @@ export interface oneHostData {
     name: string;
 }
   
-  export interface IGenerateGroup {
+export interface IGenerateGroup {
     group: string;
     devices: oneHostData[];
-  }
+}
 
 
 export interface MemorySelectedData {
@@ -387,3 +387,44 @@ export interface ITimeNode {
     startTime: number,
     endTime: number,
 }
+
+
+export interface IOneObjectName {
+    name: {
+      chineseName: string
+      englishName: string
+      tableName: string
+      importTimeColumeName: string
+    }
+    type: string
+    fourImportantColumnNames: {
+      type: string
+      item: string
+      date: string
+      etc: string
+    }
+    child: IOneObjectName[]
+  }
+export interface IinitialState {
+    mainKeyword: string, // 主搜尋關鍵字
+    subSearchKeywordList:string[],
+    fromIndex: number, // 從第幾筆開始
+    size: number, // 一次取得幾筆
+    hostList: string[], // 所有主機列表
+    indexList: (string | IOneNode)[], // 所有index列表
+    timeRange: { // 時間範圍
+        startTime: number,
+        endTime: number
+    },
+    leftSelectedList: { // 左方列表
+        analysisIndex: (string | IOneNode)[],    // 所有index列表
+        selectedIndex: string[]     // 所有被選取的index列表
+    },
+    chartData: any,// 圖表資料
+    tableData: {  // 表格資料
+        // ...
+    },
+    detailData: {  // 詳細資料
+    }
+}
+

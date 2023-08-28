@@ -50,7 +50,7 @@ const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
     return (
         <div style={{ width: '93%', margin: '8px auto', display: "flex", justifyContent: 'flex-start', alignItems: 'center' }}>
             <div style={{ width: '50%', display: 'flex', justifyContent: 'space-between' }}>
-                <p>{selectedHost}</p>
+                <p style={{ width:'80%', overflow:'hidden', textOverflow:'ellipsis' }}>{selectedHost===""?'未分類群組':selectedHost}</p>
                 <p>{includeIds.length}/{pageData.length}</p>
 
             </div>

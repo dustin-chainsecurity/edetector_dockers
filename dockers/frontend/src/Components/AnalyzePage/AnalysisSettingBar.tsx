@@ -1,23 +1,13 @@
 
 
-import MemoryDropDownSelector from './AnalysisSettingBarItem/MemoryDropDownSelector/MemoryDropDownSelector'
-import ForensicsDropSelector from './AnalysisSettingBarItem/ForensicsDropDownSelector/ForensicsDropSelector'
-import AllFilesDropDownSelector from './AnalysisSettingBarItem/AllFilesDropDownSelector/AllFilesDropDownSelector'
 import AnalysisTimeSettingBarSelector from './AnalysisTimeSettingBar/AnalysisTimeSettingBarSelector';
+import KeywordSearchInput from './AnalysisSettingBarItem/KeywordSearchInput/KeywordSearchInput';
+import AnalysisDataDropSelector from './AnalysisSettingBarItem/ForensicsDropDownSelector/AnalysisDataDropSelector';
 import './AnalysisSettingBar.css'
-import Button from '@mui/material/Button';
-import { AllFilesDropDownData, ForensicsSelectedData, MemorySelectedData, IGenerateGroup, IDateModule, IDateModuleData } from '../../constant/interfaceBoard'
-import { forensicsDropSelectorTranfer } from '../../constant/functionToolbox'
+import { AllFilesDropDownData, ForensicsSelectedData, MemorySelectedData, IGenerateGroup, IDateModuleData } from '../../constant/interfaceBoard'
 import GroupDropDown from './GroupFilter/DropDown/GroupDropDown';
-import { UseMutationResult, useMutation } from '@tanstack/react-query';
-import { axiosElastic } from '../../utiles/ProtectedRoutes';
-import { elasticChildUrl, elasticParent, elasticRoot } from '../../constant';
-import { AxiosResponse } from 'axios';
-interface oneNode {
-    name: string
-    type: "group" | "item"
-    children: oneNode[]
-}
+import { DropDownContainer, DropDownLabel } from './GroupFilter/StyledComponents';
+import React from 'react'
 
 interface IAnalysisSettingBarProps {
     groups: IGenerateGroup[];
@@ -31,63 +21,64 @@ interface IAnalysisSettingBarProps {
     setForensicsSelectedData: React.Dispatch<React.SetStateAction<ForensicsSelectedData>>
     allFilesDropDownData: AllFilesDropDownData
     setallFilesDropDownData: React.Dispatch<React.SetStateAction<AllFilesDropDownData>>
-    setResponseFromElasticsearch: React.Dispatch<React.SetStateAction<any>>
     selectedId: readonly string[];
     setSelectedId: React.Dispatch<React.SetStateAction<readonly string[]>>;
-    // fetchElasticSearch: UseMutationResult<AxiosResponse<any, any>, unknown, void, unknown>
     dateModuleData: IDateModuleData
     setDateModuleData: React.Dispatch<React.SetStateAction<IDateModuleData>>
+    setMainSearchKeyword: React.Dispatch<React.SetStateAction<string>>
 }
 
-const AnalysisSettingBar = (props: IAnalysisSettingBarProps) => {
+const
+    AnalysisSettingBar = (props: IAnalysisSettingBarProps) => {
 
-    const { groups, memoryDropDownSelected, setMemoryDropDownSelected, forensicsSelectedData,
-        setForensicsSelectedData, allFilesDropDownData, setallFilesDropDownData,
-        selectedId, setSelectedId, dateModuleData,setDateModuleData } = props
+        const { groups, memoryDropDownSelected, setMemoryDropDownSelected, forensicsSelectedData,
+            setForensicsSelectedData, allFilesDropDownData, setallFilesDropDownData,
+            selectedId, setSelectedId, dateModuleData, setDateModuleData, setMainSearchKeyword } = props
 
+        return (
+            <div style={{ maxWidth: '90%', marginBottom: 20, marginTop: 10, marginRight: 40 }}>
+                <div style={{ minWidth: 800, display: 'flex', flexWrap: 'wrap', marginLeft: 50 }}>
+                    <GroupDropDown groups={groups} selectedId={selectedId} setSelectedId={setSelectedId} />
 
-    return (
-        <div style={{ display: 'grid', gridTemplateColumns: 'auto auto auto 1fr' }}>
-
-            <GroupDropDown groups={groups} selectedId={selectedId} setSelectedId={setSelectedId} />
-
-            <div className='analysisDataSettingBar'>
-                <div>分析資料</div>
-                <div className='analysisDropDownGroup'>
-                    <span>
-                        <MemoryDropDownSelector
+                    <DropDownContainer >
+                        <DropDownLabel style={{ height: "100%", display: "flex", alignItems: "center" }}>
+                            <span>分析資料</span>
+                        </DropDownLabel>
+                        <AnalysisDataDropSelector
                             memoryDropDownSelected={memoryDropDownSelected}
                             setMemoryDropDownSelected={setMemoryDropDownSelected}
-                        />
-                    </span>
-                    <span>
-                        <ForensicsDropSelector
                             forensicsSelectedData={forensicsSelectedData}
                             setForensicsSelectedData={setForensicsSelectedData}
-                        />
-                    </span>
-                    <span>
-                        <AllFilesDropDownSelector
                             allFilesDropDownData={allFilesDropDownData}
                             setallFilesDropDownData={setallFilesDropDownData}
                         />
-                    </span>
+                    </DropDownContainer>
 
+
+                    <DropDownContainer style={{ height: 45 }}>
+                        {/* <DropDownLabel style={{ marginTop: 10 }}>分析時間</DropDownLabel> */}
+                        <DropDownLabel style={{ height: "100%", display: "flex", alignItems: "center" }}>
+                            <span>分析時間</span>
+                        </DropDownLabel>
+                        <AnalysisTimeSettingBarSelector
+                            dateModuleData={dateModuleData}
+                            setDateModuleData={setDateModuleData}
+                        />
+                    </DropDownContainer>
+
+
+
+                    <DropDownContainer style={{ height: 45 }}>
+                        <DropDownLabel style={{ height: "100%", display: "flex", alignItems: "center" }}>
+                            <span>關鍵字</span>
+                        </DropDownLabel>
+                        <KeywordSearchInput
+                            setMainSearchKeyword={setMainSearchKeyword}
+                        />
+                    </DropDownContainer>
                 </div>
             </div>
-            <div className='analysisTimeSettingBar'>
-                <div style={{ marginRight: '10px' }}>
-                    分析時間
-                </div>
-                <div>
-                    <AnalysisTimeSettingBarSelector
-                        dateModuleData={dateModuleData}
-                        setDateModuleData={setDateModuleData}
-                    />
-                </div>
-            </div>
-        </div>
-    )
-}
+        )
+    }
 
 export default AnalysisSettingBar

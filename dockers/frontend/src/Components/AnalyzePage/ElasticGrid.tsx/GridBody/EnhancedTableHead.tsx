@@ -10,28 +10,45 @@ import { useEffect, useState } from "react";
 
 interface EnhancedTableProps {
   columnName : string[]
+  selectedIndexCount : number
+  excludeProperties: string[];
+  importantFourProperties : string[];
 }
 
 const EnhancedTableHead = (props:EnhancedTableProps) => {
-  const { columnName } = props
+  const { columnName,selectedIndexCount,excludeProperties,importantFourProperties } = props
   const [reList, setReList] = useState<string[]>([])
 
   useEffect(()=>{
-    const filteredColumns = columnName.filter((item) => item !== 'uuid' && item !== 'index'); // 這兩個變數不需要被印出來
-    const newArr = capitalizeFirstWord(filteredColumns)
-    setReList(newArr)
+    if(selectedIndexCount === 1){
+      const filteredColumns = columnName.filter((item) => !excludeProperties.includes(item) ); // 這兩個變數不需要被印出來
+      const newArr = capitalizeFirstWord(filteredColumns)
+      setReList(newArr)
+    }else{
+      const filteredColumns = columnName.filter((item)=> importantFourProperties.includes(item))
+      const newArr = capitalizeFirstWord(filteredColumns)
+      setReList(newArr)
+      
+    }
+    // const filteredColumns = columnName.filter((item) => item !== 'uuid' && item !== 'index'); // 這兩個變數不需要被印出來
+    // const newArr = capitalizeFirstWord(filteredColumns)
+    // setReList(newArr)
   },[columnName])
 
 
   return (
-    <TableHead>
+    <TableHead sx={{ width:'100%' }}>
         <TableRow>
-            <TableCell padding="checkbox"/>
+
+            <TableCell padding="checkbox">
+            <Checkbox/>
+            </TableCell>
+
             {reList.map((headCell, idx) => (
                 <TableCell
                     key={`${idx}headcell`}
                     align='left'
-                    sx={{ position:'fix', top:0 }}
+                    sx={{ width: '200px' }}
                 >
                     <TableSortLabel
                         // active={orderBy === headCell.id}
@@ -39,7 +56,7 @@ const EnhancedTableHead = (props:EnhancedTableProps) => {
                         // IconComponent={ArrowDropDownIcon}
                         // onClick={createSortHandler(headCell.id)}
                     >
-                        <span style={{ fontWeight:'bold' }}>{headCell}</span>
+                        <span style={{ fontWeight:'bold', width:'180px' }}>{headCell}</span>
                     </TableSortLabel>
                 </TableCell>
             ))}

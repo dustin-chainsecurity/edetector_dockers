@@ -8,60 +8,89 @@ import InboxIcon from '@mui/icons-material/MoveToInbox';
 import DraftsIcon from '@mui/icons-material/Drafts';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
-import { IOneNode } from '../../../constant/interfaceBoard'
-import { Button } from '@mui/material';
-import { generateUrlAndBodyForElasticsearch, generateDotsListForChart } from '../../../constant/functionToolbox';
-import { useMutation } from '@tanstack/react-query'
-import { axiosClient, axiosElastic } from '../../../utiles/ProtectedRoutes';
-import { useState, useRef, ChangeEvent, useEffect } from 'react';
+import { IOneNode, IOneObjectName } from '../../../constant/interfaceBoard'
+import { generateUrlAndBodyForElasticsearch } from '../../../constant/FunctionForElasticsearch/functionToolbox';
+import {generateDotsListForChartInBoxQuery} from '../../../constant/FunctionForElasticsearch/functionToolbox'
+import { UseMutationResult } from '@tanstack/react-query'
+import { useRef, useEffect } from 'react';
+import { MemorySelectedData } from '../../../constant/interfaceBoard'
+import { AxiosResponse } from 'axios';
+import { indexTree } from '../../../constant/AnalysisPage/functionToolbox'
+
+
 interface SearchResult {
     // 定義你期望的搜尋結果型別
     // 這裡使用 any 作為示例
     data: any;
 }
+interface IIndexWithTotal {
+    index: string
+    total: number
 
-const fetchDataAfterDelay = (data: string, delay: number): Promise<SearchResult> => {
-    return new Promise((resolve) => {
-        setTimeout(() => {
-            resolve({ data: data }); // 這裡返回了一個假的搜尋結果，你需要替換為實際的資料
-        }, delay);
-    });
-};
+}
+interface IIndexForLeftList {
+    index: string
+    total: number
+    name: string
+    type: "group" | "item"
+    children: IIndexForLeftList[] | []
+}
+
+interface LeftSelectListProps {
+    fetchElasticSearchForLeftListCount: UseMutationResult<AxiosResponse<any, any>, any, any, unknown>
+    fetchElasticSearchForChart: UseMutationResult<AxiosResponse<any, any>, any, any, unknown>
+    state: any
+    setDataForDisplay: React.Dispatch<any>
+    fetchElasticSearch: any
+    memoryDropDownSelected: MemorySelectedData
+
+}
+
+// interface EnhancedTableProps {
+//     pageData: oneHostData[]
+//     selectedId: readonly string[]
+//     numSelected: number;
+//     onRequestSort: (event: React.MouseEvent<unknown>, property: keyof oneHostData) => void;
+//     onSelectAllClick: (event: React.ChangeEvent<HTMLInputElement>) => void
+//     order: Order;
+//     orderBy: string;
+//     rowCount: number;
+//     selectedHost: string
+// }
 
 
 
-
-export default function LeftSelectList({ state, setDataForDisplay, fetchElasticSearch }: { state: any, setDataForDisplay: React.Dispatch<any>, fetchElasticSearch: any }) {
-    // console.log(ConditionWhenQuerySendToElasticsearch)
+const LeftSelectList = (props: LeftSelectListProps) => {
+    const { fetchElasticSearchForLeftListCount, state, setDataForDisplay, fetchElasticSearch, memoryDropDownSelected, fetchElasticSearchForChart } = props
     const [selectedIndex, setSelectedIndex] = React.useState<number[]>([]);
     const [openedGroup, setOpenedGroup] = React.useState<number[]>([])
-    const [selectedItemName, setSelectedItemName] = React.useState<string[]>([])
+    const [autoSelectedAll, setAutoSelectedAll] = React.useState<boolean>(false)
+    const [leftIndexList, setLeftIndexList] = React.useState<IIndexForLeftList[]>([])
     const setDataFromLeftSelectedList = (afterSelectedLeftListResponseState: any) => {
         setDataForDisplay({ type: "setDataFromLeftSelectedList", data: afterSelectedLeftListResponseState })
     }
-
-    // const [searchTerm, setSearchTerm] = useState<string>('');
+    const [selectedItemName, setSelectedItemName] = React.useState<string[]>([])    
     const timeoutRef = useRef<NodeJS.Timeout | null>(null);
-    const handleSearch = (): void => {
-        if (timeoutRef.current) {
-            clearTimeout(timeoutRef.current);
-        }
-        // 改變狀態後延遲三秒
-        timeoutRef.current = setTimeout(() => {
-            fetchDataAfterDelay("searchTerm", 0)
-                .then((result) => {
-                    // 在這裡處理資料
-                    console.log('Received data:', result.data);
-                    selectedListSendRequet()
-                })
-                .finally(() => {
-                });
-        }, 1000);
-    };
+    // 點選左方清單時，延遲三秒後發送請求，如果點選內容有更換則3秒內重新計時
+    // generateIndexWithTotalList(fetchElasticSearchForLeftListCount)
+    // console.log(fetchElasticSearchForLeftListCount)
+
     useEffect(() => {
-        console.log(selectedItemName)
-        handleSearch()
-    }, [selectedItemName])
+        if (selectedItemName.length !== 0) {
+            if (timeoutRef.current) {
+                clearTimeout(timeoutRef.current);
+            }
+            // 改變狀態後延遲三秒
+            timeoutRef.current = setTimeout(() => {
+                selectedListSendRequet();
+            }, 1000);
+        }
+    }, [selectedItemName]);
+    useEffect(() => {
+        if (fetchElasticSearchForLeftListCount.isSuccess) {
+            generateIndexWithTotalList(fetchElasticSearchForLeftListCount)
+        }
+    }, [fetchElasticSearchForLeftListCount])
 
 
     // 存放左方欄位要顯示的清單
@@ -70,29 +99,84 @@ export default function LeftSelectList({ state, setDataForDisplay, fetchElasticS
     const handleListItemClick = (
         event: any,
         index: number,
+        name: string
     ) => {
         // dispatch({type:"leftSelectedList",payload:index})
         //根據所選取的index(所選主機、時間不變)，重新發送請求，並更換chart、table的資料，根據所選取的index
+
+         console.log(name)
+
         if (event.ctrlKey) {
+
+            // 控制畫面是否被點選
+            // 如果 total result 有被選的話，取消total result的選取
+
+            
             if (!selectedIndex.includes(index)) {
+                selectedIndex.includes(0) ? 
+                setSelectedIndex([index]) :
                 setSelectedIndex([...selectedIndex, index]);
             } else {
                 setSelectedIndex(selectedIndex.filter((item) => item !== index))
             }
-            if (!selectedItemName.includes(event.target.innerText)) {
-                console.log(selectedItemName)
-                setSelectedItemName(selectedItemName => [...selectedItemName, event.target.innerText]);
+
+            // 控制送出請求內容，如果全部沒選，送出原先全選的請求，如果有選，送出選取的請求
+            if (!selectedItemName.includes(name)) {
+
+                setSelectedItemName(selectedItemName => [...selectedItemName, name]);
             } else {
-                setSelectedItemName(selectedItemName => { return selectedItemName.filter((item) => item !== event.target.innerText) })
+                if (selectedItemName.filter((item) => item !== name).length === 0) {
+                    let allIndexNameList = generateInitIndexArrTableName(state.leftSelectedList.analysisIndex)
+                    setSelectedItemName(allIndexNameList)
+                    setAutoSelectedAll(true)
+                } else {
+                    if (autoSelectedAll) {
+                        setSelectedItemName([name])
+                        setAutoSelectedAll(false)
+                    } else {
+                        setSelectedItemName(selectedItemName.filter((item) => item !== name))
+                    }
+                }
             }
-            console.log(selectedItemName)
         } else {
-            console.log(selectedItemName)
             setSelectedIndex([index]);
-            setSelectedItemName(selectedItemName => [event.target.innerText])
-            console.log(selectedItemName)
+            setSelectedItemName(selectedItemName => [name])
+        }
+
+        function generateInitIndexArrTableName(groupList: IOneNode[], nowList: string[] = []) {
+            console.log("groupList", groupList)
+            for (let i = 0; i < groupList.length; i++) {
+                if (groupList[i].type === "group") {
+                    generateInitIndexArrTableName(groupList[i].children, nowList)
+                } else {
+                    nowList.push(groupList[i].name)
+                }
+            }
+            return nowList
         }
     };
+
+    
+    const handleListTotalItemClick = (
+        event: any,
+        index: number,
+        name: string
+    ) => {
+        setSelectedIndex([index])
+        let allIndexNameList = generateInitIndexArrTableName(state.leftSelectedList.analysisIndex)
+        setSelectedItemName(allIndexNameList)
+        setAutoSelectedAll(true)
+        
+        function generateInitIndexArrTableName(groupList: IOneNode[], nowList: string[] = []) {
+            groupList.map((item) => {
+                item.type === "group" ? generateInitIndexArrTableName(item.children, nowList) : nowList.push(item.name)
+            })
+            return nowList
+        }
+
+
+    }
+
     // 判斷item是否被選取
     const isItemSelected = (index: number) => selectedIndex.includes(index);
 
@@ -113,11 +197,79 @@ export default function LeftSelectList({ state, setDataForDisplay, fetchElasticS
             return false
         }
     }
-    // 根據左方所選取的index，發送請求，並更換chart、table的資料，根據所選取的index
-    async function selectedListSendRequet() {
+
+    function generateIndexWithTotalList(fetchElasticSearchForLeftListCount: any) {
+        // console.log(fetchElasticSearchForLeftListCount)
+        let indexWithTotalList: IIndexWithTotal[] = []
+        let responseList = fetchElasticSearchForLeftListCount.data?.data.responses
+        let total = 0
+        // 整理出total不為0的index
+        if (responseList) {
+            responseList.map((item: any) => {
+                try {
+                    total = total + item.hits.total
+                    let tempIndexWithTotal: IIndexWithTotal = {
+                        index: item.hits.hits[0]._index,
+                        total: item.hits.total,
+                    }
+                    indexWithTotalList.push(tempIndexWithTotal)
+                } catch {
+                    // console.log("error")
+                }
+            })
+        }
+        let resLeftList = getNodeWithTableName(indexTree, indexWithTotalList)
+        let resLeftListAddTotal: IIndexForLeftList[] = [
+            {
+                index: "TOTAL RESULT",
+                total: total,
+                name: "TOTAL RESULT",
+                type: "item",
+                children: []
+            }
+        ]
+        resLeftListAddTotal = resLeftListAddTotal.concat(resLeftList)
+        setLeftIndexList(resLeftListAddTotal)
+        function getNodeWithTableName(indexTree: IOneObjectName[], tableName: IIndexWithTotal[]) {
+            let nameList: IIndexForLeftList[] = []
+            for (let i = 0; i < indexTree.length; i++) {
+                if (indexTree[i].type === "group") {
+                    let temp = getNodeWithTableName(indexTree[i].child, tableName)
+                    let tempGroup: IIndexForLeftList = {
+                        name: indexTree[i].name.chineseName,
+                        total: 0,
+                        index: "",
+                        type: "group",
+                        children: temp
+                    }
+                    if (tempGroup.children?.length !== 0) {
+                        nameList.push(tempGroup)
+                    }
+                } else {
+                    let indexNumber = tableName.findIndex((item) => item.index === indexTree[i].name.tableName)
+                    if (indexNumber !== -1) {
+                        let temp: IIndexForLeftList = {
+                            name: indexTree[i].name.chineseName,
+                            total: tableName[indexNumber].total,
+                            index: indexTree[i].name.tableName,
+                            type: "item",
+                            children: []
+                        }
+                        nameList.push(temp)
+                    }
+                }
+            }
+            return nameList
+        }
+    }
+
+
+
+
+    // 根據左方所選取的index,生成mutationDataForTable，並發送請求，並更換chart、table的資料，根據所選取的index
+    function selectedListSendRequet() {
         try {
             let indexList: IOneNode[] = []
-            console.log("目前被選到的index", selectedItemName)
             for (let i = 0; i < selectedItemName.length; i++) {
                 let tempNode: IOneNode = {
                     name: selectedItemName[i],
@@ -126,21 +278,21 @@ export default function LeftSelectList({ state, setDataForDisplay, fetchElasticS
                 }
                 indexList.push(tempNode)
             }
-            console.log(indexList)
-            console.log(state)
             let selectedHost = state.hostList
             let startTime = state.timeRange.startTime
             let endTime = state.timeRange.endTime
-            let mutationDataForTable = generateUrlAndBodyForElasticsearch(indexList, selectedHost, startTime, endTime)
-            let dotsInChart = await generateDotsListForChart(indexList, selectedHost, startTime, endTime, fetchElasticSearch)
-            let responseFromElasticsearchForTable = await fetchElasticSearch.mutateAsync(mutationDataForTable)
+            let mainSearchKeyword = state.mainKeyword
+            let mutationDataForTable = generateUrlAndBodyForElasticsearch("normal",indexList, memoryDropDownSelected, selectedHost, startTime, endTime,mainSearchKeyword)
+            let mutationDataForChart = generateDotsListForChartInBoxQuery(indexList, memoryDropDownSelected, selectedHost, startTime, endTime,mainSearchKeyword)
+            let responseFromElasticsearchForChart =  fetchElasticSearchForChart.mutate(mutationDataForChart)
+            let responseFromElasticsearchForTable =  fetchElasticSearch.mutate(mutationDataForTable)
             let afterSelectedLeftListResponseState = {
                 formIndex: 0,
                 leftSelectedList: {
                     selectedIndex: selectedItemName
                 },
-                chartData: dotsInChart,
-                tableData: responseFromElasticsearchForTable,
+                chartData: [],
+                tableData: "responseFromElasticsearchForTable",
                 detailData: {}
             }
             setDataFromLeftSelectedList(afterSelectedLeftListResponseState)
@@ -158,13 +310,12 @@ export default function LeftSelectList({ state, setDataForDisplay, fetchElasticS
             setDataFromLeftSelectedList(afterSelectedLeftListResponseState)
             console.log(err)
         }
-
-
     }
     let itemId = 0
-    function generateLeftList(groupList: IOneNode[], level: number = 0) {
+    function generateLeftList(groupList: IIndexForLeftList[], level: number = 0) {
+        // console.log("groupList", groupList)
 
-        return groupList.map((item: any) => {
+        return groupList.map((item: IIndexForLeftList) => {
             let tempItemId = itemId
             itemId++
 
@@ -189,105 +340,52 @@ export default function LeftSelectList({ state, setDataForDisplay, fetchElasticS
                     </Collapse>
                 </div>
             } else {
-
                 // 產生item
-                return <ListItemButton
-                    key={tempItemId}
-                    sx={{ pl: level }}
-                    selected={isItemSelected(tempItemId)}
-                    // onKeyDown={(event) => { handleListItemClick(event, tempItemId) }}
-
-                    onClick={(event) => handleListItemClick(event, tempItemId)}>
-                    <ListItemIcon>
-                        <DraftsIcon />
-                    </ListItemIcon>
-                    <ListItemText primary={item.name} />
-                </ListItemButton>
+                if (item.name === "TOTAL RESULT") {
+                    return <ListItemButton
+                        key={tempItemId}
+                        sx={{ pl: 0 }}
+                        selected={isItemSelected(tempItemId)}
+                        // onKeyDown={(event) => { handleListItemClick(event, tempItemId) }}
+                        onClick={(event) => handleListTotalItemClick(event, tempItemId, item.name)}>
+                        <ListItemIcon>
+                            <DraftsIcon />
+                        </ListItemIcon>
+                        <ListItemText primary={"TOTAL RESULT"} />
+                        <ListItemText primary={item.total} style={{ display: "flex", justifyContent: "end", marginLeft: "20px" }} />
+                    </ListItemButton>
+                } else {
+                    return <ListItemButton
+                        key={tempItemId}
+                        sx={{ pl: level }}
+                        selected={isItemSelected(tempItemId)}
+                        id={item.name}
+                        // onKeyDown={(event) => { handleListItemClick(event, tempItemId) }}
+                        onClick={(event) => handleListItemClick(event, tempItemId, item.name)}>
+                        <ListItemIcon>
+                            <DraftsIcon />
+                        </ListItemIcon>
+                        <ListItemText primary={item.name} />
+                        <div>
+                            <ListItemText primary={item.total} style={{ display: "flex", justifyContent: "end", marginLeft: "20px" }} />
+                        </div>
+                    </ListItemButton>
+                }
             }
         })
-
     }
 
 
     return (
-        <div style={{ minWidth: "350px" }}>
-            {/* <Button variant="contained" onClick={() => { console.log(selectedItemName); selectedListSendRequet() }}>儲存</Button> */}
-            {generateLeftList(state.leftSelectedList.analysisIndex)}
-            {/* <List
-                sx={{ width: '100%', maxWidth: "500px", bgcolor: 'background.paper' }}
-                component="nav"
-                aria-labelledby="nested-list-subheader"
-                subheader={
-                    <ListSubheader component="div" id="nested-list-subheader">
-                        Nested List Items
-                    </ListSubheader>
-                }
-            >
-                <ListItemButton
-                    selected={selectedIndex === 0}
-                    onClick={(event) => handleListItemClick(event, 0)}>
-                    <ListItemIcon>
-                        <SendIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Sent mail" />
-                </ListItemButton>
-                <ListItemButton
-                    selected={selectedIndex === 1}
-                    onClick={(event) => handleListItemClick(event, 1)}>
-                    <ListItemIcon>
-                        <DraftsIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Drafts" />
-                </ListItemButton>
-                <ListItemButton
-                    selected={selectedIndex === 2}
-                    onClick={(event) => { handleListItemClick(event, 2); handleClick() }}>
-                    <ListItemIcon>
-                        <InboxIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Inbox" />
-                    {open ? <ExpandLess /> : <ExpandMore />}
-                </ListItemButton>
+        <div style={{ minWidth: "100%", backgroundColor:"#F5F5F5" }}>
+            {/* <Button variant="contained" onClick={() => { console.log(state) }}>儲存</Button> */}
+            {/* {generateLeftList(state.leftSelectedList.analysisIndex)} */}
 
-                <Collapse in={open} timeout="auto" unmountOnExit>
-                    <List component="div" disablePadding>
-                        <ListItemButton
-                            sx={{ pl: 4 }}
-                            selected={selectedIndex === 3}
-                            onClick={(event) => handleListItemClick(event, 3)}>
-                            <ListItemIcon>
-                                <StarBorder />
-                            </ListItemIcon>
-                            <ListItemText primary="Starred" />
-                        </ListItemButton>
-                        <ListItemButton
-                            sx={{ pl: 8 }}
-                            selected={selectedIndex === 4}
-                            onClick={(event) => handleListItemClick(event, 4)}>
-                            <ListItemIcon>
-                                <StarBorder />
-                            </ListItemIcon>
-                            <ListItemText primary="Starred" />
-                        </ListItemButton>
-                        <ListItemButton
-                            sx={{ pl: 8 }}
-                            selected={selectedIndex === 2}
-                            onClick={(event) => { handleListItemClick(event, 2); handleClick2() }}>
-                            <ListItemIcon>
-                                <InboxIcon />
-                            </ListItemIcon>
-                            <ListItemText primary="Inbox" />
-                            {open2 ? <ExpandLess /> : <ExpandMore />}
-                        </ListItemButton>
-                    </List>
-                </Collapse>
-
-            </List> */}
+            {generateLeftList(leftIndexList)}
         </div>
-
-    );
+    )
 }
 
 
 
-
+export default LeftSelectList

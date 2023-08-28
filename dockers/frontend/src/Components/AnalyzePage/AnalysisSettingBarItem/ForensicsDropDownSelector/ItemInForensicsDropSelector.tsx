@@ -16,7 +16,7 @@ import ListItemButton from '@mui/material/ListItemButton';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import { oneHostData, AllFilesDropDownData, ForensicsSelectedData, MemorySelectedData, RiskLevel, InjectActive, ProcessBeInjected, Boot, Hook, Hide } from '../../../../constant/interfaceBoard'
-import {forensicsDropSelectorTranfer} from '../../../../constant/functionToolbox'
+import {forensicsDropSelectorTranfer} from '../../../../constant/AnalysisPage/functionToolbox'
 
 // --網站瀏覽紀錄與書籤--      browsingHistoryAndBookmarks
  
@@ -111,6 +111,7 @@ function handleLittleElementChange(event: React.ChangeEvent<HTMLInputElement>,fo
     console.log(event.target.name)
     console.log(event.target.value)
     setForensicsSelectedData((prevState) => {
+        console.log(prevState)
         return {
             ...prevState,
             [event.target.name]: event.target.checked

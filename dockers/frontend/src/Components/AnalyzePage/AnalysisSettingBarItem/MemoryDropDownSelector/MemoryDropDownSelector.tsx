@@ -1,14 +1,8 @@
 import * as React from 'react';
 import Checkbox from '@mui/material/Checkbox';
-import OutlinedInput from '@mui/material/OutlinedInput';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import ListItemText from '@mui/material/ListItemText';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
 import './MemoryDropDownSelector.css'
 import Button from '@mui/material/Button';
-import { oneHostData, AllFilesDropDownData, ForensicsSelectedData, MemorySelectedData, RiskLevel, InjectActive, ProcessBeInjected, Boot, Hook, Hide } from '../../../../constant/interfaceBoard'
+import { MemorySelectedData, RiskLevel, InjectActive, ProcessBeInjected, Boot, Hook, Hide } from '../../../../constant/interfaceBoard'
 
 
 
@@ -16,7 +10,12 @@ interface ChildProps {
     memoryDropDownSelected: MemorySelectedData
     setMemoryDropDownSelected: React.Dispatch<React.SetStateAction<MemorySelectedData>>
 }
-
+const riskLevelList = ["四", "三", "二", "一"]
+const injectActiveList = ["PE", "非PE程式碼", "無"]
+const processBeInjectedList = ["有", "無"]
+const bootList = ["Service", "AutoRun", "無"]
+const hookList = ["有", "無"]
+const hideList = ["Process", "File", "無"]
 
 
 const MemoryDropDownSelector: React.FC<ChildProps> = ({ memoryDropDownSelected, setMemoryDropDownSelected }) => {
@@ -190,180 +189,156 @@ const MemoryDropDownSelector: React.FC<ChildProps> = ({ memoryDropDownSelected, 
         setMemoryDropDownSelected(newDataList)
         console.log(memoryDropDownSelected)
     }
-    function changeIsMemoryDropDownSelected(e: React.ChangeEvent<HTMLInputElement>) {
-        console.log(e.target.checked)
-        setMemoryDropDownSelected({
-            ...memoryDropDownSelected,
-            isMemoryGroupSelected: e.target.checked,
-        })
-    }
 
 
-    return <div>
-        <div style={{ zIndex: 100, position: "relative", display: 'flex', alignItems: 'center', justifyItems: 'center' }}>
-            <Checkbox
-                checked={memoryDropDownSelected.isMemoryGroupSelected}
-                // name={'isMemoryGroupSelected'}
-                // value={memoryDropDownSelected.isMemoryGroupSelected}
-                onChange={(e) => { changeIsMemoryDropDownSelected(e) }} />
-            <span>
-                <FormControl sx={{ m: 1, width: 100, top: '4px' }}>
-                    <Select
-                        multiple
-                        value={['記憶體']}
-                        renderValue={() => <em>記憶體</em>}>
-                        <MenuItem value="" style={{ minWidth: "300px", width: "771px", height: "422px", backgroundColor: 'white' }}>
+    return <div style={{ height: "100%", width: "100%",paddingLeft:"20px" }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyItems: 'center', width: "750px", height: "100%" }}>
+            <div style={{ minWidth: "300px", width: "100%", height: "100%", backgroundColor: 'white' }}>
+                <div style={{ zIndex: 100, width: "100%", height: "100%", backgroundColor: "white" }}>
+                    <div style={{ display: "grid", gridTemplateColumns: "auto 100px", height: "50px" }}>
+                        <div style={{ display: "flex", alignItems: "center"  }}>記憶體</div>
+                        <div style={{ float: 'right' }}><Button variant="contained" onClick={() => changeMemoryDropDownSelected('deleteAll')}>清除</Button></div>
+                    </div>
+                    <h3 style={{ marginBottom: 5, marginTop: 5 }}>程序參數</h3>
+                    <div style={{ display: "grid", gridTemplateColumns: "150px 4fr", width: '100%', height: '45%' }}>
+                        <div className='memoryDropDownSelector'  >
+                            <div><span>程序名稱 :</span></div>
+                            <div><span>程序連線IP :</span></div>
+                            <div><span>動指令 :</span></div>
+                            <div><span>程序MD5 :</span></div>
+                            <div><span>程序路徑 :</span></div>
+                            <div><span>父程序路徑 :</span></div>
+                            <div><span>數位簽章 :</span></div>
+                            <div><span>載入其他dll :</span></div>
+                            <div><span>程序編號 :</span></div>
+                        </div>
+                        <div className='memoryInputBox'>
+                            <div><input type="text" title={"processName"} value={memoryDropDownSelected.processName} onChange={(e) => { changeMemoryDropDownSelected(e.target.title, e.target.value) }} /></div>
+                            <div><input type="text" title={"processConnectIP"} value={memoryDropDownSelected.processConnectIP} onChange={(e) => { changeMemoryDropDownSelected(e.target.title, e.target.value) }} /></div>
+                            <div><input type="text" title={"dynamicCommand"} value={memoryDropDownSelected.dynamicCommand} onChange={(e) => { changeMemoryDropDownSelected(e.target.title, e.target.value) }} /></div>
+                            <div><input type="text" title={"processMD5"} value={memoryDropDownSelected.processMD5} onChange={(e) => { changeMemoryDropDownSelected(e.target.title, e.target.value) }} /></div>
+                            <div><input type="text" title={"processPath"} value={memoryDropDownSelected.processPath} onChange={(e) => { changeMemoryDropDownSelected(e.target.title, e.target.value) }} /></div>
+                            <div><input type="text" title={"parentProcessPath"} value={memoryDropDownSelected.parentProcessPath} onChange={(e) => { changeMemoryDropDownSelected(e.target.title, e.target.value) }} /></div>
+                            <div><input type="text" title={"digitalSign"} value={memoryDropDownSelected.digitalSign} onChange={(e) => { changeMemoryDropDownSelected(e.target.title, e.target.value) }} /></div>
+                            <div><input type="text" title={"importOtherDLL"} value={memoryDropDownSelected.importOtherDLL} onChange={(e) => { changeMemoryDropDownSelected(e.target.title, e.target.value) }} /></div>
+                            <div><input type="text" title={"processId"} value={memoryDropDownSelected.processId} onChange={(e) => { changeMemoryDropDownSelected(e.target.title, e.target.value) }} /></div>
+                        </div>
+                    </div>
+                    <hr />
 
-                            <div style={{ zIndex: 100, width: "100%", height: "100%", backgroundColor: "white" }}>
-                                <div style={{ height: "30px" }}>
-                                    <div style={{ float: 'right' }}><Button variant="contained" onClick={() => changeMemoryDropDownSelected('deleteAll')}>清除</Button></div>
-                                </div>
-
-                                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr 2fr", width: '100%', height: '90%' }}>
-                                    <div className='memoryDropDownSelector'  >
-                                        <div><span>程序名稱 :</span></div>
-                                        <div><span>程序連線IP :</span></div>
-                                        <div><span>動指令 :</span></div>
-                                        <div><span>程序MD5 :</span></div>
-                                        <div><span>程序路徑 :</span></div>
-                                        <div><span>父程序路徑 :</span></div>
-                                        <div><span>數位簽章 :</span></div>
-                                        <div><span>載入其他dll :</span></div>
-                                        <div><span>程序編號 :</span></div>
-                                    </div>
-                                    <div className='memoryInputBox'>
-                                        <div><input type="text" title={"processName"} value={memoryDropDownSelected.processName} onChange={(e) => { changeMemoryDropDownSelected(e.target.title, e.target.value) }} /></div>
-                                        <div><input type="text" title={"processConnectIP"} value={memoryDropDownSelected.processConnectIP} onChange={(e) => { changeMemoryDropDownSelected(e.target.title, e.target.value) }} /></div>
-                                        <div><input type="text" title={"dynamicCommand"} value={memoryDropDownSelected.dynamicCommand} onChange={(e) => { changeMemoryDropDownSelected(e.target.title, e.target.value) }} /></div>
-                                        <div><input type="text" title={"processMD5"} value={memoryDropDownSelected.processMD5} onChange={(e) => { changeMemoryDropDownSelected(e.target.title, e.target.value) }} /></div>
-                                        <div><input type="text" title={"processPath"} value={memoryDropDownSelected.processPath} onChange={(e) => { changeMemoryDropDownSelected(e.target.title, e.target.value) }} /></div>
-                                        <div><input type="text" title={"parentProcessPath"} value={memoryDropDownSelected.parentProcessPath} onChange={(e) => { changeMemoryDropDownSelected(e.target.title, e.target.value) }} /></div>
-                                        <div><input type="text" title={"digitalSign"} value={memoryDropDownSelected.digitalSign} onChange={(e) => { changeMemoryDropDownSelected(e.target.title, e.target.value) }} /></div>
-                                        <div><input type="text" title={"importOtherDLL"} value={memoryDropDownSelected.importOtherDLL} onChange={(e) => { changeMemoryDropDownSelected(e.target.title, e.target.value) }} /></div>
-                                        <div><input type="text" title={"processId"} value={memoryDropDownSelected.processId} onChange={(e) => { changeMemoryDropDownSelected(e.target.title, e.target.value) }} /></div>
-                                    </div>
-                                    <div className='memoryDropDownSelector2'>
-                                        <div ><span>風險等級 :</span></div>
-                                        <div><span>注入行為 :</span></div>
-                                        <div><span>程序被注入行為 :</span></div>
-                                        <div><span>開機 動 :</span></div>
-                                        <div><span>Hook :</span></div>
-                                        <div><span>隱藏 :</span></div>
-                                        <div style={{ visibility: "hidden" }}><span>1</span></div>
-                                        <div style={{ visibility: "hidden" }}><span>1</span></div>
-                                        <div style={{ visibility: "hidden" }}><span>1</span></div>
-                                    </div>
-                                    <div className='checkBoxColumn'>
-                                        <div>
+                    <h3 style={{ marginBottom: 5, marginTop: 5 }}>風險等級</h3>
+                    <div style={{ display: "grid", gridTemplateColumns: "140px 4fr", width: '100%', height: '40%' }}>
+                        <div className='memoryDropDownSelector2'>
+                            <div ><span>風險等級 :</span></div>
+                            <div><span>注入行為 :</span></div>
+                            <div><span>程序被注入行為 :</span></div>
+                            <div><span>開機 動 :</span></div>
+                            <div><span>Hook :</span></div>
+                            <div><span>隱藏 :</span></div>
+                            <div style={{ visibility: "hidden" }}><span>1</span></div>
+                            <div style={{ visibility: "hidden" }}><span>1</span></div>
+                            <div style={{ visibility: "hidden" }}><span>1</span></div>
+                        </div>
+                        <div className='checkBoxColumn'>
+                            <div>
+                                {
+                                    riskLevelList.map((ItemName) => {
+                                        return <span style={{ marginRight: "40px" }}>
                                             <Checkbox
-                                                checked={memoryDropDownSelected.riskLevel?.filter((item) => item === "四").length !== 0}
+                                                sx={{ padding: '0px', top: '-2px', marginRight: '0px', marginLeft: "0px" }}
+                                                size='small'
+                                                checked={memoryDropDownSelected.riskLevel?.filter((item) => item === ItemName).length !== 0}
                                                 name={'riskLevel'}
-                                                value={'四'}
-                                                onChange={(e) => { changeMemoryDropDownSelected(e.target.name, e.target.value) }} />四
-                                            <Checkbox
-                                                checked={memoryDropDownSelected.riskLevel?.filter((item) => item === "三").length !== 0}
-                                                name={'riskLevel'}
-                                                value={'三'}
-                                                onChange={(e) => { changeMemoryDropDownSelected(e.target.name, e.target.value) }} />三
-                                            <Checkbox
-                                                checked={memoryDropDownSelected.riskLevel?.filter((item) => item === "二").length !== 0}
-                                                name={'riskLevel'}
-                                                value={'二'}
-                                                onChange={(e) => { changeMemoryDropDownSelected(e.target.name, e.target.value) }} />二
-                                            <Checkbox
-                                                checked={memoryDropDownSelected.riskLevel?.filter((item) => item === "一").length !== 0}
-                                                // checked={true && false}
-                                                name={'riskLevel'}
-                                                value={'一'}
-                                                onChange={(e) => { changeMemoryDropDownSelected(e.target.name, e.target.value) }} />一
-                                        </div>
-                                        <div>
-                                            <Checkbox
-                                                checked={memoryDropDownSelected.injectActive?.filter((item) => item === "PE").length !== 0}
-                                                name={'injectActive'}
-                                                value={'PE'}
-                                                onChange={(e) => { changeMemoryDropDownSelected(e.target.name, e.target.value) }} />PE
-                                            <Checkbox
-                                                checked={memoryDropDownSelected.injectActive?.filter((item) => item === "非PE程式碼").length !== 0}
-                                                name={'injectActive'}
-                                                value={'非PE程式碼'}
-                                                onChange={(e) => { changeMemoryDropDownSelected(e.target.name, e.target.value) }} />非PE程式碼
-                                            <Checkbox
-                                                checked={memoryDropDownSelected.injectActive?.filter((item) => item === "無").length !== 0}
-                                                name={'injectActive'}
-                                                value={'無'}
-                                                onChange={(e) => { changeMemoryDropDownSelected(e.target.name, e.target.value) }} />無
-                                        </div>
-                                        <div>
-                                            <Checkbox
-                                                checked={memoryDropDownSelected.processBeInjected?.filter((item) => item === "有").length !== 0}
-                                                name={'processBeInjected'}
-                                                value={'有'}
-                                                onChange={(e) => { changeMemoryDropDownSelected(e.target.name, e.target.value) }} />有
-                                            <Checkbox
-                                                checked={memoryDropDownSelected.processBeInjected?.filter((item) => item === "無").length !== 0}
-                                                name={'processBeInjected'}
-                                                value={'無'}
-                                                onChange={(e) => { changeMemoryDropDownSelected(e.target.name, e.target.value) }} />無
-                                        </div>
-                                        <div>
-                                            <Checkbox
-                                                checked={memoryDropDownSelected.boot?.filter((item) => item === "Service").length !== 0}
-                                                name={'boot'}
-                                                value={'Service'}
-                                                onChange={(e) => { changeMemoryDropDownSelected(e.target.name, e.target.value) }} />Service
-                                            <Checkbox
-                                                checked={memoryDropDownSelected.boot?.filter((item) => item === "AutoRun").length !== 0}
-                                                name={'boot'}
-                                                value={'AutoRun'}
-                                                onChange={(e) => { changeMemoryDropDownSelected(e.target.name, e.target.value) }} />AutoRun
-                                            <Checkbox
-                                                checked={memoryDropDownSelected.boot?.filter((item) => item === "無").length !== 0}
-                                                name={'boot'}
-                                                value={'無'}
-                                                onChange={(e) => { changeMemoryDropDownSelected(e.target.name, e.target.value) }} />無
-                                        </div>
-                                        <div>
-                                            <Checkbox
-                                                checked={memoryDropDownSelected.hook?.filter((item) => item === "有").length !== 0}
-                                                name={'hook'}
-                                                value={'有'}
-                                                onChange={(e) => { changeMemoryDropDownSelected(e.target.name, e.target.value) }} />有
-                                            <Checkbox
-                                                checked={memoryDropDownSelected.hook?.filter((item) => item === "無").length !== 0}
-                                                name={'hook'}
-                                                value={'無'}
-                                                onChange={(e) => { changeMemoryDropDownSelected(e.target.name, e.target.value) }} />無
-                                        </div>
-                                        <div>
-                                            <Checkbox
-                                                checked={memoryDropDownSelected.hide?.filter((item) => item === "Process").length !== 0}
-                                                name={'hide'}
-                                                value={'Process'}
-                                                onChange={(e) => { changeMemoryDropDownSelected(e.target.name, e.target.value) }} />Process
-                                            <Checkbox
-                                                checked={memoryDropDownSelected.hide?.filter((item) => item === "File").length !== 0}
-                                                name={'hide'}
-                                                value={'File'}
-                                                onChange={(e) => { changeMemoryDropDownSelected(e.target.name, e.target.value) }} />File
-                                            <Checkbox
-                                                checked={memoryDropDownSelected.hide?.filter((item) => item === "無").length !== 0}
-                                                name={'hide'}
-                                                value={'無'}
-                                                onChange={(e) => { changeMemoryDropDownSelected(e.target.name, e.target.value) }} />無
-                                        </div>
-                                        <div style={{ visibility: "hidden" }}><input type="text" /></div>
-                                        <div style={{ visibility: "hidden" }}><input type="text" /></div>
-                                        <div style={{ visibility: "hidden" }}><input type="text" /></div>
-                                    </div>
-                                </div>
+                                                value={ItemName}
+                                                onChange={(e) => { changeMemoryDropDownSelected(e.target.name, e.target.value) }} />  {ItemName}
+                                        </span>
+                                    })
+                                }
 
                             </div>
+                            <div>
+                                {
+                                    injectActiveList.map((ItemName) => {
+                                        return <span style={{ marginRight: "40px" }}>
+                                            <Checkbox
+                                                sx={{ padding: '0px', top: '-2px', marginRight: '0px', marginLeft: "0px" }}
+                                                size='small'
+                                                checked={memoryDropDownSelected.injectActive?.filter((item) => item === ItemName).length !== 0}
+                                                name={'injectActive'}
+                                                value={ItemName}
+                                                onChange={(e) => { changeMemoryDropDownSelected(e.target.name, e.target.value) }} />{ItemName}
+                                        </span>
+                                    })
+                                }
 
-                        </MenuItem>
-                    </Select>
-                </FormControl>
-            </span>
+                            </div>
+                            <div>
+                                {
+                                    processBeInjectedList.map((ItemName) => {
+                                        return <span style={{ marginRight: "40px" }}>
+                                            <Checkbox
+                                                sx={{ padding: '0px', top: '-2px', marginRight: '0px', marginLeft: "0px" }}
+                                                size='small'
+                                                checked={memoryDropDownSelected.processBeInjected?.filter((item) => item === ItemName).length !== 0}
+                                                name={'processBeInjected'}
+                                                value={ItemName}
+                                                onChange={(e) => { changeMemoryDropDownSelected(e.target.name, e.target.value) }} />{ItemName}
+                                        </span>
+                                    })
+                                }
+                            </div>
+                            <div>
+                                {
+                                    bootList.map((ItemName) => {
+                                        return <span style={{ marginRight: "40px" }}>
+                                            <Checkbox
+                                                sx={{ padding: '0px', top: '-2px', marginRight: '0px', marginLeft: "0px" }}
+                                                size='small'
+                                                checked={memoryDropDownSelected.boot?.filter((item) => item === ItemName).length !== 0}
+                                                name={'boot'}
+                                                value={ItemName}
+                                                onChange={(e) => { changeMemoryDropDownSelected(e.target.name, e.target.value) }} />{ItemName}
+                                        </span>
+                                    })
+                                }
+                            </div>
+                            <div>
+                                {
+                                    hookList.map((ItemName) => {
+                                        return <span style={{ marginRight: "40px" }}>
+                                            <Checkbox
+                                                sx={{ padding: '0px', top: '-2px', marginRight: '0px', marginLeft: "0px" }}
+                                                size='small'
+                                                checked={memoryDropDownSelected.hook?.filter((item) => item === ItemName).length !== 0}
+                                                name={'hook'}
+                                                value={ItemName}
+                                                onChange={(e) => { changeMemoryDropDownSelected(e.target.name, e.target.value) }} />{ItemName}
+                                        </span>
+                                    })
+                                }
+                            </div>
+                            <div>
+                                {
+                                    hideList.map((ItemName) => {
+                                        return <span style={{ marginRight: "40px" }}>
+                                            <Checkbox
+                                                sx={{ padding: '0px', top: '-2px' }}
+                                                size='small'
+                                                checked={memoryDropDownSelected.hide?.filter((item) => item === ItemName).length !== 0}
+                                                name={'hide'}
+                                                value={ItemName}
+                                                onChange={(e) => { changeMemoryDropDownSelected(e.target.name, e.target.value) }} />{ItemName}
+                                        </span>
+                                    })
+                                }
+                            </div>
+                            <div style={{ visibility: "hidden" }}><input type="text" /></div>
+                            <div style={{ visibility: "hidden" }}><input type="text" /></div>
+                            <div style={{ visibility: "hidden" }}><input type="text" /></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 }

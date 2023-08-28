@@ -6,7 +6,7 @@ import { AuthContext } from '../../../AppContext/AuthProvider';
 
 const CommonHeader = ({ isDarkTheme }: { isDarkTheme: boolean }) => {
 
-    const { isLogin, setIsLogin } = useContext(AuthContext);
+    const { setIsLogin } = useContext(AuthContext);
     const navigate = useNavigate();
 
     const textStyles = {
@@ -26,6 +26,10 @@ const CommonHeader = ({ isDarkTheme }: { isDarkTheme: boolean }) => {
         else return
     }
 
+    const navigateTo = (path: string) => {
+        navigate(path);
+    }
+
     return (
         <div className='App-background container' style={{ padding: '5px 10px' }}>
             <div style={textStyles}>
@@ -36,8 +40,12 @@ const CommonHeader = ({ isDarkTheme }: { isDarkTheme: boolean }) => {
                 <Link to='/detect' className='headerButton' style={{ ...textStyles, }}>蒐證任務</Link>
                 <Link to='/analysis' className='headerButton' style={{ ...textStyles, }}>分析</Link>
             </div>
-            <span className='loginButton' style={{ ...textStyles, }}
-                onClick={handleLogin}>{isLogin ? "登出" : "載入中"}</span>
+            {/* <span className='settingButton' style={{ ...textStyles, }} onClick={handleLogin}>
+                登出
+            </span> */}
+            <span className='settingButton' style={{ ...textStyles, }} onClick={()=>{navigateTo('/setting')}}>
+                設定
+            </span>
         </div>
     )
 }

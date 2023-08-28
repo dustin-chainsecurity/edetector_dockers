@@ -1,6 +1,5 @@
 import * as React from 'react';
 import Checkbox from '@mui/material/Checkbox';
-import OutlinedInput from '@mui/material/OutlinedInput';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
@@ -13,10 +12,8 @@ import List from '@mui/material/List';
 import ListItemButton from '@mui/material/ListItemButton';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
-import { oneHostData, AllFilesDropDownData, ForensicsSelectedData, MemorySelectedData, RiskLevel, InjectActive, ProcessBeInjected, Boot, Hook, Hide } from '../../../../constant/interfaceBoard'
-import ItemInForensicsDropSelector from './ItemInForensicsDropSelector';
+import { ForensicsSelectedData } from '../../../../constant/interfaceBoard'
 import ItemContainerInForensicsDropSelector from './ItemContainerInForensicsDropSelector';
-import { useBeforeUnload } from 'react-router-dom';
 interface ChildProps {
     forensicsSelectedData: ForensicsSelectedData
     setForensicsSelectedData: React.Dispatch<React.SetStateAction<ForensicsSelectedData>>
@@ -306,50 +303,28 @@ const ForensicsDropSelector: React.FC<ChildProps> = ({ forensicsSelectedData, se
             setForensicsSelectedData={setForensicsSelectedData}
         />
     }
-    // 控制是否選取記憶體
-    function handleForensicsDropDownSelected(e: React.ChangeEvent<HTMLInputElement>) {
-        console.log(e.target.checked)
-        setForensicsSelectedData({
-            ...forensicsSelectedData,
-            isForensicsSelected: e.target.checked
-        })
-    }
-
 
     return (
-        <div style={{ display: 'flex', alignItems: 'center', justifyItems: 'center' }}>
-            <Checkbox
-                checked={forensicsSelectedData.isForensicsSelected ? forensicsSelectedData.isForensicsSelected : false}
-                onChange={(e) => handleForensicsDropDownSelected(e)}
-            />
-            <FormControl sx={{ m: 1, width: 120, top: '4px' }}>
-                <Select
-                    multiple
-                    value={["126", "fepfl"]}
-                    renderValue={() => <em>痕跡取證</em>}
-                >
-                    <div style={{ minWidth: "300px", height: "599px" }}>
-                        <div style={{ position: 'relative', height: '599px', width: '760px', zIndex: '100', left: '-20px', paddingLeft: '20px', backgroundColor: 'white' }}>
-                            <div style={{ height: "600px", width: '750px', paddingRight: '20px', paddingLeft: '20px', backgroundColor: 'white' }}>
-                                <QuickSelect keywordType={''} />
-                                <KeyWordType keywordType={''} />
-                                <SearchKeyword keywordType={''} />
-                                <hr />
-                                <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', height: '450px' }}>
-                                    {SelectPageList()}
-                                    <div style={{ backgroundColor: "#F5F5F5", padding: "20px" }}>
-                                        {showSelectedPage()}
-                                    </div>
-                                </div>
-                                <div>
-
-                                </div>
+        <div style={{ display: 'flex', alignItems: 'center', justifyItems: 'center', width: "750px" }}>
+            <div style={{ minWidth: "300px", height: "599px" }}>
+                <div style={{ position: 'relative', height: '599px', width: '760px', zIndex: '100', paddingLeft: '20px', backgroundColor: 'white' }}>
+                    <div style={{ height: "600px", backgroundColor: 'white' }}>
+                        <div style={{display:"grid",gridTemplateColumns:"1fr  auto"}}>
+                            <div style={{display:"flex",alignItems:"center"}}>痕跡取證</div>
+                            <QuickSelect keywordType={''} />
+                        </div>
+                        {/* <KeyWordType keywordType={''} />
+                        <SearchKeyword keywordType={''} /> */}
+                        <hr />
+                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', height: '450px' }}>
+                            {SelectPageList()}
+                            <div style={{ backgroundColor: "#F5F5F5", padding: "20px" }}>
+                                {showSelectedPage()}
                             </div>
-
                         </div>
                     </div>
-                </Select>
-            </FormControl>
+                </div>
+            </div>
         </div>
     )
 }

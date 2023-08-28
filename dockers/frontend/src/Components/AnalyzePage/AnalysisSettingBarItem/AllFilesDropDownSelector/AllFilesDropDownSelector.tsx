@@ -1,5 +1,4 @@
 import * as React from 'react';
-import Checkbox from '@mui/material/Checkbox';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
@@ -60,31 +59,6 @@ const AllFilesDropDownSelector: React.FC<ChildProps> = ({
         </div>
         )
     }
-
-
-    // // 關鍵路徑
-    // const AllFileDropDownSelectorKeyPath: React.FC<ChildProps> = ({ allFilesDropDownData, setallFilesDropDownData }) => {
-    //     const [mes, setMes] =React.useState('') ;
-
-    //     return (<div style={{ display: 'grid', gridTemplateColumns: 'auto auto 1fr' }}>
-    //         <span style={{ display: 'flex', alignItems: 'center', marginRight: "10px" }}>
-    //             關鍵路徑：
-    //         </span>
-    //         <TextField
-    //             id="outlined-basic"
-    //             size='small'
-    //             type='text'
-    //             // value={allFilesDropDownData.keyPath}
-    //             onChange={(e) => {
-    //                 console.log(e.target.value)
-    //                 setMes(e.target.value)
-    //             }
-
-    //             } />
-    //         <div></div>
-    //     </div>
-    //     )
-    // }
 
     // 關鍵字類別:
     const AllFileDropDownSelectorKeywordType = () => {
@@ -230,52 +204,33 @@ const AllFilesDropDownSelector: React.FC<ChildProps> = ({
         </div>
         )
     }
-    function changeMemoryDropDownSelected(e: React.ChangeEvent<HTMLInputElement>) {
-        console.log(e.target.checked)
-        setallFilesDropDownData({
-            ...allFilesDropDownData,
-            isAllFilesSelected: e.target.checked
-        })
-    }
 
 
-    return (<div style={{ display: 'flex', alignItems: 'center', justifyItems: 'center' }}>
-        <Checkbox
-            checked={allFilesDropDownData.isAllFilesSelected ? true : false}
-            // name={'memoryGroupChecked'}
-            // value={memoryDropDownSelected.memoryGroupChecked}
-            onChange={(e) => changeMemoryDropDownSelected(e)}
-        />
-        <FormControl sx={{ m: 1, width: 120, top: '4px' }}>
-            <Select
-                multiple
-                value={["檔案總表"]}
-                renderValue={() => <em>檔案總表</em>}
-            >
-                <div style={{ minWidth: "300px", height: "311px" }}>
-                    <div style={{ position: 'relative', height: '311px', width: '534px', zIndex: '100', left: '-20px', paddingLeft: '20px', backgroundColor: 'white' }}>
-                        <div style={{ height: "311px", width: '750px', paddingRight: '20px', paddingLeft: '20px', backgroundColor: 'white' }}>
-                            {/* <QuickSelect keywordType={''} />
+    return (
+        <div style={{ display: 'flex', alignItems: 'center', justifyItems: 'center', width: "750px" }}>
+
+            <div style={{ minWidth: "300px", height: "311px" }}>
+                <div style={{ position: 'relative', height: '311px', width: '534px', zIndex: '100', paddingLeft: '20px', backgroundColor: 'white' }}>
+                    <div style={{ height: "311px", backgroundColor: 'white' }}>
+                        <div style={{display:"flex",alignItems:"center",height:50}}>檔案總表</div>
+                        {/* <QuickSelect keywordType={''} />
                         <KetWordType keywordType={''} />
                         <SearchKeyword keywordType={''} /> */}
-                            <div className='allRow'>
-                                {AllFileDropDownSelectorKeyPath()}
-                                {/* <AllFileDropDownSelectorKeyPath allFilesDropDownData={allFilesDropDownData} setallFilesDropDownData={setallFilesDropDownData} /> */}
-                                {AllFileDropDownSelectorKeywordType()}
-                                {AllFileDropDownSelectorKeywordFileName()}
-                                {AllFileDropDownSelectorKeywordContent()}
-                                <hr />
+                        <div className='allRow'>
+                            {/* {AllFileDropDownSelectorKeyPath()}
+                            {AllFileDropDownSelectorKeywordType()}
+                            {AllFileDropDownSelectorKeywordFileName()}
+                            {AllFileDropDownSelectorKeywordContent()}
+                            <hr /> */}
+                            {AllFileDropDownSelectorFileSize()}
+                            {AllFileDropDownSelectorOnlySearchDeletedFile()}
 
-                                {AllFileDropDownSelectorFileSize()}
-                                {AllFileDropDownSelectorOnlySearchDeletedFile()}
-
-                            </div>
                         </div>
                     </div>
                 </div>
-            </Select>
-        </FormControl>
-    </div>
+            </div>
+
+        </div>
     )
 }
 

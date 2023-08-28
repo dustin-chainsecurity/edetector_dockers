@@ -12,7 +12,7 @@ export const translateTime =(obj:DynamicObject)=>{
       const value = obj[key];
 
       if (typeof value === 'number' && value.toString().length > 8) {
-        newObj[key] = formatTimestamp(value);
+        newObj[key] = formatTimestamp(value); // 統一時間格式轉換
       } else {
         newObj[key] = value;
       }

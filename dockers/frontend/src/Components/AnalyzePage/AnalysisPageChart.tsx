@@ -1,59 +1,44 @@
-import React from 'react';
+import { UseMutationResult } from '@tanstack/react-query';
+import { AxiosResponse } from 'axios';
+import React, { useEffect } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { generateDotsListForChartWithBoxQuery, generateTimeListForChart } from '../../constant/FunctionForElasticsearch/functionToolbox';
+import { IDateModuleData } from '../../constant/interfaceBoard';
+import CircularProgress from '@mui/material/CircularProgress';
 
-const data = [
-  {
-    name: 'Page A',
-    uv: 4000,
-    pv: 2400,
-    amt: 2400,
-  },
-  {
-    name: 'Page B',
-    uv: 300,
-    pv: 1398,
-    amt: 2210,
-  },
-  {
-    name: 'Page C',
-    uv: 2000,
-    pv: 9800,
-    amt: 2290,
-  },
-  {
-    name: 'Page D',
-    uv: 2780,
-    pv: 3908,
-    amt: 2000,
-  },
-  {
-    name: 'Page E',
-    uv: 1890,
-    pv: 4800,
-    amt: 2181,
-  },
-  {
-    name: 'Page F',
-    uv: 2390,
-    pv: 3800,
-    amt: 2500,
-  },
-  {
-    name: 'Page G',
-    uv: 3490,
-    pv: 4300,
-    amt: 2100,
-  },
-];
 
-const AnalysisPageChart = ({ dotsInChart }: { dotsInChart: any }) => {
-  if (dotsInChart.length !== 0) {
+interface IDotsForChart {
+  name: string,
+  totalCount: number
+}
+const AnalysisPageChart = ({ dateModuleData, fetchElasticSearchForChart }: { dateModuleData: IDateModuleData, fetchElasticSearchForChart: UseMutationResult<AxiosResponse<any, any>, any, any, unknown> }) => {
+
+  const [dotsForChart, setDotsForChart] = React.useState<IDotsForChart[]>([])
+
+  useEffect(() => {
+    setDotsForChart([])
+    if (fetchElasticSearchForChart.isSuccess) {
+      let timeList = generateTimeListForChart(dateModuleData.startTime, dateModuleData.endTime)
+      let dotsListForChartInBoxQuery = generateDotsListForChartWithBoxQuery(fetchElasticSearchForChart.data, timeList)
+      setDotsForChart(dotsListForChartInBoxQuery)
+
+    }
+  }, [fetchElasticSearchForChart])
+  if (fetchElasticSearchForChart.isLoading) {
+    return (
+      <div style={{height:"200px",display:"flex",alignItems:"center",justifyContent:"center"}}>
+        <CircularProgress></CircularProgress>
+      </div>
+    )
+  }
+
+  if (dotsForChart.length !== 0) {
     return (
       <ResponsiveContainer>
         <LineChart
           // width={500}
-          height={300}
-          data={dotsInChart}
+          height={400}
+          data={dotsForChart}
           margin={{
             top: 5,
             right: 30,
@@ -61,13 +46,13 @@ const AnalysisPageChart = ({ dotsInChart }: { dotsInChart: any }) => {
             bottom: 5,
           }}
         >
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="name" />
+          {/* //調整格線 */}
+          <CartesianGrid strokeDasharray="0 1" />  
+          <XAxis dataKey="name" minTickGap={40} />
           <YAxis />
           <Tooltip />
           <Legend />
-          <Line type="monotone" dataKey="totalCount" stroke="#8884d8" activeDot={{ r: 8 }} />
-          <Line type="monotone" dataKey="uv" stroke="#82ca9d" />
+          <Line type="monotone" dataKey="totalCount" stroke="#8884d8" activeDot={{ r:  0}} />
         </LineChart>
       </ResponsiveContainer>
     );
@@ -79,3 +64,4 @@ const AnalysisPageChart = ({ dotsInChart }: { dotsInChart: any }) => {
 }
 
 export default AnalysisPageChart;
+

@@ -4,6 +4,7 @@ import GroupNav from './GroupNav';
 import GroupGrid from './GroupGrid/GroupGrid';
 import { IGenerateGroup, oneHostData } from '../../../../constant/interfaceBoard';
 import { useCallback, useEffect, useState } from 'react';
+import { DropDownContainer, DropDownLabel } from '../StyledComponents';
 
 interface GroupDropDownProps {
     groups: IGenerateGroup[]
@@ -50,9 +51,9 @@ const GroupDropDown = (props: GroupDropDownProps) => {
     }, [renderData, setSelectedId]);
 
     return (
-        <div style={{ minWidth: 200, display: 'flex', flexWrap: 'nowrap', alignItems: 'center', justifyContent: 'space-evenly' }}>
-            <p>主機</p>
-            <FormControl sx={{ m: 1, width: '70%', top: '4px' }}>
+        <DropDownContainer style={{ width: 220 }}>
+            <DropDownLabel style={{ marginRight:5 }}>主機</DropDownLabel>
+            <FormControl sx={{ m:1, width: '70%', top: '4px', marginTop:0, marginLeft:0, backgroundColor:'white' }} size='small'>
                 <Select
                     multiple
                     displayEmpty
@@ -86,7 +87,7 @@ const GroupDropDown = (props: GroupDropDownProps) => {
 
                 </Select>
             </FormControl>
-        </div>
+        </DropDownContainer>
     )
 }
 

@@ -19,8 +19,8 @@ const elasticRoute = {
 }
 
 export const API = {
-    login :'member/login',
-    loginWithToken :'member/loginWithToken',
+    login :'login',
+    loginWithToken :'loginWithToken',
     DetectDevices:'searchEvidence/detectDevices', // searchEvidence/DetectDevices?pages={page} …
     SearchDevices:'searchEvidence/queryKey', // searchEvidence/DetectDevices?pages={page} …
     DevicesConnect:'searchEvidence/DevicesConnect',
@@ -28,12 +28,18 @@ export const API = {
     // searchEvidense
     SendMission:'task/sendMission',
     detectionMode: 'task/detectionMode',
-
     scheduledScan:'task/scheduledScan', //5050
     scheduledForensics:'task/scheduledCollect', //5050
     scheduledDownload:'task/scheduledDownload', //5050
-
+    // analysisPage
     deviceGroups:'analysisPage/allDeviceDetail',
+    
+    //setting page
+    interfaceSetting:'setting/Interface',
+    agentSetting:'setting/Agent',
+    CommonFunc :'setting/Function',
+    ServerAndEmail : 'setting/ServerAndEmail',
+
 }
 
 const elasticParentUrl = {  //todo
@@ -43,18 +49,23 @@ const elasticParentUrl = {  //todo
 
 export const mainTableName={
     ed_main:'ed_main/',
+    ed_all:"ed_*/"
 }
 
 export const elasticChildUrl = {  //todo
     search: '_search',
+    msearch:"_msearch",
+    count:"_count"
 }
 
-export const urlRoot = rootRoute.dev;
-//要連接elastic的url，要把elasticRoute跟elasticParentUrl改成dev
-export const elasticParent = elasticParentUrl.dev;
-export const scheduledRoot = scheduledRoute.dev;
-export const socketRoot = socketRoute.dev;
-export const elasticRoot = elasticRoute.dev;
 
+
+export const urlRoot = rootRoute.dev;
+export const scheduledRoot = scheduledRoute.local;
+export const socketRoot = socketRoute.dev;
+
+//要連接elastic的url，要把elasticRoute跟elasticParentUrl改成dev
+export const elasticRoot = elasticRoute.dev;
+export const elasticParent = elasticParentUrl.dev;
 
 

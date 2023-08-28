@@ -140,6 +140,8 @@ const CheckTitle = (props: CheckTitleProps) => {
                 backgroundColor: selectedHost === text ? '#E1F5FE' : 'transparent',
                 cursor: 'pointer',
                 margin: '3px auto',
+                display: 'flex',
+                alignItems: 'center',
             }}
             onClick={() => { setSelectedHost(text) }}
         >
@@ -152,7 +154,12 @@ const CheckTitle = (props: CheckTitleProps) => {
                     'aria-label': 'select all desserts',
                 }}
             />
-            <span>{text}</span>
+            <span style={{ 
+                width:'100%', 
+                maxHeight:45, 
+                overflow:'hidden', 
+                textOverflow:'ellipsis' 
+            }}>{text===''?'未分類群組':text}</span>
         </div>
     )
 }

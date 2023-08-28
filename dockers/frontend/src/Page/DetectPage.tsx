@@ -1,36 +1,23 @@
-import {
-  useQuery,
-  useMutation,
-  useQueryClient,
-  QueryClient,
-  QueryClientProvider,
-  useQueries,
-} from '@tanstack/react-query'
-import axios from 'axios';
+import { useQuery } from '@tanstack/react-query'
 import { API, socketRoot, urlRoot } from '../constant';
 import GridTable from '../Components/DetectPage/DetectGridTable/GridTable/GridTable';
-import SelectFilter from '../Components/SelectFilter';
 import { useContext, useEffect, useRef, useState } from 'react';
 import CommonHeader from '../Components/CommonConponents/CommonHeader/CommonHeader';
 import Error404Page from './ErrorPage/404Page';
-import SettingBar from '../Components/SettingBar'
-import SettingBarWithDate from '../Components/SettingBarWithDate'
 
-import { IConnectStatus, IDataFlow, IDevice, IFormtedConnectStatus, IFormatedDevice, TactionType, ITimeForm } from '../constant/interfaceBoard';
-import { customConnectedData, customData, matchObjects } from '../constant/functionToolbox';
+import { IDevice, TactionType } from '../constant/interfaceBoard';
+import { customData, matchObjects } from '../constant/functionToolbox';
 import PartialLoading from '../Components/CommonConponents/PartialLoading/PartialLoading';
-// import { axiosClient } from '../api/api';
-import DetectProvider, { DetectContext } from '../AppContext/DetectProvider';
+import DetectProvider from '../AppContext/DetectProvider';
 import { axiosClient } from '../utiles/ProtectedRoutes';
 import { AuthContext } from '../AppContext/AuthProvider';
-import { url } from 'inspector';
+import HorizontalBar from '../Components/DetectPage/HorizontalBar/HorizontalBar';
 
 
 
 const DetectPage = () => {
   const { token } = useContext(AuthContext);
   const [activeFetch, setActiveFetch] = useState(false);
-  const [settingBarShowOptions, setSettingBarShowOptions] = useState<TactionType>("");
   const [responseID, setResponseID] = useState<string[]>([]);
 
 
@@ -43,11 +30,9 @@ const DetectPage = () => {
           const res_1 = customData(obj);
           return { ...res_1, id: index + 1 };
         }) ?? [];
-        // setGridData(formtedData);
         return formtedData;
       }
-    },
-    refetchInterval: 30000
+    }
   })
 
 
@@ -103,7 +88,8 @@ const DetectPage = () => {
           if (message.deviceId.length !== 0) {
             setActiveFetch(true)
           }
-        }//and if message.type === 'some other else' call setActiveFetch
+          //and if message.type === 'some other else' call setActiveFetch
+        }
       };
     }
   }, [socketRef])
@@ -117,26 +103,8 @@ const DetectPage = () => {
   return (
     <DetectProvider>
       <div>
-
         <CommonHeader isDarkTheme={false} />
-
-        {/* <p>我是假的ws觸發按鈕 ：請點我<button onClick={() => {
-          setActiveFetch(true)
-          setResponseID(['AAA-123'])
-        }}>click</button>
-        </p> */}
-
-        <div style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', alignItems: 'center', padding: '5px' }} >
-          <SelectFilter title="記憶體" isOption={true} isThemeColor={true} settingBarShowOptions={settingBarShowOptions} setSettingBarShowOptions={setSettingBarShowOptions} />
-          <SelectFilter title="痕跡取證" isOption={true} isThemeColor={true} settingBarShowOptions={settingBarShowOptions} setSettingBarShowOptions={setSettingBarShowOptions} />
-          <SelectFilter title="檔案總表" isOption={true} isThemeColor={true} settingBarShowOptions={settingBarShowOptions} setSettingBarShowOptions={setSettingBarShowOptions} />
-          <SelectFilter title="關鍵映像檔" isOption={false} isThemeColor={true} settingBarShowOptions={settingBarShowOptions} setSettingBarShowOptions={setSettingBarShowOptions} />
-          <SelectFilter title="任務執行" isOption={false} isThemeColor={false} settingBarShowOptions={settingBarShowOptions} setSettingBarShowOptions={setSettingBarShowOptions} />
-        </div>
-
-        {settingBarShowOptions === "記憶體" && <SettingBar />}
-        {settingBarShowOptions === "痕跡取證" && <SettingBarWithDate settingBarShowOptions={settingBarShowOptions} />}
-        {settingBarShowOptions === "檔案總表" && <SettingBarWithDate settingBarShowOptions={settingBarShowOptions} />}
+        <HorizontalBar/>        
         <div style={{ margin: 5, padding: 5, backgroundColor: '#F5F5F5', overflow: 'scroll' }}>
           {fetchQuery.isLoading ? <PartialLoading /> : <GridTable data={fetchQuery.data}
             connectData={refreshQuery.data ? refreshQuery.data : []}

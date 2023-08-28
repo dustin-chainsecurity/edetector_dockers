@@ -10,6 +10,6 @@
   }
 }
   
-  .roll-out {
-    animation: zoom-in-zoom-out 1s ease ;
-  }
+.roll-out {
+  animation: zoom-in-zoom-out 1s ease ;
+}

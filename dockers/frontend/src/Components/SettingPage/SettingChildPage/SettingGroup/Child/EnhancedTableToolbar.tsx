@@ -2,8 +2,7 @@ import { Checkbox, FormControlLabel, InputAdornment, Menu, MenuItem, TextField, 
 import { alpha } from '@mui/material/styles';
 import { ChangeEvent, useState } from "react";
 import SearchIcon from '@mui/icons-material/Search';
-import PartialLoading from "../../PartialLoading/PartialLoading";
-import SearchBar from "../../SearchBar/SearchBar";
+
 
 
 
@@ -64,13 +63,11 @@ export function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
                 <div style={{ width: 400, display: 'flex', alignItems: 'flex-end' }}>
                     {/* <FilterDrop /> */}
                     {/* <FilterAltIcon style={{ color: '#BDBDBD', cursor: 'pointer', marginRight: 10 }} fontSize="large" /> */}
-                    <SearchBar labelValue={hint} query={key} onChangeFunc={onChangeFunc} onSearchFunc={searchKeyWords} />
-                    {props.refreshLoading && props.activeFetch ? <PartialLoading /> : null}
+                    {/* <SearchBar labelValue={hint} query={key} onChangeFunc={onChangeFunc} onSearchFunc={searchKeyWords} /> */}
+                    {/* {props.refreshLoading && props.activeFetch ? <PartialLoading /> : null} */}
                 </div>
             </Typography>
         </Toolbar>
     );
 }
 
-
-// 目前處於兩個點要考慮，本地搜尋或是伺服器搜尋

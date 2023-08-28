@@ -42,10 +42,6 @@ const headCells: readonly DetectGrid_HeadCell[] = [
         label: 'MAC Address',
     },
     {
-        id: 'clientUid',
-        label: '流水編號',
-    },
-    {
         id: 'groups',
         label: '所屬群組',
     }

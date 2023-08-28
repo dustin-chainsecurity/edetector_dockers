@@ -398,6 +398,8 @@ export function generateUrlAndBodyForElasticsearch(
           "query_string": {
             "query": `*${subSearchKeyword[i]}*`,
             "fuzziness": "AUTO",
+            // "operator": "and"
+            // "flags": "CASE_INSENSITIVE"
           }
         }
       )

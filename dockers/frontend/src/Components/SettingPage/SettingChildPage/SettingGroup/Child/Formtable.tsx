@@ -1,54 +1,54 @@
-/** @format */
-
-import {
-	Box,
-	Checkbox,
-	Table,
-	TableBody,
-	TableCell,
-	TableContainer,
-	TablePagination,
-	TableRow,
-} from "@mui/material";
-import EnhancedTableHead from "./EnhancedTableHead";
-import { mockSettingData } from "./MockData"; // 假資料
 import { useMemo, useState } from "react";
-import {
-	Order,
-	fixPaginationNumber,
-	getComparator,
-	stableSort,
-} from "../../TableFunction";
-import {
-	GridCheck,
-	TableCellComponent,
-	TableStatusomponent,
-} from "./EnhancedTableElement";
-import { Control, FieldValues } from "react-hook-form";
-import { EnhancedTableToolbar } from "./EnhancedTableToolbar";
-import { formatTimestamp } from "../../../../constant/functionToolbox";
+import { Order, fixPaginationNumber, getComparator, stableSort } from "../../../../CommonConponents/TableFunction";
+import { Box, Checkbox, Table, TableBody, TableCell, TableContainer, TablePagination, TableRow } from "@mui/material";
+import { formatTimestamp } from "../../../../../constant/functionToolbox";
+import { mockSettingData } from "./mockSettingData";
 
+import { TableCellComponent } from "../../../../CommonConponents/FormInput/FormTable/EnhancedTableElement";
+import EnhancedTableHead from "../../../../CommonConponents/FormInput/FormTable/EnhancedTableHead";
+import { EnhancedTableToolbar } from "./EnhancedTableToolbar";
+
+
+// used in table component
 export interface IDeviceData {
-	deviceId: string;
-	innerIP: string;
-	deviceName: string;
-	address: string;
-	groups: string;
+    deviceId: string;
+    innerIP: string;
+    deviceName: string;
+    address: string;
+    groups: string;
+}
+
+export interface IDeviceData2 {
+    groupID: number; 
+	name: string;
+	description: string;
+	rangeBegin: string;
+	rangeEnd: string;
+	devices: string[];
+}
+
+interface IAllGroup {
+    groupID: number ;
+	name: string;
+    description: string ;
+    rangeBegin: string ;
+    rangeEnd: string ;
+    devices: string[] ;
 }
 
 interface IFormTable {
-
+	tableData : IDeviceData[] ;
 }
 
 const FormTable = (props: IFormTable) => {
-	// const { control, fields } = props;
+	const { tableData } = props;
 	const [selectedId, setSelectedId] = useState<readonly string[]>([]);
 	const [orderBy, setOrderBy] = useState<keyof IDeviceData>("deviceId");
 	const [order, setOrder] = useState<Order>("asc");
 	const [page, setPage] = useState(0);
 	const [rowsPerPage, setRowsPerPage] = useState(5);
 
-	const dataQuery = mockSettingData.data;
+	// const dataQuery = mockSettingData;
 
 	const handleRequestSort = (
 		//排序方法
@@ -99,24 +99,24 @@ const FormTable = (props: IFormTable) => {
 		setPage(0);
 	};
 
-	const pagNumArray = fixPaginationNumber(dataQuery.length);
+	const pagNumArray = fixPaginationNumber(tableData.length);
 
 	const isSelected = (name: string) => selectedId.indexOf(name) !== -1;
 
 	const emptyRows =
-		page > 0 ? Math.max(0, (1 + page) * rowsPerPage - dataQuery.length) : 0;
+		page > 0 ? Math.max(0, (1 + page) * rowsPerPage - tableData.length) : 0;
 
 	const visibleRows = useMemo(
 		() =>
-			stableSort(dataQuery, getComparator(order, orderBy)).slice(
+			stableSort(tableData, getComparator(order, orderBy)).slice(
 				page * rowsPerPage,
 				page * rowsPerPage + rowsPerPage
 			),
-		[order, orderBy, page, rowsPerPage, dataQuery]
+		[order, orderBy, page, rowsPerPage, tableData]
 	);
 
 	const searchRows = (searchedVal: string) => { //表格關鍵字搜索
-	    const filteredRows = dataQuery.filter((row) => {
+	    const filteredRows = tableData.filter((row) => {
 	        return Object.entries(row).some(([key, value]) => {
 	            if (key === 'tableFinishTime' || key === 'ImageFinishTime' || key === 'scanFinishTime' || key === 'traceFinishTime') {
 	                return formatTimestamp(value).includes(searchedVal);
@@ -129,7 +129,7 @@ const FormTable = (props: IFormTable) => {
 	};
 
 	return (
-		<Box sx={{ width: 1000, backgroundColor:'#F5F5F5',marginLeft:'160px' }}>
+		<Box sx={{ width: 700, backgroundColor:'#F5F5F5', padding:'10px' }}>
 				<EnhancedTableToolbar 
                     numSelected={999} 
                     // setDataQuery={setDataQuery} 
@@ -146,7 +146,7 @@ const FormTable = (props: IFormTable) => {
 							orderBy={orderBy}
 							// onSelectAllClick={handleSelectAllClick}
 							handleRequestSort={handleRequestSort}
-							rowCount={dataQuery.length}
+							rowCount={tableData.length}
 						/>
 						<TableBody>
 							{visibleRows.map((row, index) => {
@@ -163,32 +163,23 @@ const FormTable = (props: IFormTable) => {
 										// selected={isItemSelected}
 										sx={{ cursor: "pointer" }}
 									>
-
-
 										<TableCell padding="checkbox">
-											{/* <GridCheck
-												// control={control}
-												name={row.deviceId}
-												// field={fields[index]}
-											/> */}
 											<Checkbox
                                                 color="primary"
                                                 checked={isItemSelected}
                                                 inputProps={{ 'aria-labelledby': labelId }}
                                             />
 										</TableCell>
-
-
-										<TableCellComponent align="left">
+										<TableCellComponent align="left" minWidth="80px" lockHeight={true}>
 											{row.innerIP}
 										</TableCellComponent>
-										<TableCellComponent align="left">
+										<TableCellComponent align="left" minWidth="80px" lockHeight={true}>
 											{row.deviceName}
 										</TableCellComponent>
-										<TableCellComponent align="left">
+										<TableCellComponent align="left" minWidth="80px" lockHeight={true}>
 											{row.address}
 										</TableCellComponent>
-										<TableCellComponent align="left">
+										<TableCellComponent align="left" minWidth="80px" lockHeight={true}>
 											{row.groups}
 										</TableCellComponent>
 									</TableRow>
@@ -209,7 +200,7 @@ const FormTable = (props: IFormTable) => {
 						{ label: "全部", value: -1 },
 					]}
 					component="div"
-					count={dataQuery.length}
+					count={tableData.length}
 					rowsPerPage={rowsPerPage}
 					page={page}
 					onPageChange={handleChangePage}

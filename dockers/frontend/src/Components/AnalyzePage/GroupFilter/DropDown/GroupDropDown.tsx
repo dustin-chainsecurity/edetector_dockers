@@ -51,9 +51,16 @@ const GroupDropDown = (props: GroupDropDownProps) => {
     }, [renderData, setSelectedId]);
 
     return (
-        <DropDownContainer style={{ width: 220 }}>
-            <DropDownLabel style={{ marginRight:5 }}>主機</DropDownLabel>
-            <FormControl sx={{ m:1, width: '70%', top: '4px', marginTop:0, marginLeft:0, backgroundColor:'white' }} size='small'>
+        <div style={{
+            display: 'flex',
+            width: "min-content",
+            height: "100%",
+            marginLeft: 20
+        }}>
+            <div style={{ height: "100%", whiteSpace: "nowrap", display: "flex", alignItems: "center" }}>
+                主機
+            </div>
+            <FormControl sx={{ m: 1, width: 200, backgroundColor: 'white',height:"min-content" }} size='small'>
                 <Select
                     multiple
                     displayEmpty
@@ -87,7 +94,8 @@ const GroupDropDown = (props: GroupDropDownProps) => {
 
                 </Select>
             </FormControl>
-        </DropDownContainer>
+        </div>
+
     )
 }
 

@@ -41,6 +41,11 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
+    "local": "env-cmd -f .env.local react-scripts start",
+    "dev": "env-cmd -f .env.development react-scripts start",
+    "prod": "env-cmd -f .env.production react-scripts start",
+    "build:prod": "env-cmd -f .env.production react-scripts build",
+    
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -65,6 +70,7 @@
     ]
   },
   "devDependencies": {
+    "env-cmd": "^10.1.0",
     "react-cookies": "^0.1.1"
   }
 }

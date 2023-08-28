@@ -37,13 +37,15 @@ const
 
         return (
             <div style={{ maxWidth: '90%', marginBottom: 20, marginTop: 10, marginRight: 40 }}>
-                <div style={{ minWidth: 800, display: 'flex', flexWrap: 'wrap', marginLeft: 50 }}>
-                    <GroupDropDown groups={groups} selectedId={selectedId} setSelectedId={setSelectedId} />
+                <div style={{ minWidth: 800, display: 'flex', marginLeft: 50 }}>
+                    <DropDownContainer >
+                        <GroupDropDown groups={groups} selectedId={selectedId} setSelectedId={setSelectedId} />
+                    </DropDownContainer>
 
                     <DropDownContainer >
-                        <DropDownLabel style={{ height: "100%", display: "flex", alignItems: "center" }}>
+                        {/* <DropDownLabel style={{ height: "100%", display: "flex", alignItems: "center" }}>
                             <span>分析資料</span>
-                        </DropDownLabel>
+                        </DropDownLabel> */}
                         <AnalysisDataDropSelector
                             memoryDropDownSelected={memoryDropDownSelected}
                             setMemoryDropDownSelected={setMemoryDropDownSelected}
@@ -55,11 +57,7 @@ const
                     </DropDownContainer>
 
 
-                    <DropDownContainer style={{ height: 45 }}>
-                        {/* <DropDownLabel style={{ marginTop: 10 }}>分析時間</DropDownLabel> */}
-                        <DropDownLabel style={{ height: "100%", display: "flex", alignItems: "center" }}>
-                            <span>分析時間</span>
-                        </DropDownLabel>
+                    <DropDownContainer >
                         <AnalysisTimeSettingBarSelector
                             dateModuleData={dateModuleData}
                             setDateModuleData={setDateModuleData}
@@ -68,10 +66,7 @@ const
 
 
 
-                    <DropDownContainer style={{ height: 45 }}>
-                        <DropDownLabel style={{ height: "100%", display: "flex", alignItems: "center" }}>
-                            <span>關鍵字</span>
-                        </DropDownLabel>
+                    <DropDownContainer >
                         <KeywordSearchInput
                             setMainSearchKeyword={setMainSearchKeyword}
                         />

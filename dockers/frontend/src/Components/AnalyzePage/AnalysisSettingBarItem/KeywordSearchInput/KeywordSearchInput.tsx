@@ -35,30 +35,41 @@ const KeywordSearchInput = (props: KeywordSearchInputProps) => {
     const { setMainSearchKeyword } = props
     // const [name, setName] = React.useState('');
     return (
-        <Box
-            component="form"
-            sx={{
-                '& > :not(style)': { m: 1, width: '25ch', backgroundColor: '#fff', display: "flex" },
-            }}
-            noValidate
-            autoComplete="off"
-        >
-            <TextField
-                style={{ backgroundColor: 'white' }}
-                sx={{ width: 250 }}
-                id="input-with-icon-textfield"
-                label={"全域關鍵字"}
-                size="small"
-                onChange={(event: React.ChangeEvent<HTMLInputElement>) => { setMainSearchKeyword(event.target.value); }}
-                InputProps={{
-                    endAdornment: (
-                        <InputAdornment position="end">
-                            <SearchIcon onClick={() => {}} />
-                        </InputAdornment>
-                    ),
+        <div style={{
+            display: 'flex',
+            width: "min-content",
+            height: "100%",
+            marginLeft: 20
+        }}>
+            <div style={{ height: "100%", whiteSpace: "nowrap", display: "flex", alignItems: "center" }}>
+                分析時間
+            </div>
+            <Box
+                component="form"
+                sx={{
+                    '& > :not(style)': { m: 1, width: '25ch', backgroundColor: '#fff', display: "flex" },
                 }}
-            />
-        </Box>
+                noValidate
+                autoComplete="off"
+            >
+                <TextField
+                    style={{ backgroundColor: 'white' }}
+                    sx={{ width: 250 }}
+                    id="input-with-icon-textfield"
+                    label={"全域關鍵字"}
+                    size="small"
+                    onChange={(event: React.ChangeEvent<HTMLInputElement>) => { setMainSearchKeyword(event.target.value); }}
+                    InputProps={{
+                        endAdornment: (
+                            <InputAdornment position="end">
+                                <SearchIcon onClick={() => { }} />
+                            </InputAdornment>
+                        ),
+                    }}
+                />
+            </Box>
+        </div>
+
     );
 
 }

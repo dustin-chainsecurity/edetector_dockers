@@ -53,12 +53,15 @@ export const GridCheck = (props:IGridCheck) => {
 interface TableCellComponentProps extends TableCellProps {
     align?: "inherit" | "left" | "center" | "right" | "justify";
     children: React.ReactNode;
+    minWidth? : string;
+    lockHeight?: boolean;
 }
 
 export function TableCellComponent({ align = "left", children, ...other }: TableCellComponentProps) {
+    const { minWidth, lockHeight } = other;
     return (
         <TableCell
-            sx={{ minWidth:'145px' }}
+            sx={{ minWidth: minWidth ? minWidth : "145px", height: lockHeight ? '20px' : 'auto' }}
             style={{ whiteSpace: "pre-line" }}
             align={align}
             {...other}

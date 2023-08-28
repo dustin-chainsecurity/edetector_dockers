@@ -32,7 +32,8 @@ const queryClient = new QueryClient();
 function App() {
 
   useEffect(() => {
-    // console.log('fb app id', process.env.REACT_APP_ENV);
+    console.log('fb app id', process.env.REACT_APP_ENV);
+    console.log('fb app id2', process.env.REACT_APP_URL);
   }, [])
 
   return (

@@ -8,6 +8,7 @@ import { AllFilesDropDownData, ForensicsSelectedData, MemorySelectedData } from 
 import ForensicsDropSelector from './ForensicsDropSelector';
 import MemoryDropDownSelector from '../MemoryDropDownSelector/MemoryDropDownSelector';
 import AllFilesDropDownSelector from '../AllFilesDropDownSelector/AllFilesDropDownSelector';
+import { DropDownLabel } from '../../GroupFilter/StyledComponents';
 
 interface ChildProps {
     memoryDropDownSelected: MemorySelectedData
@@ -155,8 +156,13 @@ const AnalysisDataDropSelector: React.FC<ChildProps> = (props: ChildProps) => {
 
 
     return (
-        <div style={{ display: 'flex', alignItems: 'center', justifyItems: 'center' }}>
-            <FormControl sx={{ m: 1, width: 200, top: '4px', backgroundColor: 'white' }} size='small'>
+        <div style={{ width: "min-content", display: "flex", height: "100%" }}>
+
+            <div style={{ height: "100%", whiteSpace: "nowrap", display: "flex", alignItems: "center",marginLeft:20 }}>
+                分析資料
+            </div>
+
+            <FormControl sx={{ m: 1, width: 200,  backgroundColor: 'white',height:"min-content" }} size='small'>
                 <Select
                     multiple
                     value={["126", "fepfl"]}
@@ -166,7 +172,7 @@ const AnalysisDataDropSelector: React.FC<ChildProps> = (props: ChildProps) => {
                         <div style={{ width: 200, height: "100%" }}>
                             {mainSelectorList()}
                         </div>
-                        <div style={{ width: 800,height:"100%" }}>
+                        <div style={{ width: 800, height: "100%" }}>
                             {
                                 selectedMainSelectorName === "記憶體" ?
                                     <MemoryDropDownSelector
@@ -196,6 +202,7 @@ const AnalysisDataDropSelector: React.FC<ChildProps> = (props: ChildProps) => {
                 </Select>
             </FormControl>
         </div>
+
     )
 }
 

@@ -1,9 +1,5 @@
-import { IConnectStatus, IDevice, IFormtedConnectStatus, IFormatedDevice, scanning, dateForm, IOneNode, ITimeNode, MemorySelectedData, ForensicsSelectedData, AllFilesDropDownData } from "./interfaceBoard";
-import dayjs from 'dayjs';
-import { elasticRoot, elasticChildUrl, mainTableName } from "./index"
-import { AxiosResponse } from "axios";
-import { translateChineseToElasticsearchTableIndex, forensicsDropSelectorTranfer, mainTimeColumnInTable, generateForensicsGroupTree } from "./AnalysisPage/functionToolbox"
-import {generateTimeListForChart} from "./FunctionForElasticsearch/functionToolbox"
+import { IConnectStatus, IDevice, IFormtedConnectStatus, IFormatedDevice, scanning, dateForm } from "./interfaceBoard";
+
 
 
 // 轉換成時間格式

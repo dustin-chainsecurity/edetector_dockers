@@ -13,7 +13,6 @@ export const mockSettingData: ISettingData = {
         "innerIP": "192.168.10.1",
         "deviceName": "PC-1",
         "address": "AA-BB-C6-DD-EE-01",
-        "clientUid" : "1" ,
         "groups": "group1, group2, group3,group1, group2, group3,group1, group2, group3"
       },
       {
@@ -21,7 +20,6 @@ export const mockSettingData: ISettingData = {
         "innerIP": "192.168.10.1",
         "deviceName": "PC-1",
         "address": "AA-BB-C6-DD-EE-01",
-        "clientUid" : "1" ,
         "groups": "group1, group2, group4"
       },
       {
@@ -29,7 +27,6 @@ export const mockSettingData: ISettingData = {
         "innerIP": "192.168.10.1",
         "deviceName": "PC-1",
         "address": "AA-BB-C6-DD-EE-01",
-        "clientUid" : "1" ,
         "groups": "group1, group2, group5"
       },
       {
@@ -37,7 +34,6 @@ export const mockSettingData: ISettingData = {
         "innerIP": "192.168.10.1",
         "deviceName": "PC-1",
         "address": "AA-BB-C6-DD-EE-01",
-        "clientUid" : "1" ,
         "groups": "group1, group2, group6"
       },
       {
@@ -45,7 +41,6 @@ export const mockSettingData: ISettingData = {
         "innerIP": "192.168.10.1",
         "deviceName": "PC-1",
         "address": "AA-BB-C6-DD-EE-01",
-        "clientUid" : "1" ,
         "groups": "group2"
       },
       {
@@ -53,7 +48,6 @@ export const mockSettingData: ISettingData = {
         "innerIP": "192.168.10.1",
         "deviceName": "PC-1",
         "address": "AA-BB-C6-DD-EE-01",
-        "clientUid" : "1" ,
         "groups": "group1, group2"
       },
       {
@@ -61,7 +55,6 @@ export const mockSettingData: ISettingData = {
         "innerIP": "192.168.10.1",
         "deviceName": "PC-1",
         "address": "AA-BB-C6-DD-EE-01",
-        "clientUid" : "1" ,
         "groups": "group1, group2"
       },
       {
@@ -69,7 +62,6 @@ export const mockSettingData: ISettingData = {
         "innerIP": "1.2.4.34",
         "deviceName": "PC-1",
         "address": "AA-BB-C6-DD-EE-01",
-        "clientUid" : "1" ,
         "groups": "group1, group2"
       },
       {
@@ -77,7 +69,6 @@ export const mockSettingData: ISettingData = {
         "innerIP": "1.2.4.34",
         "deviceName": "PC-1",
         "address": "AA-BB-C6-DD-EE-01",
-        "clientUid" : "1" ,
         "groups": "group1, group2"
       },
       

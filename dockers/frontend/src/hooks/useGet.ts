@@ -11,6 +11,7 @@ interface IuseFetch {
 interface IResponse{
   data : { [x: string]: any }
   isSuccess : boolean;
+  groups? : { [x: string]: any }
 }
 
 interface IQueryParams extends IuseFetch {

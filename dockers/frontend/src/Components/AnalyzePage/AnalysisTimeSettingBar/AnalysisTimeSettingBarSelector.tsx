@@ -15,6 +15,7 @@ import { IDateModule, IDateModuleData } from '../../../constant/interfaceBoard';
 import { useState } from 'react';
 import { ListItemButton } from '@mui/material';
 import { DropDownLabel } from '../GroupFilter/StyledComponents';
+import { Height } from '@mui/icons-material';
 
 interface IAnalysisSettingBarProps {
     dateModuleData: IDateModuleData
@@ -49,14 +50,15 @@ const AnalysisTimeSettingBarSelector = (props: IAnalysisSettingBarProps) => {
     return (
         <div style={{
             display: 'flex',
-            flexWrap: 'wrap',
-            alignItems: 'center',
-            justifyItems: 'center',
-            justifyContent: 'space-evenly',
-            width: 200
+            width: "min-content",
+            height: "100%",
+            marginLeft:20
         }}>
-            <div style={{ width: 200, height: 50, display: 'flex', alignItems: 'flex-end' }}>
-                <FormControl fullWidth size='small' sx={{ backgroundColor: 'white' }}>
+            <div style={{ height: "100%", whiteSpace: "nowrap", display: "flex", alignItems: "center" }}>
+                分析時間
+            </div>
+            {/* <div style={{ width: 200, height: 50, display: 'flex', alignItems: 'flex-end' }}> */}
+                <FormControl sx={{ m: 1, width: 200,  backgroundColor: 'white',height:"min-content" }} size='small'>
                     {/* <InputLabel id="demo-simple-select-label">自訂</InputLabel> */}
                     <Select
                         multiple
@@ -76,8 +78,8 @@ const AnalysisTimeSettingBarSelector = (props: IAnalysisSettingBarProps) => {
                                 })}
                             </div>
 
-                            <div style={{ width: 400,marginLeft:5 }}>
-                                <div style={{ display: "flex", alignItems: "center" ,marginTop:10,marginBottom:5}}>
+                            <div style={{ width: 400, marginLeft: 5 }}>
+                                <div style={{ display: "flex", alignItems: "center", marginTop: 10, marginBottom: 5 }}>
                                     {dateModuleData.dateModuleData[selectedIndex].name}
                                 </div>
                                 <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -122,7 +124,7 @@ const AnalysisTimeSettingBarSelector = (props: IAnalysisSettingBarProps) => {
                     </Select>
                 </FormControl>
             </div>
-        </div>
+        // </div>
 
     )
 }

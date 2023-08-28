@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS user_info (
 	token VARCHAR(200),
 	token_time TIMESTAMP,
 	email VARCHAR(45) NOT NULL,
-  PRIMARY KEY (id),
+  	PRIMARY KEY (id),
 	FOREIGN KEY (id) REFERENCES user(id) ON DELETE CASCADE
 );
 
@@ -80,6 +80,7 @@ CREATE TABLE IF NOT EXISTS client_task_status (
 	file_schedule varchar(45),
 	file_finish_time TIMESTAMP,
 	image_finish_time TIMESTAMP,
+	PRIMARY KEY (client_id),
 	FOREIGN KEY (client_id) REFERENCES client(client_id) ON DELETE CASCADE
 );
 

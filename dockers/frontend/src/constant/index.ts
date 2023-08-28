@@ -1,16 +1,16 @@
 export const socketRoute ={
     local: 'wss://localhost:6969',
-    dev : 'ws://192.168.200.161:5050/ws'
+    dev : 'ws://192.168.200.132:5050/ws'
 }
 
 const rootRoute = {
     local: 'http://localhost:6969/',
-    dev:'http://192.168.200.161:5000/',
+    dev:'http://192.168.200.132:5000/',
 }
 
 const scheduledRoute = {
     local: 'http://localhost:6969/',
-    dev:'http://192.168.200.161:5050/',
+    dev:'http://192.168.200.132:5050/',
 }
 
 const elasticRoute = {

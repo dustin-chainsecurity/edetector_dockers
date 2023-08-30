@@ -1,5 +1,19 @@
 # eDetector Dockers
 
+## Description
+This repository deploys the following services :
+- Maria DB
+- Redis
+- Graylog (with Mongo and Elasticsearch)
+- API
+- Websocket
+- Task Handler
+- Working Server
+- DB Parser
+- Tree Builder
+- Connector
+- Frontend App
+
 ## Prerequisites
 Have the following installed:
 - Docker version 24.0.5
@@ -31,7 +45,14 @@ The following steps will run a local instance of the eDetector Server:
 
 3. Run the following commands to launch the microservices
     ```console
-    sudo docker
+    sudo docker compose --env-file ./config/app.env up -d
     ```
 
-4. 
+4. Check service healthiness (should not be restarting)
+    ```console
+    # check status
+    sudo docker compose --env-file ./config/app.env ps
+    # check logs from stdout
+    sudo docker compose --env-file ./config/app.env logs <service_name>
+    ```
+    Or you can view logger info from Graylog interface `<your_ip>:9000` or under `.volumes`

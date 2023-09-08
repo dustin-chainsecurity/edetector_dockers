@@ -16,7 +16,6 @@ export const HorizontalBarContainer = styled.div`
     align-items: center;
     flex-wrap: wrap;
     justify-content: flex-start;
-    padding: 0px 10px;
 ` ;
 
 export const ActionPlugContainer = styled.div` 

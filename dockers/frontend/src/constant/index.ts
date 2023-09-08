@@ -45,11 +45,14 @@ export const API = {
     AllGroup : 'group/device',
     // method : POST - 'group' 新增群組
     // method : GET - 'group' 取得所有群組
+    allGroupsInfo:'group/all',
     // method : PUT - 'group/${groupid}' 修改群組
     // method : GET - 'group/${groupid}' 取得特定群組detail
     // method : DELETE - 'group/${groupid}' 刪除群組
     // method : POST - 'group/device' 將多個 device 加入多個群組
     // method : DELETE - 'group/device'  將多個 device 離開多個群組
+    addOrRemoveDevicesFromGroups : 'group/device',
+
 }
 
 const elasticParentUrl = {  //todo

@@ -4,7 +4,6 @@ import { ChangeEvent, useState } from "react";
 import SearchIcon from '@mui/icons-material/Search';
 
 import { IFormatedDevice } from "../../../constant/interfaceBoard";
-import PartialLoading from "../../CommonConponents/PartialLoading/PartialLoading";
 import FilterDrop from "../FilterDrop.tsx/FilterDrop";
 import SearchBar from "../../CommonConponents/SearchBar/SearchBar";
 
@@ -15,7 +14,6 @@ interface EnhancedTableToolbarProps {
     searchRows: (key: string) => void;
     originData: IFormatedDevice[];
     refreshLoading: boolean;
-    activeFetch: boolean;
 }
 
 export function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
@@ -69,7 +67,6 @@ export function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
                     <FilterDrop />
                     {/* <FilterAltIcon style={{ color: '#BDBDBD', cursor: 'pointer', marginRight: 10 }} fontSize="large" /> */}
                     <SearchBar labelValue={hint} query={key} onChangeFunc={onChangeFunc} onSearchFunc={searchKeyWords} />
-                    {props.refreshLoading && props.activeFetch ? <PartialLoading /> : null}
                 </div>
             </Typography>
         </Toolbar>
@@ -77,4 +74,4 @@ export function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
 }
 
 
-// 目前處於兩個點要考慮，本地搜尋或是伺服器搜尋
+

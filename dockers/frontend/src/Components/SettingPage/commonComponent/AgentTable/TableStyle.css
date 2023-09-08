@@ -1,0 +1,5 @@
+/* position: "absolute", zIndex: 2, border: "solid", margin: 3, backgroundColor: "white", padding: 5,transition:"box-shadow .25s" */
+
+.filterListInTable{
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+}

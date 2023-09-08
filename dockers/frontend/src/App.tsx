@@ -13,7 +13,7 @@ import ErrorPage from './Page/ErrorPage/ErrorPage';
 import LoginPage from './Page/LoginPage';
 import AnalysisPage from './Page/AnalysisPage';
 import ProtectedRoutes from './utiles/ProtectedRoutes';
-import { useEffect } from 'react';
+import { Suspense, lazy, useEffect, useState } from 'react';
 import SettingPage from './Page/SettingPage';
 import Error404Page from './Page/ErrorPage/404Page';
 
@@ -26,19 +26,44 @@ import SettingServer from './Components/SettingPage/SettingChildPage/SettingServ
 import SettingUserPermission from './Components/SettingPage/SettingChildPage/SettingUserPermission/SettingUserPermission';
 import SettingVersion from './Components/SettingPage/SettingChildPage/SettingVersion/SettingVersion';
 import SettingWhiteList from './Components/SettingPage/SettingChildPage/SettingWhiteList/SettingWhiteList';
+import { AlertProvider } from './AppContext/AlertProvider';
 
 const queryClient = new QueryClient();
 
+const ReactQueryDevtoolsProduction = lazy(() =>
+import('@tanstack/react-query-devtools/build/lib/index.prod.js').then(
+  (d) => ({
+    default: d.ReactQueryDevtools,
+  }),
+),
+)
+
 function App() {
+  const [showDevtools, setShowDevtools] = useState(false)
+
 
   useEffect(() => {
     console.log('fb app id', process.env.REACT_APP_ENV);
-    console.log('fb app id2', process.env.REACT_APP_URL);
+    console.log('fb app is production', process.env.REACT_APP_IS_PRODUCTION);
+     // @ts-ignore
+    window.toggleDevtools = () => setShowDevtools((old) => !old)
+
+    if(process.env.REACT_APP_IS_PRODUCTION === 'true'){
+      console.log = () => { };
+      console.warn = () => { };
+      setShowDevtools(false)
+    }
+
+  }, [])
+
+  useEffect(() => {
+    // @ts-ignore
+    window.toggleDevtools = () => setShowDevtools((old) => !old)
   }, [])
 
   return (
-    <div>
-
+    <div >
+      <AlertProvider>
       <QueryClientProvider client={queryClient}>
         <AuthProvider>
           <Router>
@@ -69,9 +94,14 @@ function App() {
             </Routes>
           </Router>
         </AuthProvider>
-        <ReactQueryDevtools initialIsOpen={false} />
+        {!showDevtools && ( <ReactQueryDevtools initialIsOpen={false} />)}
+        {showDevtools && (
+        <Suspense fallback={null}>
+          <ReactQueryDevtoolsProduction />
+        </Suspense>
+      )}
       </QueryClientProvider>
-
+      </AlertProvider>
     </div>
   );
 }

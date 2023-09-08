@@ -74,7 +74,6 @@ export function generateLeftListCountQueryList(
 export function generateDotsListForChartWithBoxQuery(responseFromElasticsearchForChart: AxiosResponse<any, any>, timeList: ITimeNode[]) {
   let res = []
   try {
-    console.log(responseFromElasticsearchForChart)
     for (let i = 0; i < responseFromElasticsearchForChart.data.responses.length; i++) {
       let oneNode = {
         name: dayjs(timeList[i].startTime).format("YYYY/MM/DD/HH:mm"),
@@ -397,7 +396,7 @@ export function generateUrlAndBodyForElasticsearch(
         {
           "query_string": {
             "query": `*${subSearchKeyword[i]}*`,
-            "fuzziness": "AUTO",
+            // "fuzziness": "AUTO",
             // "operator": "and"
             // "flags": "CASE_INSENSITIVE"
           }

@@ -10,7 +10,7 @@ import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import { IOneNode, IOneObjectName } from '../../../constant/interfaceBoard'
 import { generateUrlAndBodyForElasticsearch } from '../../../constant/FunctionForElasticsearch/functionToolbox';
-import {generateDotsListForChartInBoxQuery} from '../../../constant/FunctionForElasticsearch/functionToolbox'
+import { generateDotsListForChartInBoxQuery } from '../../../constant/FunctionForElasticsearch/functionToolbox'
 import { UseMutationResult } from '@tanstack/react-query'
 import { useRef, useEffect } from 'react';
 import { MemorySelectedData } from '../../../constant/interfaceBoard'
@@ -63,13 +63,13 @@ interface LeftSelectListProps {
 const LeftSelectList = (props: LeftSelectListProps) => {
     const { fetchElasticSearchForLeftListCount, state, setDataForDisplay, fetchElasticSearch, memoryDropDownSelected, fetchElasticSearchForChart } = props
     const [selectedIndex, setSelectedIndex] = React.useState<number[]>([]);
-    const [openedGroup, setOpenedGroup] = React.useState<number[]>([])
+    const [openedGroup, setOpenedGroup] = React.useState<number[]>(Array.from({ length: 100 }, (_, k) => k))  // 預設0~99都是展開的
     const [autoSelectedAll, setAutoSelectedAll] = React.useState<boolean>(false)
     const [leftIndexList, setLeftIndexList] = React.useState<IIndexForLeftList[]>([])
     const setDataFromLeftSelectedList = (afterSelectedLeftListResponseState: any) => {
         setDataForDisplay({ type: "setDataFromLeftSelectedList", data: afterSelectedLeftListResponseState })
     }
-    const [selectedItemName, setSelectedItemName] = React.useState<string[]>([])    
+    const [selectedItemName, setSelectedItemName] = React.useState<string[]>([])
     const timeoutRef = useRef<NodeJS.Timeout | null>(null);
     // 點選左方清單時，延遲三秒後發送請求，如果點選內容有更換則3秒內重新計時
     // generateIndexWithTotalList(fetchElasticSearchForLeftListCount)
@@ -103,19 +103,13 @@ const LeftSelectList = (props: LeftSelectListProps) => {
     ) => {
         // dispatch({type:"leftSelectedList",payload:index})
         //根據所選取的index(所選主機、時間不變)，重新發送請求，並更換chart、table的資料，根據所選取的index
-
-         console.log(name)
-
         if (event.ctrlKey) {
-
             // 控制畫面是否被點選
             // 如果 total result 有被選的話，取消total result的選取
-
-            
             if (!selectedIndex.includes(index)) {
-                selectedIndex.includes(0) ? 
-                setSelectedIndex([index]) :
-                setSelectedIndex([...selectedIndex, index]);
+                selectedIndex.includes(0) ?
+                    setSelectedIndex([index]) :
+                    setSelectedIndex([...selectedIndex, index]);
             } else {
                 setSelectedIndex(selectedIndex.filter((item) => item !== index))
             }
@@ -144,19 +138,14 @@ const LeftSelectList = (props: LeftSelectListProps) => {
         }
 
         function generateInitIndexArrTableName(groupList: IOneNode[], nowList: string[] = []) {
-            console.log("groupList", groupList)
-            for (let i = 0; i < groupList.length; i++) {
-                if (groupList[i].type === "group") {
-                    generateInitIndexArrTableName(groupList[i].children, nowList)
-                } else {
-                    nowList.push(groupList[i].name)
-                }
-            }
+            groupList.map((item) => {
+                item.type === "group" ? generateInitIndexArrTableName(item.children, nowList) : nowList.push(item.name)
+            })
             return nowList
         }
     };
 
-    
+
     const handleListTotalItemClick = (
         event: any,
         index: number,
@@ -166,7 +155,7 @@ const LeftSelectList = (props: LeftSelectListProps) => {
         let allIndexNameList = generateInitIndexArrTableName(state.leftSelectedList.analysisIndex)
         setSelectedItemName(allIndexNameList)
         setAutoSelectedAll(true)
-        
+
         function generateInitIndexArrTableName(groupList: IOneNode[], nowList: string[] = []) {
             groupList.map((item) => {
                 item.type === "group" ? generateInitIndexArrTableName(item.children, nowList) : nowList.push(item.name)
@@ -269,24 +258,19 @@ const LeftSelectList = (props: LeftSelectListProps) => {
     // 根據左方所選取的index,生成mutationDataForTable，並發送請求，並更換chart、table的資料，根據所選取的index
     function selectedListSendRequet() {
         try {
-            let indexList: IOneNode[] = []
-            for (let i = 0; i < selectedItemName.length; i++) {
-                let tempNode: IOneNode = {
-                    name: selectedItemName[i],
-                    type: "item",
-                    children: []
-                }
-                indexList.push(tempNode)
-            }
-            let selectedHost = state.hostList
-            let startTime = state.timeRange.startTime
-            let endTime = state.timeRange.endTime
-            let mainSearchKeyword = state.mainKeyword
-            let mutationDataForTable = generateUrlAndBodyForElasticsearch("normal",indexList, memoryDropDownSelected, selectedHost, startTime, endTime,mainSearchKeyword)
-            let mutationDataForChart = generateDotsListForChartInBoxQuery(indexList, memoryDropDownSelected, selectedHost, startTime, endTime,mainSearchKeyword)
-            let responseFromElasticsearchForChart =  fetchElasticSearchForChart.mutate(mutationDataForChart)
-            let responseFromElasticsearchForTable =  fetchElasticSearch.mutate(mutationDataForTable)
-            let afterSelectedLeftListResponseState = {
+            const indexList: IOneNode[] = []
+            selectedItemName.map((item) => {
+                indexList.push({ name: item, type: "item", children: [] })
+            })
+            const selectedHost = state.hostList
+            const startTime = state.timeRange.startTime
+            const endTime = state.timeRange.endTime
+            const mainSearchKeyword = state.mainKeyword
+            const mutationDataForTable = generateUrlAndBodyForElasticsearch("normal", indexList, memoryDropDownSelected, selectedHost, startTime, endTime, mainSearchKeyword)
+            const mutationDataForChart = generateDotsListForChartInBoxQuery(indexList, memoryDropDownSelected, selectedHost, startTime, endTime, mainSearchKeyword)
+            fetchElasticSearchForChart.mutate(mutationDataForChart)
+            fetchElasticSearch.mutate(mutationDataForTable)
+            const afterSelectedLeftListResponseState = {
                 formIndex: 0,
                 leftSelectedList: {
                     selectedIndex: selectedItemName
@@ -308,13 +292,10 @@ const LeftSelectList = (props: LeftSelectListProps) => {
                 detailData: {}
             }
             setDataFromLeftSelectedList(afterSelectedLeftListResponseState)
-            console.log(err)
         }
     }
     let itemId = 0
     function generateLeftList(groupList: IIndexForLeftList[], level: number = 0) {
-        // console.log("groupList", groupList)
-
         return groupList.map((item: IIndexForLeftList) => {
             let tempItemId = itemId
             itemId++
@@ -325,7 +306,6 @@ const LeftSelectList = (props: LeftSelectListProps) => {
                     <ListItemButton
                         sx={{ pl: level }}
                         selected={isItemSelected(tempItemId)}
-                        // onKeyDown={(event) => { handleListItemClick(event, tempItemId); handleGroupOpen(tempItemId) }}
                         onClick={(event) => { handleGroupOpen(tempItemId) }}>
                         <ListItemIcon>
                             <InboxIcon />
@@ -374,13 +354,8 @@ const LeftSelectList = (props: LeftSelectListProps) => {
             }
         })
     }
-
-
     return (
-        <div style={{ minWidth: "100%", backgroundColor:"#F5F5F5" }}>
-            {/* <Button variant="contained" onClick={() => { console.log(state) }}>儲存</Button> */}
-            {/* {generateLeftList(state.leftSelectedList.analysisIndex)} */}
-
+        <div style={{ width: "100%", backgroundColor: "#F5F5F5" }}>
             {generateLeftList(leftIndexList)}
         </div>
     )

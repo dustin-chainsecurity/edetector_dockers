@@ -4,8 +4,14 @@ import { Button, Dialog, DialogActions, DialogContent, DialogContentText, Dialog
 import React, { useContext } from "react";
 import { DetectContext } from "../../../AppContext/DetectProvider";
 import ActionButton from "./ActionPlug/CommonComponents/ActionButton";
+import { IFormatedDevice } from "../../../constant/interfaceBoard";
 
-const MissionAlert = () => {
+interface MissionAlertProps {
+    setData : React.Dispatch<React.SetStateAction<IFormatedDevice[]>>
+}
+
+const MissionAlert = (props:MissionAlertProps) => {
+    const { setData } = props;
 	const { dialogOpen, setDialogOpen } =useContext(DetectContext);
 	
     const handleClose = () => {
@@ -30,7 +36,7 @@ const MissionAlert = () => {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-            <ActionButton name="確認終止" isColor={true} /> {/* for stop mission button */}
+            <ActionButton name="確認終止" isColor={true} setData={setData}/> {/* for stop mission button */}
             <Button onClick={handleClose} sx={{ color:'rgba(0, 0, 0, 0.6)' }}>取消</Button>
         </DialogActions>
         </Dialog>

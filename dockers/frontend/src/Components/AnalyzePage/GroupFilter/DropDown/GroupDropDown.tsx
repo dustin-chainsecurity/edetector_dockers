@@ -29,7 +29,17 @@ const GroupDropDown = (props: GroupDropDownProps) => {
 
     useEffect(() => {  // set the default group
         if (selectedHost === '' && groups.length > 0) {
-            setSelectedHost(groups[0].group)
+            console.log('set default group', groups)
+            // if(groups[1]){ // 預設如果區分群組了，則選group[1]為使用者分類的第一群
+            //     setSelectedHost(groups[1].group)
+            // }
+            // else{ // 預設如果未區分群組，則選group[0]為全部主機
+            //     setSelectedHost(groups[0].group)
+            // }
+            if(groups[0]){
+                setSelectedHost(groups[0].group)
+            }
+            
         }
     }, [groups])
 

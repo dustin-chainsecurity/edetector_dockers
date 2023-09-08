@@ -24,9 +24,11 @@ import {
 	TableCellComponent,
 	TableStatusomponent,
 } from "./EnhancedTableElement";
-import { Control, FieldValues } from "react-hook-form";
+
 import { EnhancedTableToolbar } from "./EnhancedTableToolbar";
 import { formatTimestamp } from "../../../../constant/functionToolbox";
+import { headCells } from "../../../../constant/interfaceBoard";
+
 
 export interface IDeviceData {
 	deviceId: string;
@@ -35,10 +37,35 @@ export interface IDeviceData {
 	address: string;
 	groups: string;
 }
-
 interface IFormTable {
-
+	tableData: IDeviceData[];
 }
+
+interface HeadCell {
+	id: keyof IDeviceData;
+	label: string;
+  }
+
+//   const headCells: readonly HeadCell[] = [
+// 	{
+// 	  id: 'deviceId',
+// 	  label: '群組名稱',
+// 	},
+// 	{
+// 	  id: 'amount',
+// 	  label: '電腦數量',
+// 	},
+//   ];
+
+// {
+// 	"deviceId": "deviceIDNumber1",
+// 	"innerIP": "192.168.10.1",
+// 	"deviceName": "PC-1",
+// 	"address": "AA-BB-C6-DD-EE-01",
+// 	"groups": "group1, group2, group3,group1, group2, group3,group1, group2, group3"
+//   },
+
+
 
 const FormTable = (props: IFormTable) => {
 	// const { control, fields } = props;
@@ -145,8 +172,9 @@ const FormTable = (props: IFormTable) => {
 							order={order}
 							orderBy={orderBy}
 							// onSelectAllClick={handleSelectAllClick}
-							handleRequestSort={handleRequestSort}
+							// handleRequestSort={handleRequestSort}
 							rowCount={dataQuery.length}
+							headCells={headCells} // todo : fix
 						/>
 						<TableBody>
 							{visibleRows.map((row, index) => {

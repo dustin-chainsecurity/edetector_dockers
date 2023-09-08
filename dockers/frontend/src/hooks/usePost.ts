@@ -35,6 +35,11 @@ interface IuseFetch {
     route: string;
     body: { [x: string]: any };
 }
+interface IResponse{
+    data : { [x: string]: any }
+    isSuccess : boolean;
+    groups? : { [x: string]: any }
+  }
 
 const fetchData = async (props: IuseFetch) => {
     const { root, route, body } = props;
@@ -42,7 +47,7 @@ const fetchData = async (props: IuseFetch) => {
     return data;
 };
 
-export const usePost = (): UseMutationResult<any, Error, IuseFetch> => {
+export const usePost = (): UseMutationResult<IResponse, Error, IuseFetch> => {
     const queryClient = useQueryClient();
     
     return useMutation(fetchData, {

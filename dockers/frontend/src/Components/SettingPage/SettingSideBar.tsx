@@ -73,7 +73,6 @@ const SettingSideBar = () => {
 					</NavOutterLink>
 				);
 			})}
-			{/* Log out Button */}
 			<LogOutButton/>
 		</NavBarContainer>
 	);

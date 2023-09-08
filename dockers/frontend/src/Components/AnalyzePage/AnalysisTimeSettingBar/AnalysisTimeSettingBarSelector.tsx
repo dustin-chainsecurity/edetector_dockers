@@ -41,6 +41,7 @@ const AnalysisTimeSettingBarSelector = (props: IAnalysisSettingBarProps) => {
             let endDayjs = dayjs(endTimestamp)
             setStartDateValue(startDayjs)
             setEndDateValue(endDayjs)
+            console.log("dateModuleData", dateModuleData)
             setDateModuleData({ ...dateModuleData, startTime: startTimestamp, endTime: endTimestamp })
 
         } else {

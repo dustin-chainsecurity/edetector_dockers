@@ -5,8 +5,14 @@ import { DetectContext } from '../../../../AppContext/DetectProvider';
 import DateAndTimeSelector from '../../SettingBarItem/DateAndTimeSelector/DateAndTimeSelector';
 import ActionButton from './CommonComponents/ActionButton';
 import TimeMissionButton from './CommonComponents/TimeMissionButton';
+import { IFormatedDevice } from '../../../../constant/interfaceBoard';
 
-const ActionPlugFile = () => {
+interface ActionPlugFileProps {
+  setData: React.Dispatch<React.SetStateAction<IFormatedDevice[]>>;
+}
+
+const ActionPlugFile = (props:ActionPlugFileProps) => {
+    const { setData } = props;
     const { setScheduleDownload, setScheduleDownloadTime, scheduleDownloadTime } = useContext(DetectContext);
 
   return (
@@ -17,7 +23,7 @@ const ActionPlugFile = () => {
         <TimeMissionButton/>
         <StraightSeparator/>
         <ActionPlugTitle>檔案總表</ActionPlugTitle>
-        <ActionButton/>
+        <ActionButton setData={setData}/>
     </ActionPlugContainer>
   )
 }

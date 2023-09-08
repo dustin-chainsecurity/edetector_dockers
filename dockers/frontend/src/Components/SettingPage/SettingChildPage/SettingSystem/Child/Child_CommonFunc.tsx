@@ -20,6 +20,7 @@ import { useGet } from "../../../../../hooks/useGet";
 import { API, urlRoot } from "../../../../../constant";
 import FullLoading from "../../../../CommonConponents/FullLoading/FullLoading";
 import { SettingContext } from "../../../../../AppContext/SettingProvider";
+import { useAlert } from "../../../../../hooks/useAlert";
 
 interface EmailNotification {
     on: boolean;
@@ -78,6 +79,7 @@ const defaultValues:ICommonFuncData = {
 };
 
 const Child_CommonFunc = () => {
+	const alert = useAlert().showAlert;
 	const { setIsGlobalDirty } = useContext(SettingContext);
 	const [pageData, setPageData] = useState<ICommonFuncData>(defaultValues);
 	
@@ -125,7 +127,7 @@ const Child_CommonFunc = () => {
 
 	useEffect(() => {
 		if (isSuccess) {
-			alert("儲存成功"); //todo :自製彈窗
+			alert("儲存成功");
 		}
 	}, [isSuccess]);
 

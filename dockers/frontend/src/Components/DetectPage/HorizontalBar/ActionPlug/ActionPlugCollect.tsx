@@ -5,8 +5,14 @@ import { DetectContext } from '../../../../AppContext/DetectProvider';
 import DateAndTimeSelector from '../../SettingBarItem/DateAndTimeSelector/DateAndTimeSelector';
 import ActionButton from './CommonComponents/ActionButton';
 import TimeMissionButton from './CommonComponents/TimeMissionButton';
+import { IFormatedDevice } from '../../../../constant/interfaceBoard';
 
-const ActionPlugCollect = () => {
+interface ActionPlugCollectProps {
+  setData: React.Dispatch<React.SetStateAction<IFormatedDevice[]>>;
+}
+
+const ActionPlugCollect = (props:ActionPlugCollectProps) => {
+    const { setData } = props;
     const { setScheduleForensics, setScheduleForensicsTime, scheduleForensicsTime } = useContext(DetectContext);
 
   return (
@@ -17,7 +23,7 @@ const ActionPlugCollect = () => {
         <TimeMissionButton/>
         <StraightSeparator/>
         <ActionPlugTitle>痕跡取證</ActionPlugTitle>
-        <ActionButton/>
+        <ActionButton setData={setData}/>
     </ActionPlugContainer>
   )
 }

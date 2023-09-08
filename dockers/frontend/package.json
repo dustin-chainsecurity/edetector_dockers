@@ -19,6 +19,7 @@
     "@types/jest": "^27.5.2",
     "@types/js-cookie": "^3.0.3",
     "@types/node": "^16.18.36",
+    "@types/ramda": "^0.29.3",
     "@types/react": "^18.2.12",
     "@types/react-dom": "^18.2.5",
     "@types/react-window": "^1.8.5",
@@ -27,6 +28,7 @@
     "axios": "^1.4.0",
     "dayjs": "^1.11.9",
     "js-cookie": "^3.0.5",
+    "ramda": "^0.29.0",
     "rc-texty": "^0.2.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -37,15 +39,15 @@
     "react-window": "^1.8.9",
     "recharts": "^2.7.2",
     "styled-components": "^6.0.7",
+    "types-ramda": "^0.29.4",
     "typescript": "^4.9.5",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "local": "env-cmd -f .env.local react-scripts start",
+    "local": "cross-env PORT=3333 env-cmd -f .env.local react-scripts start",
     "dev": "env-cmd -f .env.development react-scripts start",
-    "prod": "env-cmd -f .env.production react-scripts start",
+    "prod": "cross-env PORT=3001 env-cmd -f .env.production react-scripts start",
     "build:prod": "env-cmd -f .env.production react-scripts build",
-    
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -70,6 +72,7 @@
     ]
   },
   "devDependencies": {
+    "cross-env": "^7.0.3",
     "env-cmd": "^10.1.0",
     "react-cookies": "^0.1.1"
   }

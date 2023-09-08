@@ -11,6 +11,10 @@
 .headerButton{
     margin-right: 20px;
     font-size: small;
+    color: white;
+    text-decoration: none;
+    cursor: pointer;
+    width: 50px;
 }
 .headerLogo{
     font-size: 30px;

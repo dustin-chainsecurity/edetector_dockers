@@ -2,7 +2,7 @@
 
 import { Backdrop, CircularProgress } from "@mui/material";
 import "./FullLoading.css";
-import { useEffect, useState } from "react";
+
 
 interface FullLoadingProps {
     open: boolean;
@@ -14,7 +14,7 @@ const FullLoading = (props: FullLoadingProps) => {
 
     return (
         <Backdrop
-            sx={{ color: '#42a5f5', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+            sx={{ color: '#42a5f5', zIndex: (theme) => theme.zIndex.drawer + 1, opacity: 0.6, backgroundColor:'rgb(0 0 0 / 10%)' }}
             open={open}
             onClick={handleClose}
         >

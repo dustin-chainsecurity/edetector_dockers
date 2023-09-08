@@ -13,9 +13,11 @@ import { Person } from "@mui/icons-material";
 import Error404Page from "./ErrorPage/404Page";
 import { AuthContext } from "../AppContext/AuthProvider";
 import FullLoading from "../Components/CommonConponents/FullLoading/FullLoading";
-// import { FormInput } from 'component-lib'
+import { useAlert } from "../hooks/useAlert";
+import { ReactComponent as Logo } from "../assets/eDetctorLogo.svg" ;
 
 const LoginPage = () => {
+	const alert = useAlert().showAlert;
 	const [username, setUsername] = useState("chiehyu");
 	const [password, setPassword] = useState("123");
 	const [usernameMessage, setUsernameMessage] = useState("");
@@ -49,8 +51,7 @@ const LoginPage = () => {
 			}
 		},
 		onError: (error) => {
-			console.log(error);
-			setUsernameMessage("連線錯誤");
+			alert("請檢察網路")
 		},
 	});
 
@@ -71,9 +72,14 @@ const LoginPage = () => {
 		<div
 			style={{
 				width: "100%",
-				height: "100vh",
+				height: "100%",
+				maxHeight: "100%",
 				backgroundColor: "#E1F5FE",
 				paddingTop: "70px",
+				position : 'absolute',
+				zIndex : 1000,
+				top : 0,
+				left : 0,
 			}}
 		>
 			<FullLoading open={fetchLogAuth.isLoading} />
@@ -98,7 +104,8 @@ const LoginPage = () => {
 						color: "#2196F3",
 					}}
 				>
-					eDetector
+					{/* eDetector */}
+					<Logo style={{ width:'60%', height:'100%' }}/>
 				</div>
 				<p
 					style={{

@@ -15,13 +15,15 @@ interface IRightBarProps {
     unknown
   >;
   reRender: boolean;
-  uidOnHand: IelasticQuery
+  uidOnHand: IelasticQuery;
+  isHideDetail: boolean;
+  setIsHideDetail: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const excludingList: string[] = ["uuid", "agent", "index", "id"]; //不需要的欄位，可以持續增加
 
 const RightBar = (props: IRightBarProps) => {
-  const { fetchElasticDetail, reRender, uidOnHand } = props;
+  const { fetchElasticDetail, reRender, uidOnHand, isHideDetail, setIsHideDetail } = props;
   const { data, isLoading, isError } = fetchElasticDetail;
   const [elasticDetail, setElasticDetail] = useState<DynamicObject>({});
 
@@ -57,16 +59,19 @@ const RightBar = (props: IRightBarProps) => {
   return (
     <>
       {reRender ? null : (
+        <div style={{ position: 'relative', width: isHideDetail ? "260px" : "0px", }}>
+        {/* <span 
+          style={{ position:'absolute', left:-20, backgroundColor: "#F5F5F5",width:20, height: 20 }}
+          onClick={() => setIsHideDetail(!isHideDetail)}
+          >{isHideDetail?'>':'<'}</span> */}
         <div
           style={{
             backgroundColor: "#F5F5F5",
-            // padding: 10,
-            paddingLeft: 20,
-            margin: "0px auto",
-            width: "90%",
-            height: '100%',
-            overflow: 'auto',
-            overflowX: 'hidden'
+            paddingLeft: 10,
+            margin: "0px 0px 0px auto",
+            width: isHideDetail ? "260px" : "0px",
+            maxHeight: 774,
+            overflowX: 'hidden',
           }}
         >
           <p style={{ color: "#00000099", marginTop: 30 }}>詳細資訊</p>
@@ -89,11 +94,12 @@ const RightBar = (props: IRightBarProps) => {
                 }}
               >
                 <p style={{ backgroundColor: 'transparent', width: '100%', wordBreak: 'break-word', margin: '3px auto' }}>{key}</p>
-                <p style={{ backgroundColor: 'white', width: '100%', margin: '3px auto', wordBreak: 'break-word', padding: '5px 8px' }}>{elasticDetail[key]}</p>
+                <p style={{ backgroundColor: 'white', width: '85%', margin: '5px auto', wordBreak: 'break-word', padding: '5px 8px' }}>{elasticDetail[key]}</p>
               </div>
             ))
             }
             </div>
+          </div>
           </div>
       )}
     </>

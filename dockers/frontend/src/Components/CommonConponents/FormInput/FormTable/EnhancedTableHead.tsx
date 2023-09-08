@@ -1,23 +1,26 @@
 import { Box, Checkbox, TableCell, TableHead, TableRow, TableSortLabel } from "@mui/material";
 import { Order } from "../../TableFunction";
-import { IDeviceData } from "./FormTable";
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import { visuallyHidden } from '@mui/utils'
 
 
+interface HeadCell {
+    id: any ;
+    label: string;
+}
+
 interface EnhancedTableProps {
     numSelected: number;
-    handleRequestSort: (event: React.MouseEvent<unknown>, property: keyof IDeviceData) => void
-    // onSelectAllClick: (event: React.ChangeEvent<HTMLInputElement>) => void;
+    // handleRequestSort: (event: React.MouseEvent<unknown>, property: keyof IDeviceData) => void
+    onSelectAllClick?: (event: React.ChangeEvent<HTMLInputElement>) => void;
     order: Order;
     orderBy: string;
     rowCount: number;
+    headCells : readonly HeadCell[]
 }
 
-interface DetectGrid_HeadCell {
-    id: keyof IDeviceData;
-    label: string;
-}
+
+
 
 // export interface IDeviceData{
 //     deviceId: string; 
@@ -28,28 +31,11 @@ interface DetectGrid_HeadCell {
 //     groups: string; //所屬群組
 // }
 
-const headCells: readonly DetectGrid_HeadCell[] = [
-    {
-        id: 'innerIP',
-        label: '電腦內部IP',
-    },
-    {
-        id: 'deviceName',
-        label: '電腦名稱',
-    },
-    {
-        id: 'address',
-        label: 'MAC Address',
-    },
-    {
-        id: 'groups',
-        label: '所屬群組',
-    }
-];
+
 
 const EnhancedTableHead = (props: EnhancedTableProps) => {
     // const { dectectiveHead } = useContext(DetectContext);
-    const { order, orderBy, numSelected, rowCount, handleRequestSort } = props;
+    const { order, orderBy, numSelected, rowCount, headCells ,onSelectAllClick} = props;
     // const createSortHandler =
     //     (property: keyof IDeviceData) => (event: React.MouseEvent<unknown>) => {
     //         onRequestSort(event, property);
@@ -57,13 +43,13 @@ const EnhancedTableHead = (props: EnhancedTableProps) => {
 
     return (
         <TableHead>
-            <TableRow style={{ whiteSpace: 'pre-line' }}>
+            <TableRow style={{ whiteSpace: 'nowrap',textOverflow: "ellipsis" }}>
                 <TableCell padding="checkbox">
                     <Checkbox
                         color="primary"
                         indeterminate={numSelected > 0 && numSelected < rowCount}
                         checked={rowCount > 0 && numSelected === rowCount}
-                        // onChange={onSelectAllClick}
+                        onChange={onSelectAllClick}
                         inputProps={{
                             'aria-label': 'select all desserts',
                         }}

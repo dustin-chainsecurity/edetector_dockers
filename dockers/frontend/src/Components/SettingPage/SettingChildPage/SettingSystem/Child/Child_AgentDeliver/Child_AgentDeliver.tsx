@@ -14,6 +14,7 @@ import SelectInputByHooks from "../../../../../CommonConponents/FormInput/Select
 import { Button, MenuItem, TextField } from "@mui/material";
 import { useEffect, useState } from "react";
 import { IPTable } from "./IPTable";
+import { useAlert } from "../../../../../../hooks/useAlert";
 
 const mockIPData = [
 	["192.168.1.1", "192.168.1.99"],
@@ -43,6 +44,7 @@ const mockIPData = [
 ];
 
 const Child_AgentDeliver = () => {
+	const alert =  useAlert().showAlert;
 	const [selectedId, setSelectedId] = useState<readonly string[]>([]);
 	const [listData, setListData] = useState<string[][]>([]);
 

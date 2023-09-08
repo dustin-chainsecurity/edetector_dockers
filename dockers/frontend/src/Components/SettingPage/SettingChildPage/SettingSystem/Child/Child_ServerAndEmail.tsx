@@ -19,6 +19,7 @@ import { useGet } from "../../../../../hooks/useGet";
 import { API, urlRoot } from "../../../../../constant";
 import FullLoading from "../../../../CommonConponents/FullLoading/FullLoading";
 import { SettingContext } from "../../../../../AppContext/SettingProvider";
+import { useAlert } from "../../../../../hooks/useAlert";
 
 interface ServerAndEmailType {
 	workerPort: number;
@@ -57,6 +58,7 @@ const handleType = (data: ServerAndEmailType):ServerAndEmailType => {
 };
 
 const Child_ServerAndEmail = () => {
+	const alert = useAlert().showAlert ;
 	const { setIsGlobalDirty } = useContext(SettingContext);
 	const [pageData, setPageData] = useState<ServerAndEmailType>(defaultValues);
 
@@ -105,7 +107,7 @@ const Child_ServerAndEmail = () => {
 
 	useEffect(() => {
 		if (isSuccess) {
-			alert("儲存成功"); //todo :自製彈窗
+			alert("儲存成功");
 		}
 	}, [isSuccess]);
 

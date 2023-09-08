@@ -1,6 +1,6 @@
 /** @format */
 
-import { useFieldArray, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import {
 	HookFormSubmit,
 	HookFormSubmitContainer,
@@ -8,18 +8,19 @@ import {
 import FormInputByHooks from "../../../../CommonConponents/FormInput/FormInputByHooks";
 import {
 	CommonHoriLine,
-	CommonSpaceGap,
 	CommonTitle,
 } from "../../../../CommonConponents/CommonStyledComponent";
-import CheckInputByHooks from "../../../../CommonConponents/FormInput/CheckInputByHooks";
 import SelectInputByHooks from "../../../../CommonConponents/FormInput/SelectInputByHooks";
 import { MenuItem } from "@mui/material";
-import FormTable from "../../../../CommonConponents/FormInput/FormTable/FormTable";
-import { useEffect } from "react";
+import { useState } from "react";
+import { useAlert } from "../../../../../hooks/useAlert";
+import MainTableBox from '../../../commonComponent/AgentTable/MainTableBox'
 
-  
+
+
 
 const Child_AgentRefresh = () => {
+	const alert = useAlert().showAlert;
 	const {
 		control,
 		handleSubmit,
@@ -31,6 +32,9 @@ const Child_AgentRefresh = () => {
 		alert(JSON.stringify(data));
 	};
 
+	const [selectedId, setSelectedId] = useState<string[]>([]);
+	const [selectedGroupList, setSelectedGroupList] = useState<number[]>([]);
+	const [renewTable, setRenewTable] = useState<boolean>(false);
 
 	return (
 		<div>
@@ -58,13 +62,25 @@ const Child_AgentRefresh = () => {
 					<MenuItem value="allDevices">所有電腦</MenuItem>
 				</SelectInputByHooks>
 
-				<FormTable/>
+				{/* <FormTable tableData={[]}/>  */}
+				{/* todo:fix */}
+				<MainTableBox
+					showGroup={false}
+					// buttonComponent={buttonComponent}
+					selectedId={selectedId}
+					setSelectedId={setSelectedId}
+					renewTable={renewTable}
+					setRenewTable={setRenewTable}
+					selectedGroupList={selectedGroupList}
+					setSelectedGroupList={setSelectedGroupList}
+
+				/>
 
 				<CommonHoriLine />
 				<HookFormSubmitContainer>
 					<HookFormSubmit
 						type="submit"
-						disabled={!isDirty || !isValid}
+						disabled={!isDirty || !isValid || selectedId.length === 0 || isSubmitting}
 					/>
 				</HookFormSubmitContainer>
 			</form>

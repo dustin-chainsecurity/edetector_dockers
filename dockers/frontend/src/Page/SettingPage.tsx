@@ -33,7 +33,7 @@ const SettingPage = () => {
 				<SettingPageContainer>
 					<p style={{ width: "100%" }}>系統狀況： 良好</p>
 					<SettingSideBar />
-					<Outlet />{" "}
+					<Outlet />
 					{/*Gate: SettingSystem.tsx, SettingGroup.tsx ... */}
 				</SettingPageContainer>
 			</SettingProvider>

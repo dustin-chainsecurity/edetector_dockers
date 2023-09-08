@@ -118,7 +118,6 @@ const GridFooter = (props: IDridFooter) => {
                     cursor: 'pointer'
                 }}
                 onClick={() => {
-                    // alert('上一頁')
                     handlePageChange(-1)
                 }}
             >
@@ -130,7 +129,6 @@ const GridFooter = (props: IDridFooter) => {
                     cursor: 'pointer'
                 }}
                 onClick={() => {
-                    // alert('下一頁')
                     handlePageChange(1)
                 }}
             >

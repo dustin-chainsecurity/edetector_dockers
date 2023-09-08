@@ -54,15 +54,14 @@ interface TableCellComponentProps extends TableCellProps {
     align?: "inherit" | "left" | "center" | "right" | "justify";
     children: React.ReactNode;
     minWidth? : string;
-    lockHeight?: boolean;
 }
 
-export function TableCellComponent({ align = "left", children, ...other }: TableCellComponentProps) {
-    const { minWidth, lockHeight } = other;
+export function TableCellComponent({ minWidth ,align = "left", children, ...other }: TableCellComponentProps) {
+
     return (
         <TableCell
-            sx={{ minWidth: minWidth ? minWidth : "145px", height: lockHeight ? '20px' : 'auto' }}
-            style={{ whiteSpace: "pre-line" }}
+            sx={{ minWidth: minWidth ? minWidth : "145px" }}
+            style={{ overflow: "hidden", whiteSpace: "nowrap", textOverflow: "ellipsis"}}
             align={align}
             {...other}
         >

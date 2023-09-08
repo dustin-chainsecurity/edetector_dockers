@@ -1,9 +1,21 @@
-import React from 'react'
 import { ChildInnerWhiteContainer } from '../../../commonComponent/StyledComponents'
+import { useToast } from '../../../../../hooks/useToast/useToast'
 
 const Parent = () => {
+  const { toast, alarm } = useToast() ;
+  
+  const handleAdd = () => {
+    toast("Testing") ;
+  }
+  const handleErrorAdd = () => {
+    alarm("error!!!") ;
+  }
+
   return (
-    <ChildInnerWhiteContainer>Parent</ChildInnerWhiteContainer>
+    <ChildInnerWhiteContainer>
+      <button onClick={handleAdd}>Testing</button>
+      <button onClick={handleErrorAdd}>alarm</button>
+    </ChildInnerWhiteContainer>
   )
 }
 

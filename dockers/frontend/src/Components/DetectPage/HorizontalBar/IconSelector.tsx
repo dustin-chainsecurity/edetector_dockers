@@ -49,9 +49,6 @@ const IconSelector = (props: IIconSelectorProps) => {
 	}, [settingBarShowOptions, selectedId]);
 
 	const handleClick = (title: TactionType) => {
-		// if(selectedId.length ===0 ){
-		// 	alert('請選擇欲執行的設備')
-		// }
 		handleClickStatus(title)
 		handleStopAction(title)
 	};

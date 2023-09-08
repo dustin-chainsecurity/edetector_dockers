@@ -108,7 +108,7 @@ const AnalysisDataDropSelector: React.FC<ChildProps> = (props: ChildProps) => {
                             defaultValue=""
                             style={{ paddingRight: '5px', marginRight: '0px' }}
                             selected={selectedIndex === i}
-                            key={i}
+                            key={`${item}${i}-SelectorList`}
                             onClick={(event) => { handleMainListItemClick(event, i); setSelectedMainSelectorName(item) }}
                         >
                             {

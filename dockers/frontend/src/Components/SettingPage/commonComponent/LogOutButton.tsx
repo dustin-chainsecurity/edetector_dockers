@@ -3,19 +3,22 @@ import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../../AppContext/AuthProvider';
 import Cookies from 'js-cookie';
+import { useAlert } from '../../../hooks/useAlert';
 
 const LogOutButton = () => {
     const navigate = useNavigate();
+    const alert = useAlert().showAlert;
     const { setIsLogin } = useContext(AuthContext);
 
+
+    const userLogout = () => {
+        setIsLogin(false);
+        Cookies.remove('token');
+        navigate('/login');
+    }
+
     const handleLogOut = () => {
-        const logout = window.confirm('確定要登出嗎?');
-        if (logout) {
-            setIsLogin(false);
-            Cookies.remove('token');
-            navigate('/login');
-        }
-        else return
+        alert('確定要登出嗎?',userLogout);
     }
 
   return (

@@ -4,7 +4,7 @@ import './MemoryDropDownSelector.css'
 import Button from '@mui/material/Button';
 import { MemorySelectedData, RiskLevel, InjectActive, ProcessBeInjected, Boot, Hook, Hide } from '../../../../constant/interfaceBoard'
 
-
+// todo : add unique key to each checkbox
 
 interface ChildProps {
     memoryDropDownSelected: MemorySelectedData

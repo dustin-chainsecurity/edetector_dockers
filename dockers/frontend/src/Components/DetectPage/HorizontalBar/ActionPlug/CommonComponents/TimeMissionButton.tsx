@@ -6,8 +6,10 @@ import { useMutation } from "@tanstack/react-query";
 import { axiosClient } from "../../../../../utiles/ProtectedRoutes";
 import { API, scheduledRoot } from "../../../../../constant";
 import { Button } from "@mui/material";
+import { useAlert } from "../../../../../hooks/useAlert";
 
 const TimeMissionButton = () => {
+	const alert = useAlert().showAlert;
 	const {
 		selectedId,
 		scheduleForensicsTime,

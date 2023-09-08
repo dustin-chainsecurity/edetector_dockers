@@ -20,6 +20,7 @@ import { useGet } from "../../../../../hooks/useGet";
 import { useContext, useEffect, useState } from "react";
 import FullLoading from "../../../../CommonConponents/FullLoading/FullLoading";
 import { SettingContext } from "../../../../../AppContext/SettingProvider";
+import { useAlert } from "../../../../../hooks/useAlert";
 
 export interface InterfaceSettingType {
 	cefLog: boolean;
@@ -46,6 +47,7 @@ const handleType = (data: InterfaceSettingType) => {
 };
 
 const Child_InterfaceSetting = () => {
+	const alert = useAlert().showAlert;
 	const { setIsGlobalDirty } = useContext(SettingContext);
 	const [pageData, setPageData] = useState<InterfaceSettingType>(defaultValues);
 
@@ -95,7 +97,7 @@ const Child_InterfaceSetting = () => {
 	
 	useEffect(() => {
 		if (isSuccess) {
-			alert("儲存成功"); //todo :自製彈窗
+			alert("儲存成功");
 		}
 	}, [isSuccess]);
 

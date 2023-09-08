@@ -65,6 +65,7 @@ export const DetectContext = createContext<DetectContextType>({
 const DetectProvider = ({ children }: { children: ReactNode }) => {
 	const [scheduleScan, setScheduleScan] = useState(false);
 	const [scanModule, setScanModule] = useState(false); // 偵測模式
+	
 	const [selectedId, setSelectedId] = useState<readonly string[]>([]);
 	const [scheduleForensics, setScheduleForensics] = useState(false);
 	const [scheduleDownload, setScheduleDownload] = useState(false);

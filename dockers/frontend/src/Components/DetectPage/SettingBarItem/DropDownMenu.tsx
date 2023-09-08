@@ -9,6 +9,7 @@ import Select from "@mui/material/Select";
 import Checkbox from "@mui/material/Checkbox";
 import { useEffect, useState } from "react";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { useAlert } from "../../../hooks/useAlert";
 
 
 interface IDropDownMenu {
@@ -131,6 +132,7 @@ type HourSelectorProps = {
 };
 
 const HourSelector = (props: HourSelectorProps) => {
+	const alert = useAlert().showAlert ;
 	const { hourList, selectedHourList, setSelectedHourList } = props;
 		// * 增加'可選擇'選單中的元素
 	const addSelectedHourList = (input: NumberString0To24|undefined) => {

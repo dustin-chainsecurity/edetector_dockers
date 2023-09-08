@@ -3,6 +3,7 @@
 import { useContext } from "react";
 import { SettingSystemChildren } from "../constant";
 import { SettingContext } from "../../../AppContext/SettingProvider";
+import { useAlert } from "../../../hooks/useAlert";
 
 interface HeaderNavigationProps {
 	header: SettingSystemChildren;
@@ -15,6 +16,11 @@ interface HeaderNavigationProps {
 const HeaderNavigation = (props: HeaderNavigationProps) => {
 	const { isGlobalDirty } = useContext(SettingContext);
 	const { header, setHeader, HeaderList } = props;
+	const alert = useAlert().showAlert;
+
+	const leavePage = (item:SettingSystemChildren)=>{
+		setHeader(item);
+	}
 
 	return (
 		<div style={{ display: "flex", width: "80%" }}>
@@ -39,11 +45,9 @@ const HeaderNavigation = (props: HeaderNavigationProps) => {
 							// 判斷是否有修改過，有修改過需要確認
 							() => {
 								if (isGlobalDirty) {
-									const isConfirm =
-										window.confirm("是否要離開此頁面?"); //todo add custom component
-									if (isConfirm) {
-										setHeader(item);
-									}
+									alert("是否要離開此頁面?",()=>{
+										leavePage(item)
+									})
 								} else {
 									setHeader(item);
 								}

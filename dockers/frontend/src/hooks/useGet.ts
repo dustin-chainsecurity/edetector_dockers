@@ -16,6 +16,7 @@ interface IResponse{
 
 interface IQueryParams extends IuseFetch {
   query : string;
+  refetchInterval? : number;
 }
 
 const fetchData = async (props: IuseFetch) => {
@@ -25,10 +26,7 @@ const fetchData = async (props: IuseFetch) => {
 };
 
 export const useGet = (params: IQueryParams) => {
-  const { query, root, route } = params;
-  return useQuery<IResponse, Error>([query], () => fetchData({
-    root,
-    route
-  }));
+  const { query, root, route, refetchInterval } = params;
+  return useQuery<IResponse, Error>([query], () => fetchData({ root, route }),{refetchInterval:refetchInterval});
 };
 

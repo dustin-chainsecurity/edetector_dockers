@@ -22,16 +22,8 @@ export interface IElasticGridProps {
     memoryDropDownSelected: MemorySelectedData
 }
 
-interface detailObject {
-    agent: string;
-    uuid: string;
-    index: string;
-}
-let count = 0
-
 const ElasticGrid = (props: IElasticGridProps) => {
-    count++
-    console.log('ElasticGrid', count)
+
     const { fetchData,
         setUidOnHand,
         fetchElasticDetail,
@@ -52,9 +44,7 @@ const ElasticGrid = (props: IElasticGridProps) => {
     // console.log(fetchData)
     // 如果沒拿到需要先印no data
 
-    useEffect(() => {
-        console.log('fetchData ---->', fetchData)
-    }, [fetchData])
+
 
     useEffect(() => {
         if (fetchData.data && fetchData.data.data.hits.hits.length !== 0) {
@@ -97,18 +87,17 @@ const ElasticGrid = (props: IElasticGridProps) => {
         }
 
     }, [fetchData])
-    const height = totalCount > 0 ? 300 : 100
+
 
     return (
         <>
-            {/* {fetchData.isIdle || fetchData.isLoading ? null : */}
-            <div style={{ width: '100%' }}>
+            <div style={{ width: '100%', overflow:'hidden' }}>
                 {/* <div>{dataForDisplay.}</div> */}
                 <div style={{
                     minHeight: 100,
                     // maxHeight: height,
                     width: '95%',
-                    maxWidth: "1200px",
+                    // maxWidth: "1200px",
                     padding: '20px',
                     margin: '20px auto',
                     backgroundColor: '#F5F5F5',

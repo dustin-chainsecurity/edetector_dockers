@@ -8,7 +8,7 @@ import { ReactComponent as FileIcon } from "./assests/fileIcon.svg";
 import { ReactComponent as EyeIcon } from "./assests/eyeIcon.svg";
 import { ReactComponent as MemoryIcon } from "./assests/memoryIcon.svg";
 
-import { TactionType } from "../../../constant/interfaceBoard";
+import { IFormatedDevice, TactionType } from "../../../constant/interfaceBoard";
 import { DetectContext } from "../../../AppContext/DetectProvider";
 import { HorizontalBarContainer } from "../commonComponent/StyledComponents";
 
@@ -19,25 +19,30 @@ import ActionPlugFile from "./ActionPlug/ActionPlugFile";
 import ActionISO from "./ActionPlug/ActionISO";
 import MissionAlert from "./MissionAlert";
 
-const HorizontalBar = () => {
+interface HorizontalBarProps {
+	setData : React.Dispatch<React.SetStateAction<IFormatedDevice[]>>
+}
+
+const HorizontalBar = (props:HorizontalBarProps) => {
+	const { setData } = props;
 	const { settingBarShowOptions, dialogOpen } = useContext(DetectContext);
 
 
 	return (
 		<HorizontalBarContainer>
-			<div style={{ display: "flex", minWidth: 200 }}>
+			<div style={{ display: "flex", minWidth: 200, marginLeft:10 }}>
 				<IconSelector Icon={MemoryIcon} title="記憶體" />
 				<IconSelector Icon={EyeIcon} title="痕跡取證" />
 				<IconSelector Icon={FileIcon} title="檔案總表" />
 				<IconSelector Icon={IsoIcon} title="關鍵映像檔" />
 				<IconSelector Icon={StopIcon} title="任務執行" />
 			</div>
-			{dialogOpen && <MissionAlert/>}
+			{dialogOpen && <MissionAlert setData={setData}/>}
 
-			{settingBarShowOptions === "記憶體" && (<ActionPlug/>)}
-			{settingBarShowOptions === "痕跡取證" && ( <ActionPlugCollect/>)}
-			{settingBarShowOptions === "檔案總表" && (<ActionPlugFile/>)}
-			{settingBarShowOptions === "關鍵映像檔" && (<ActionISO/>)}
+			{settingBarShowOptions === "記憶體" && (<ActionPlug setData={setData}/>)}
+			{settingBarShowOptions === "痕跡取證" && ( <ActionPlugCollect setData={setData}/>)}
+			{settingBarShowOptions === "檔案總表" && (<ActionPlugFile setData={setData}/>)}
+			{settingBarShowOptions === "關鍵映像檔" && (<ActionISO setData={setData}/>)}
 
 		</HorizontalBarContainer>
 	);

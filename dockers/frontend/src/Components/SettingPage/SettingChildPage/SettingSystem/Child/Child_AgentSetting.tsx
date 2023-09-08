@@ -19,6 +19,7 @@ import { useGet } from "../../../../../hooks/useGet";
 import { API, urlRoot } from "../../../../../constant";
 import FullLoading from "../../../../CommonConponents/FullLoading/FullLoading";
 import { SettingContext } from "../../../../../AppContext/SettingProvider";
+import { useAlert } from "../../../../../hooks/useAlert";
 
 export interface IAgentSettingData {
 	mission: {
@@ -55,6 +56,7 @@ const defaultValues:IAgentSettingData = {
 };
 
 const Child_AgentSetting = () => {
+	const alert = useAlert().showAlert;
 	const { setIsGlobalDirty } = useContext(SettingContext);
 	const [pageData, setPageData] = useState<IAgentSettingData>(defaultValues);
 
@@ -103,7 +105,7 @@ const Child_AgentSetting = () => {
 
 	useEffect(() => {
 		if (isSuccess) {
-			alert("儲存成功"); //todo :自製彈窗
+			alert("儲存成功");
 		}
 	}, [isSuccess]);
 

@@ -52,3 +52,5 @@ export function ConditionCellcomponent({ value }: ConditionCellcomponentProps) {
     );
 }
 
+// todo : add loading progress bar in detect page and detect grid table
+

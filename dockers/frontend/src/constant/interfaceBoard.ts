@@ -16,10 +16,20 @@ export interface IOneNode {
     children: IOneNode[]
 }
 
+
+// status
+// 0: not started
+// 1: pending
+// 2: working    ->  get progress
+// 3: finished   ->  get finish time
+// 4: terminated ->  get finish time
+// 5: failed     ->  get message
+
 export interface scanning{
-	isFinish:boolean,
+	status: 0|1|2|3|4|5,
 	progress:number,
-	finishTime:number|null
+	finishTime:number,
+    message: string
 }
 
 export interface dateForm{

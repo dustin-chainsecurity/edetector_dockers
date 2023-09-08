@@ -56,7 +56,7 @@ CREATE TABLE IF NOT EXISTS client_group (
 	group_id INT NOT NULL,
 	PRIMARY KEY (client_id, group_id),
 	FOREIGN KEY (client_id) REFERENCES client(client_id) ON DELETE CASCADE,
-	FOREIGN KEY (group_id) REFERENCES group_info(group_id)
+	FOREIGN KEY (group_id) REFERENCES group_info(group_id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS task (

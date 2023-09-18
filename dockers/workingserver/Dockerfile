@@ -1,8 +1,6 @@
-FROM ubuntu:latest
+FROM golang:alpine
 WORKDIR /
-RUN apt-get update && apt-get install -y wget
-RUN mkdir log
-EXPOSE 5055 1988 1989 1990
-CMD wget -O "server_${SERVER_VERSION}.exe" "http://${API_HOST}:${API_PORT}/server_file/server/server_${SERVER_VERSION}.exe" && \
-    chmod +x server_${SERVER_VERSION}.exe && \
-    ./server_${SERVER_VERSION}.exe
+RUN apk update && apk add --no-cache gcc musl-dev g++
+RUN go mod download
+RUN go build -o workingserver.exe cmd/server/server.go
+CMD ["/workingserver.exe"]

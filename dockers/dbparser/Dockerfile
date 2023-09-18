@@ -1,7 +1,6 @@
-FROM ubuntu:latest
+FROM golang:alpine
 WORKDIR /
-RUN apt-get update && apt-get install -y wget
-RUN mkdir log   
-CMD wget -O "parser_${PARSER_VERSION}.exe" "http://${API_HOST}:${API_PORT}/server_file/parser/parser_${PARSER_VERSION}.exe" && \
-    chmod +x parser_${PARSER_VERSION}.exe && \
-    ./parser_${PARSER_VERSION}.exe
+RUN go mod download
+RUN go build -o dbparser.exe cmd/parser/parser.go
+EXPOSE 5000
+CMD ["/parser.exe", "5000"]

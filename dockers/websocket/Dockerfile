@@ -1,8 +1,6 @@
-FROM ubuntu:latest
+FROM golang:alpine
 WORKDIR /
-RUN apt-get update && apt-get install -y wget
-RUN mkdir log
+RUN go mod download
+RUN go build -o websocket.exe cmd/websocket/websocket.go
 EXPOSE 5050
-CMD wget -O "websocket_${WS_VERSION}.exe" "http://${API_HOST}:${API_PORT}/server_file/websocket/websocket_${WS_VERSION}.exe" && \
-    chmod +x websocket_${WS_VERSION}.exe && \
-    ./websocket_${WS_VERSION}.exe 5050
+CMD ["/websocket.exe", "5050"]

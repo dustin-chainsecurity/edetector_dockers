@@ -1,7 +1,5 @@
-FROM ubuntu:latest
+FROM golang:alpine
 WORKDIR /
-RUN apt-get update && apt-get install -y wget
-RUN mkdir log
-CMD wget -O "connector_${CONNECTOR_VERSION}.exe" "http://${API_HOST}:${API_PORT}/server_file/connector/connector_${CONNECTOR_VERSION}.exe" && \
-    chmod +x connector_${CONNECTOR_VERSION}.exe && \
-    ./connector_${CONNECTOR_VERSION}.exe
+RUN go mod download
+RUN go build -o connector.exe cmd/connector/connector.go
+CMD ["/connector.exe"]

@@ -1,8 +1,7 @@
-FROM ubuntu:latest
+FROM golang:alpine
 WORKDIR /
-RUN apt-get update
-RUN mkdir log api api/server_files
-COPY server_files ./api/server_files
+RUN go mod download
+RUN go build -o api.exe cmd/api/api.go
 EXPOSE 5000
-CMD chmod +x api/server_files/api/api_${API_VERSION}.exe && \
-    ./api/server_files/api/api_${API_VERSION}.exe 5000
+CMD ["/api.exe", "5000"]
+

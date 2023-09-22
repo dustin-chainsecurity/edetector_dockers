@@ -297,7 +297,7 @@ services:
       api:
         condition: service_started
     ports:
-      - "3000:3000"
+      - "3001:3001"
     env_file: ./config/app.env
     networks: 
       - edetector_net

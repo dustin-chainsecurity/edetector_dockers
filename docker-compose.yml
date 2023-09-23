@@ -148,6 +148,7 @@ services:
     volumes:
       - ./.volumes/api:/log
       - ./dockers/api/settings.json:/api/setting/settings.json
+      - ./dockers/api/setting/keyimage.json:/api/setting/keyimage.json
     ports:
       - "5000:5000"
     depends_on:

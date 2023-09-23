@@ -1,3 +1,101 @@
+CREATE DATABASE IF NOT EXISTS edetector;
+USE edetector;
+
+CREATE TABLE IF NOT EXISTS user (
+	id         INT          AUTO_INCREMENT PRIMARY KEY,
+	username   VARCHAR(45)  NOT NULL UNIQUE,
+	password   VARCHAR(45)  NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS user_info (
+	id           INT          PRIMARY KEY,
+	department   VARCHAR(45)  NOT NULL,
+	email        VARCHAR(45)  NOT NULL,
+	permission   VARCHAR(255),
+	status       TINYINT      NOT NULL,
+	token        VARCHAR(45),
+	token_time   TIMESTAMP,
+	FOREIGN KEY (id) REFERENCES user(id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS client (
+  client_id   VARCHAR(45)   PRIMARY KEY,
+  ip          VARCHAR(45)   NOT NULL,
+  mac         VARCHAR(45)   NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS client_setting (
+  client_id      VARCHAR(45)  PRIMARY KEY,
+  networkreport  TINYINT(1)   NOT NULL DEFAULT 0,
+  processreport  TINYINT(1)   NOT NULL DEFAULT 0,
+  FOREIGN KEY (client_id) REFERENCES client(client_id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS client_info (
+  client_id     VARCHAR(45)   PRIMARY KEY,
+  sysinfo       VARCHAR(100)  NOT NULL,
+  osinfo        VARCHAR(100)  NOT NULL,
+  computername  VARCHAR(100)  NOT NULL,
+  username      VARCHAR(100)  NOT NULL,
+  fileversion   VARCHAR(100)  NOT NULL,
+  boottime      VARCHAR(45)   NOT NULL,
+  FOREIGN KEY (client_id) REFERENCES client(client_id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS group_info (
+	group_id     INT           AUTO_INCREMENT PRIMARY KEY,
+	group_name   VARCHAR(45)   NOT NULL UNIQUE,
+	description  VARCHAR(1000) NOT NULL,
+	range_begin  VARCHAR(45)   NOT NULL,
+	range_end    VARCHAR(45)   NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS client_group (
+	client_id   VARCHAR(45) NOT NULL,
+	group_id    INT         NOT NULL,
+	PRIMARY KEY (client_id, group_id),
+	FOREIGN KEY (client_id) REFERENCES client(client_id) ON DELETE CASCADE,
+	FOREIGN KEY (group_id) REFERENCES group_info(group_id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS task (
+	task_id    VARCHAR(45) PRIMARY KEY,
+	client_id  VARCHAR(45) NOT NULL,
+	type       VARCHAR(45) NOT NULL,
+	status     INT         NOT NULL,
+	progress   INT         NOT NULL,
+	timestamp  TIMESTAMP   NOT NULL,
+	FOREIGN KEY (client_id) REFERENCES client(client_id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS client_task_status (
+	client_id            VARCHAR(45) PRIMARY KEY,
+	scan_schedule        VARCHAR(45),
+	scan_finish_time     TIMESTAMP,
+	collect_schedule     VARCHAR(45),
+	collect_finish_time  TIMESTAMP,
+	file_schedule        VARCHAR(45),
+	file_finish_time     TIMESTAMP,
+	image_finish_time    TIMESTAMP,
+	FOREIGN KEY (client_id) REFERENCES client(client_id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS analysis_template (
+	template_id           VARCHAR(45)  PRIMARY KEY,
+	template_name         VARCHAR(45)  NOT NULL UNIQUE,
+	work                  VARCHAR(45)  NOT NULL,
+	keyword_type          VARCHAR(45),
+	keyword               VARCHAR(255),
+	history_and_bookmark  VARCHAR(45)  NOT NULL,
+	cookie_and_cache      VARCHAR(45)  NOT NULL,
+	connection_history    VARCHAR(45)  NOT NULL,
+	process_history       VARCHAR(45)  NOT NULL,
+	vanishing_history     VARCHAR(45)  NOT NULL,
+	recent_opening        VARCHAR(45)  NOT NULL,
+	usb_history           VARCHAR(45)  NOT NULL,
+	email_history         VARCHAR(45)  NOT NULL
+);
+
 CREATE TABLE IF NOT EXISTS white_list (
 	id         INT          AUTO_INCREMENT PRIMARY KEY,
 	setup_user VARCHAR(45),

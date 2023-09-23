@@ -98,7 +98,7 @@ services:
         timeout: 30s
         retries: 3
     volumes:
-      - ./es_data:/usr/share/elasticsearch/data
+      - ./es_data:/var/lib/elasticsearch/data
     ports:
       - ${ELASTICSEARCH_PORT}:${ELASTICSEARCH_PORT}
     networks:

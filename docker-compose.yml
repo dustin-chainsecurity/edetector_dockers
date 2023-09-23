@@ -1,4 +1,4 @@
-# sudo docker-compose --env-file ./config/app.env up -d
+# docker compose --env-file ./config/app.env up -d
 version: "3"
 services:
   redisdb:

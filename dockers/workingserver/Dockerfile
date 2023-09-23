@@ -1,8 +1,7 @@
 FROM ubuntu:latest
 WORKDIR /
-RUN apt-get update && apt-get install -y wget
+RUN apt-get update
 RUN mkdir log
+COPY *.exe .
 EXPOSE 5055 1988 1989 1990
-CMD wget -O "server_${SERVER_VERSION}.exe" "http://${API_HOST}:${API_PORT}/server_file/server/server_${SERVER_VERSION}.exe" && \
-    chmod +x server_${SERVER_VERSION}.exe && \
-    ./server_${SERVER_VERSION}.exe
+CMD find . -name "*.exe" -exec chmod +x {} \;
